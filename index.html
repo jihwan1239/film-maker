@@ -249,7 +249,7 @@ input[type=text]{box-sizing:border-box;font:inherit;font-family:var(--display);f
 .opt{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 10px;align-items:center;text-align:left;background:#fff;padding:7px 10px;margin:2px;width:calc(100% - 4px);box-sizing:border-box;
   box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -3px 0 0 rgba(0,0,0,.07)}
 .opt:not(:has(.av)){grid-template-columns:minmax(0,1fr) auto auto;gap:4px 14px}
-.opt.dist{grid-template-columns:minmax(0,1fr) auto auto}
+.opt.dist{grid-template-columns:minmax(0,1fr) auto auto auto}
 .opt[aria-pressed="true"]{background:var(--butter-l);box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 0 0 3px var(--gold)}
 .opt:disabled{background:#F1E8D8;color:var(--muted);cursor:not-allowed}
 .opt .av{width:28px;height:28px;image-rendering:pixelated;background:var(--paper2);box-shadow:0 0 0 2px var(--ink)}
@@ -269,7 +269,7 @@ input[type=text]{box-sizing:border-box;font:inherit;font-family:var(--display);f
 .crow+.crow{box-shadow:inset 0 2px 0 0 #EFE6D3}
 .crow[aria-pressed="true"]{background:var(--ink);color:var(--gold-l)}
 .crow .cn{color:inherit}.crow .cp{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.crow .ce{font-size:11px}.crow .cf{text-align:right;font-size:12px;white-space:nowrap}
-.seg5{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.seg5{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
 .seg5 .pick{font-size:12.5px}
 .pending{display:flex;justify-content:space-between;gap:8px;padding:8px 12px;background:var(--paper2);font-size:13px;margin:2px;box-shadow:0 -2px 0 0 var(--gold-d),0 2px 0 0 var(--gold-d),-2px 0 0 0 var(--gold-d),2px 0 0 0 var(--gold-d)}
 .scores{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -305,7 +305,7 @@ h3 .cnt{font-family:var(--pixel);font-size:13px;color:var(--muted)}
 .drum.pop{font-size:22px}
 @keyframes shake{0%{transform:translate(0,0) rotate(-1deg)}25%{transform:translate(2px,-1px) rotate(1deg)}50%{transform:translate(-2px,1px) rotate(0)}75%{transform:translate(1px,2px) rotate(1deg)}100%{transform:translate(0,0) rotate(-1deg)}}
 @keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.25)}100%{transform:scale(1)}}
-.cf{position:absolute;top:-10px;width:7px;height:10px;pointer-events:none;z-index:5;animation:fall linear forwards}
+.confetti{position:absolute;top:-10px;width:7px;height:10px;pointer-events:none;z-index:5;animation:fall linear forwards}
 @keyframes fall{to{transform:translate(var(--dx),110vh) rotate(540deg)}}
 .goals{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .goal{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);background:#fff;padding:6px 8px;margin:2px;box-shadow:0 -2px 0 0 rgba(35,26,43,.3),0 2px 0 0 rgba(35,26,43,.3),-2px 0 0 0 rgba(35,26,43,.3),2px 0 0 0 rgba(35,26,43,.3)}
@@ -314,7 +314,17 @@ h3 .cnt{font-family:var(--pixel);font-size:13px;color:var(--muted)}
 .goal small{margin-left:auto;font-size:10.5px;color:var(--muted)}
 .badge{font-size:10px;line-height:14px;padding:0 4px;margin:0 2px;white-space:nowrap}
 .badge.chem{background:var(--pink);color:#fff}.badge.warn{background:var(--red);color:#fff}.badge.mild{background:var(--gold)}
-@media (prefers-reduced-motion:reduce){.drum,.cf,.nom .wt{animation:none!important}}
+.crow{grid-template-columns:84px minmax(0,1fr) auto 64px}
+@media (prefers-reduced-motion:reduce){.drum,.confetti,.nom .wt{animation:none!important}}
+.apg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ap{background:#fff;padding:8px 10px;margin:2px;display:flex;flex-direction:column;gap:5px;box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink)}
+.apt{display:flex;justify-content:space-between;align-items:baseline}.apt b{font-family:var(--pixel);font-weight:400;font-size:20px}
+.apb{height:10px;background:#EFE6D3;box-shadow:0 0 0 2px var(--ink);margin:2px}.apb i{display:block;height:100%}
+.ap small{font-size:11px;color:var(--muted)}
+.bep{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;align-items:center;background:var(--paper2);padding:10px 12px;margin:2px;box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink)}
+.bep div{display:flex;flex-direction:column}.bep small{font-size:11px;color:var(--muted)}.bep b{font-family:var(--pixel);font-weight:400;font-size:20px;white-space:nowrap}
+.bep p{margin:0;font-size:12.5px;line-height:1.5}
+.bep.ok{background:#DDF3E4}.bep.bad{background:#FFD9D9}
 </style>
 
 </head>
@@ -369,14 +379,14 @@ const COMBO_MULT=[0.72,1,1.12,1.28], COMBO_LABEL=['최악의 조합...','무난�
 const DARK=['호러','스릴러','액션'];
 /* film elements and how much each genre leans on them */
 const EL=['story','act','dir','vis','snd','vfx'];
-const EL_NAME={story:'스토리',act:'연기',dir:'연출',vis:'영상미',snd:'사운드',vfx:'특수효과',buzz:'화제성'};
+const EL_NAME={story:'스토리',act:'연기',dir:'연출',vis:'영상미',snd:'음악',vfx:'특수효과',buzz:'화제성'};
 const EL_COLOR={story:'#4F7BD9',act:'#F27BA5',dir:'#E2434C',vis:'#33AEA3',snd:'#9C7BE0',vfx:'#FF8F3A',buzz:'#F7C948'};
 const GW={액션:[.15,.15,.15,.2,.1,.25],코미디:[.35,.35,.15,.05,.05,.05],로맨스:[.3,.35,.15,.12,.05,.03],호러:[.2,.15,.2,.15,.25,.05],SF:[.15,.1,.15,.2,.1,.3],
   스릴러:[.3,.2,.25,.1,.12,.03],드라마:[.35,.35,.2,.05,.03,.02],사극:[.2,.2,.15,.3,.1,.05],판타지:[.15,.1,.15,.25,.1,.25],애니:[.25,.1,.15,.3,.1,.1]};
 const PHASE_NAME={dev:'시나리오 개발',shoot:'촬영',post:'후반작업',mkt:'개봉 준비'};
-const BUDGET={low:{name:'저예산',cost:40000,ph:[4,6,4,2],pv:.85,screens:1,desc:'16주 제작, 상영관 적음'},
-  mid:{name:'중예산',cost:180000,ph:[6,9,6,3],pv:1,screens:1.3,desc:'24주 제작, 기술 요소 보통'},
-  big:{name:'블록버스터',cost:700000,ph:[8,13,9,4],pv:1.15,screens:1.6,desc:'34주 제작, 영상과 특수효과 강화, 상영관 최다'}};
+const BUDGET={low:{name:'저예산',cost:80000,ov:400,ph:[4,6,4,2],pv:.85,screens:1,desc:'16주 제작, 상영관 적음'},
+  mid:{name:'중예산',cost:350000,ov:1200,ph:[6,9,6,3],pv:1,screens:1.4,desc:'24주 제작, 기술 요소 보통'},
+  big:{name:'블록버스터',cost:1000000,ov:2500,ph:[8,13,9,4],pv:1.15,screens:2.1,desc:'34주 제작, 영상과 특수효과 강화, 상영관 최다'}};
 const RATING={all:'전체관람가','15':'15세 관람가',adult:'청소년 관람불가'};
 const CAMPAIGN=[{name:'홍보 없음',cost:0,h:0},{name:'온라인 바이럴',cost:5000,h:15},{name:'TV 광고',cost:30000,h:40},{name:'대대적 홍보',cost:100000,h:80}];
 const OFFICE=[{name:'반지하 원룸',cap:4,rent:100,cost:0,perk:'시작 사무실'},{name:'상가 2층 사무실',cap:7,rent:800,cost:100000,perk:'7명까지 근무'},{name:'강남 빌딩 한 층',cap:11,rent:3000,cost:500000,perk:'11명까지, 화제성 +10'},{name:'자체 촬영 스튜디오',cap:16,rent:8000,cost:2000000,perk:'16명까지, 영상미 +8%'}];
@@ -384,20 +394,26 @@ const OTTS=['꿀잼플릭스','팝콘플레이','왓더필름'];
 const PPL={none:{name:'PPL 없음',support:0,fit:[]},peach:{name:'이가네 복숭아',support:30000,fit:['요리','가족','첫사랑']},fish:{name:'청해진 건어물',support:30000,fit:['요리','바다','가족']}};
 const INVESTORS=[
   {id:'none',name:'투자 없음',pct:0,share:0,req:0,desc:'제작비를 전부 우리가 내고, 수익도 전부 가져요'},
-  {id:'angel',name:'동네 엔젤투자자',pct:.2,share:.3,req:0,desc:'제작비 20%를 대신 내줘요'},
-  {id:'vc',name:'꿀벌 벤처캐피탈',pct:.4,share:.56,req:35,desc:'제작비 40%를 대신 내줘요'},
-  {id:'fund',name:'시네마 펀드',pct:.6,share:.78,req:55,desc:'제작비 60%를 대신 내줘요'},
-  {id:'major',name:'팝콘그룹 투자배급',pct:.8,share:.97,req:75,desc:'제작비 80%를 대신 내줘요'}];
+  {id:'angel',name:'동네 엔젤투자자',pct:.2,share:.22,req:0,perk:'',desc:'제작비 20%를 내줘요'},
+  {id:'vc',name:'꿀벌 벤처캐피탈',pct:.4,share:.42,req:35,perk:'buzz',desc:'제작비 40% + 마케팅 지원으로 화제성 +10'},
+  {id:'fund',name:'시네마 펀드',pct:.6,share:.62,req:55,perk:'pa',desc:'제작비 60% + 배급 기본 홍보비(P&A) 절반 부담'},
+  {id:'major',name:'팝콘그룹 투자배급',pct:.8,share:.8,req:75,perk:'dist',desc:'제작비 80% + 메가스크린 배급 보장, 수수료 5%p 할인'}];
 const DISTS=[
-  {id:'self',name:'자체 배급',reach:.45,fee:0,req:0,desc:'수수료가 없지만 상영관이 적어요'},
-  {id:'alley',name:'골목시네마',reach:.8,fee:.12,req:0,desc:'작은 배급사, 예술영화관 위주'},
-  {id:'pop',name:'팝콘엔터',reach:1.15,fee:.18,req:40,desc:'전국 멀티플렉스와 계약된 중견 배급사'},
-  {id:'mega',name:'메가스크린',reach:1.5,fee:.25,req:65,desc:'업계 1위, 상영관을 쓸어 담아요'}];
+  {id:'self',name:'자체 배급',reach:.45,fee:0,pa:0,h:0,req:0,desc:'수수료와 기본 홍보비가 없지만 상영관이 적어요'},
+  {id:'alley',name:'골목시네마',reach:.8,fee:.12,pa:.08,h:5,req:0,desc:'작은 배급사, 예술영화관 위주'},
+  {id:'pop',name:'팝콘엔터',reach:1.15,fee:.18,pa:.15,h:12,req:40,desc:'전국 멀티플렉스와 계약된 중견 배급사'},
+  {id:'mega',name:'메가스크린',reach:1.5,fee:.25,pa:.22,h:20,req:65,desc:'업계 1위, 상영관을 쓸어 담아요'}];
 const STAT_LABEL={mkt:'마케팅',cast:'캐스팅',dist:'배급',inv:'투자유치',dev:'기획개발',pm:'제작관리',skill:'실력',rep:'명성',story:'스토리',char:'캐릭터'};
 const STAT_COLOR={mkt:'#F7C948',cast:'#F27BA5',dist:'#33AEA3',inv:'#6FA54E',dev:'#9C7BE0',pm:'#FF8F3A',skill:'#E2434C',rep:'#F7C948',story:'#4F7BD9',char:'#F27BA5'};
 const STAT_DESC={mkt:'개봉 준비 단계의 화제성',cast:'섭외할 수 있는 배우 등급',dist:'배급사 계약과 수수료, OTT 판매가',inv:'투자자 유치와 투자 조건',dev:'시나리오 보조, 새 소재 발굴, 흥행 예측',pm:'촬영 사고와 예산 초과 방지'};
 const ROLE_STATS={staff:['mkt','cast','dist','inv','dev','pm'],boss:['mkt','cast','dist','inv','dev','pm'],director:['skill','rep'],writer:['story','char']};
-const DTYPES={lead:{name:'총괄감독',el:'연출',acc:'beret',k:4},cam:{name:'촬영감독',el:'영상미',acc:'cap',k:2},art:{name:'미술감독',el:'영상미',acc:'',k:1.5},snd:{name:'음향감독',el:'사운드',acc:'phones',k:1.5},cg:{name:'CG감독',el:'특수효과',acc:'vglass',k:2.5}};
+const DTYPES={lead:{name:'총괄감독',el:'연출',acc:'beret',k:4},cam:{name:'촬영감독',el:'영상미',acc:'cap',k:2.5},snd:{name:'음악감독',el:'음악',acc:'phones',k:2}};
+const STUDIOS=[{id:'none',name:'CG 없이',skill:12,fee:0,desc:'특수효과를 거의 쓰지 않아요'},{id:'local',name:'동네 CG 공방',skill:35,fee:3000,desc:'간단한 합성 정도'},{id:'pixel',name:'픽셀웍스',skill:55,fee:15000,desc:'국내 중견 VFX 스튜디오'},{id:'nexter',name:'넥스터 스튜디오',skill:75,fee:50000,fame:20,desc:'국내 최고 수준의 VFX'},{id:'star',name:'스타라이트 VFX',skill:90,fee:150000,fame:45,desc:'할리우드 블록버스터 협력사'}];
+const studioOf=id=>STUDIOS.find(s=>s.id===id)||STUDIOS[1];
+const studioFee=(id,b)=>Math.round(studioOf(id).fee*({low:.6,mid:1,big:1.8}[b])/100)*100;
+const STYLES={commercial:{name:'상업영화',pop:12,art:-12,desc:'대중성을 끌어올리는 대신 예술성은 낮아져요'},balance:{name:'균형',pop:0,art:0,desc:'양쪽을 고르게 노려요'},auteur:{name:'작가주의',pop:-12,art:12,desc:'예술성을 끌어올리는 대신 대중성은 낮아져요'}};
+const GPOP={액션:12,코미디:14,로맨스:10,호러:8,SF:10,스릴러:4,드라마:0,사극:2,판타지:10,애니:12};
+const GART={액션:-4,코미디:-6,로맨스:0,호러:0,SF:2,스릴러:6,드라마:10,사극:6,판타지:0,애니:2};
 const DKEYS=Object.keys(DTYPES);
 const roleLabel=p=>p.role==='boss'?'대표':p.role==='staff'?'제작사 직원':p.role==='writer'?'전속 작가':'전속 '+DTYPES[p.dtype].name;
 const TRAITS={staff:[['흥행 감각','마케팅 효과 +25%'],['인맥왕','캐스팅 +15'],['협상의 달인','배급 +15'],['큰손 인맥','투자유치 +15'],['꼼꼼함','제작관리 +15'],['성실','경험치 +50%']],
@@ -433,7 +449,7 @@ const gauss=()=>{let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();r
 const hash=s=>{let h=7;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function fmtMoney(n){if(!Math.round(n))return '0원';const s=n<0?'-':'';n=Math.abs(Math.round(n));const e=Math.floor(n/10000),m=n%10000;if(e&&m)return s+e+'억 '+m.toLocaleString()+'만';if(e)return s+e+'억';return s+m.toLocaleString()+'만';}
-const fmtShort=n=>Math.abs(n)>=10000?(n/10000).toFixed(Math.abs(n)>=100000?0:1).replace(/\.0$/,'')+'억':Math.round(n).toLocaleString()+'만';
+const fmtShort=n=>!Math.round(n)?'0원':Math.abs(n)>=10000?(n/10000).toFixed(Math.abs(n)>=100000?0:1).replace(/\.0$/,'')+'억':Math.round(n).toLocaleString()+'만';
 function fmtAud(n){n=Math.round(n);if(n>=10000)return (n/10000).toFixed(n>=1e6?0:1)+'만명';return n.toLocaleString()+'명';}
 const comboLevel=(g,t)=>GREAT.has(g+'|'+t)?3:BAD.has(g+'|'+t)?0:(hash(g+t)%3===0?2:1);
 const stars=n=>'★'.repeat(n)+'☆'.repeat(3-n);
@@ -452,7 +468,7 @@ function salaryOf(p){const st=ROLE_STATS[p.role];const avg=st.reduce((a,s)=>a+p.
 function mkPerson(role,opt={}){
   const tl=TRAITS[role]||TRAITS.staff;
   const p={id:G.nextId++,name:opt.name||randName(),role,lv:1,exp:0,stats:{},trait:opt.trait||pick(tl)[0],mastery:{},parody:!!opt.parody,...look()};
-  if(role==='director'){p.dtype=opt.dtype||'lead';p.acc=DTYPES[p.dtype].acc}
+  if(role==='director'){p.dtype=DTYPES[opt.dtype]?opt.dtype:'lead';p.acc=DTYPES[p.dtype].acc}
   if(role==='writer')p.acc='glasses';
   const base=opt.base??(15+G.fame*.3),spread=opt.spread??32;
   for(const s of ROLE_STATS[role])p.stats[s]=clamp(Math.round(base+rnd(0,spread)),5,95);
@@ -488,7 +504,7 @@ function basicPerson(key){
   return BASIC[key]=p;
 }
 function newGame(studio,boss){
-  G={v:2,started:true,over:false,studio,year:1,month:1,week:1,money:200000,fame:0,office:0,speed:1,nextId:1,
+  G={v:2,started:true,over:false,studio,year:1,month:1,week:1,money:250000,fame:0,office:0,speed:1,nextId:1,
      staff:[],films:[],prod:null,pending:null,topics:[...TOPICS_START],combos:{},outCrew:{},outWri:[],actors:[],recruits:[],postings:[],
      trend:pick(GENRES),ottReq:null,trophies:0,slate:[],chem:{},flags:{},goals:{}};
   const b=mkPerson('staff',{name:boss,base:28,spread:10,trait:'성실'});b.role='boss';b.salary=0;b.acc='tie';G.staff.push(b);
@@ -519,7 +535,7 @@ function arrivePosting(po){
   toast(`${t.name} 공고에 지원자 3명이 왔어요`,'gold');sfx('hire');
 }
 function save(){try{localStorage.setItem(KEY,JSON.stringify(G))}catch(e){}}
-function load(){try{const s=localStorage.getItem(KEY);if(s){const g=JSON.parse(s);if(g&&g.v===2){g.slate=g.slate||[];g.chem=g.chem||{};g.flags=g.flags||{};g.goals=g.goals||{};if(g.prod){const P=g.prod;P.bon=P.bon||{};P.apen=P.apen||0;P.used=P.used||[];P.lastEvt=P.lastEvt||0}if(g.pending){const f=g.pending;f.aAdj=f.aAdj||0;f.cAdj=f.cAdj||0;f.nA=f.nA||0;f.nC=f.nC||0;f.minWait=0}return g}}}catch(e){}return null}
+function load(){try{const s=localStorage.getItem(KEY);if(s){const g=JSON.parse(s);if(g&&g.v===2){g.staff.forEach(p=>{if(p.dtype==='art'){p.dtype='cam';p.acc='cap'}if(p.dtype==='cg'){p.dtype='snd';p.acc='phones'}});g.recruits=(g.recruits||[]).filter(p=>!['art','cg'].includes(p.dtype));g.postings=(g.postings||[]).filter(p=>!['art','cg'].includes(p.dtype));if(g.outCrew){delete g.outCrew.art;delete g.outCrew.cg}if(g.prod){delete g.prod.crew.art;delete g.prod.crew.cg;g.prod.studio=g.prod.studio||'local';g.prod.style=g.prod.style||'balance'}(g.films||[]).forEach(f=>{f.art=f.art??50;f.pop=f.pop??50;f.pa=f.pa||0});if(g.pending){g.pending.style=g.pending.style||'balance';g.pending.leadPop=g.pending.leadPop||50}g.slate=g.slate||[];g.chem=g.chem||{};g.flags=g.flags||{};g.goals=g.goals||{};if(g.prod){const P=g.prod;P.bon=P.bon||{};P.apen=P.apen||0;P.used=P.used||[];P.lastEvt=P.lastEvt||0}if(g.pending){const f=g.pending;f.aAdj=f.aAdj||0;f.cAdj=f.cAdj||0;f.nA=f.nA||0;f.nC=f.nC||0;f.minWait=0}return g}}}catch(e){}return null}
 
 /* ---------- helpers ---------- */
 const effStat=(p,s)=>(p.stats[s]||0)+((s==='cast'&&p.trait==='인맥왕')||(s==='dist'&&p.trait==='협상의 달인')||(s==='inv'&&p.trait==='큰손 인맥')||(s==='pm'&&p.trait==='꼼꼼함')?15:0);
@@ -546,16 +562,20 @@ const seasonName=m=>m===7||m===8?'여름 성수기':m===12?'연말 시즌':(m<=2
 function ratingMult(f){if(f.rating==='all')return DARK.includes(f.genre)?.85:1.12;if(f.rating==='adult')return DARK.includes(f.genre)?.75:.62;return 1}
 const buzzMult=h=>.5+2*(1-Math.exp(-h/110));
 function distPower(f){return maxStat('dist')+G.fame*.3+(f?(f.Q-50)*.4:0)}
-function distFee(d){return Math.max(0,d.fee*(1.1-maxStat('dist')/250))}
+function distFee(d,f){return Math.max(0,d.fee*(1.1-maxStat('dist')/250)-(f&&f.inv&&f.inv.id==='major'&&d.id==='mega'?.05:0))}
+const distOk=(d,f)=>distPower(f)>=d.req||(f&&f.inv&&f.inv.id==='major'&&d.id==='mega');
+const paOf=(d,f)=>Math.round(BUDGET[f.budget].cost*(d.pa||0)*(f.inv&&f.inv.id==='fund'?.5:1)/100)*100;
+const bepOf=(cost,pa,fee,share)=>Math.round((cost+pa)/(.5*(1-fee)*(1-share)));
 function estimate(f,camp,distId,when){
   const d=DISTS.find(x=>x.id===distId)||DISTS[1];const w=when??(absW()+1);
-  const raw=150000*Math.pow(f.Q/45,2)*buzzMult(f.H+CAMPAIGN[camp].h*(1+maxStat('mkt')/200))*d.reach*BUDGET[f.budget].screens*seasonMult(f.genre,f.topic,monthAt(w))*(G.trend===f.genre?1.2:1)*ratingMult(f)*(.6+f.A*.06)*compMult(w,f.genre);
+  const appeal=.5*f.Q+.5*(f.pop??f.Q);const gap=(f.art??0)-(f.pop??0);
+  const raw=200000*Math.pow(appeal/45,2)*buzzMult(f.H+(d.h||0)+CAMPAIGN[camp].h*(1+maxStat('mkt')/200))*d.reach*BUDGET[f.budget].screens*seasonMult(f.genre,f.topic,monthAt(w))*(G.trend===f.genre?1.2:1)*ratingMult(f)*(.6+f.A*.06)*compMult(w,f.genre)*(gap>15?1-(gap-15)/180:1);
   return 2e7*(1-Math.exp(-raw/2e7));
 }
 const screenCost=f=>Math.max(1000,Math.round(BUDGET[f.budget].cost*.04/100)*100);
 const reeditCost=f=>Math.max(2000,Math.round(BUDGET[f.budget].cost*.08/100)*100);
 function ottOffer(f){const m=G.ottReq&&G.ottReq.genre===f.genre;return Math.max(20000,Math.round(estimate(f,0,'alley')*.5*.6*(1+maxStat('dist')/200)*(m?1.6:1)/100)*100)}
-function invTerms(iv){const sh=iv.share*(1.15-investPower()/200);return{pct:iv.pct,share:clamp(sh,iv.pct*.9,.97)}}
+function invTerms(iv){const sh=iv.share*(1.08-investPower()/400);return{pct:iv.pct,share:clamp(sh,iv.pct*.85,.97)}}
 
 /* ---------- rivals, goals ---------- */
 const RIVALS=[{name:'블록버스터 필름',tier:3,fav:['액션','SF','판타지']},{name:'달빛 시네마',tier:2,fav:['드라마','로맨스','스릴러']},{name:'왕대박 픽쳐스',tier:1,fav:['코미디','호러','애니']}];
@@ -630,7 +650,7 @@ const CHOICES=[
   {id:'cgdelay',ph:'post',t:'CG 업체의 마감 연장 요청',q:P=>'CG 업체가 2주만 더 주면 퀄리티를 확 올리겠대요.',
     o:[['연장해준다','2주 지연',P=>{P.ph[2]+=2;bon(P,'vfx',8);return '특수효과가 훨씬 좋아졌어요. 특수효과 +8'}],['일정대로','특수효과↓',P=>{bon(P,'vfx',-4);return '급하게 마무리했어요. 특수효과 -4'}]]},
   {id:'ost',ph:'post',t:'유명 가수 OST 제안',q:P=>`톱가수가 ${fmtMoney(evCost(P,.06))}에 OST를 불러주겠대요.`,
-    o:[['계약한다',P=>`-${fmtMoney(evCost(P,.06))}`,P=>{G.money-=evCost(P,.06);bon(P,'snd',7);bon(P,'buzz',6);return '음원 차트 1위! 사운드 +7, 화제성 +6'}],['패스','변화 없음',P=>'기존 음악으로 가요']]},
+    o:[['계약한다',P=>`-${fmtMoney(evCost(P,.06))}`,P=>{G.money-=evCost(P,.06);bon(P,'snd',7);bon(P,'buzz',6);return '음원 차트 1위! 음악 +7, 화제성 +6'}],['패스','변화 없음',P=>'기존 음악으로 가요']]},
   {id:'runtime',ph:'post',t:'3시간짜리 감독판',q:P=>'첫 편집본이 3시간이에요. 감독은 한 장면도 못 자르겠대요.',
     o:[['감독을 믿는다','연출↑ 관객 피로',P=>{bon(P,'dir',5);P.apen+=.3;return '평론가는 좋아하겠지만 관객은 지칠 거예요. 연출 +5'}],['과감히 자른다','연출↓',P=>{bon(P,'dir',-3);return '2시간으로 줄였어요. 연출 -3'}]]},
   {id:'meme',ph:'mkt',t:'예고편이 밈이 됐어요',q:P=>'예고편 한 장면이 조롱 섞인 밈으로 퍼지고 있어요.',
@@ -690,12 +710,12 @@ function prodWeek(fx){
     add('act',L.act*apt(L)*.65+(S?S.act*apt(S)*.25:6)+lead.stats.skill*.1,null,'va');
     add('dir',lead.stats.skill*mOf(lead,g)*perf(lead),P.crew.lead.type==='ex'?lead:null,P.crew.lead.type==='ex'?null:'vd');
     const vb=BUDGET[P.budget].pv*(G.office>=3?1.08:1);
-    add('vis',(C.cam.stats.skill*mOf(C.cam,g)*perf(C.cam)*.6+C.art.stats.skill*mOf(C.art,g)*perf(C.art)*.4)*vb,P.crew.cam.type==='ex'?C.cam:(P.crew.art.type==='ex'?C.art:null));
+    add('vis',C.cam.stats.skill*mOf(C.cam,g)*perf(C.cam)*vb,P.crew.cam.type==='ex'?C.cam:null);
   }
   if(ph==='post'){
     const pv=BUDGET[P.budget].pv;
     add('snd',C.snd.stats.skill*mOf(C.snd,g)*perf(C.snd)*pv,P.crew.snd.type==='ex'?C.snd:null);
-    add('vfx',C.cg.stats.skill*mOf(C.cg,g)*perf(C.cg)*pv,P.crew.cg.type==='ex'?C.cg:null);
+    add('vfx',studioOf(P.studio).skill*pv,null);
     add('dir',C.lead.stats.skill*mOf(C.lead,g)*perf(C.lead)*.9,P.crew.lead.type==='ex'?C.lead:null,P.crew.lead.type==='ex'?null:'vd');
   }
   if(ph==='mkt'){
@@ -710,12 +730,14 @@ function prodWeek(fx){
 }
 const elVal=(P,k)=>P.cnt[k]?P.sum[k]/P.cnt[k]:0;
 function computeScores(f){
-  const g=f.genre;
+  const g=f.genre;const st=STYLES[f.style||'balance'];
   let Q=EL.reduce((a,k,i)=>a+GW[g][i]*f.el[k],0)*COMBO_MULT[f.combo]+(f.fit?3:0);
   if(f.sequelOf)Q*=.95;f.Q=Math.max(5,Q);
-  const aq=.35*f.el.story+.35*f.el.act+.3*f.Q;
+  f.pop=Math.round(clamp(.25*f.el.act+.15*Math.min(99,f.H)+.12*f.el.vfx+.13*f.el.story+.1*(f.leadPop||40)+GPOP[g]+(f.combo-1)*4+(f.rating==='all'?5:f.rating==='adult'?-8:0)+st.pop+(f.sequelOf?5:0),1,99));
+  f.art=Math.round(clamp(.9*(.35*f.el.dir+.3*f.el.story+.15*f.el.vis+.1*f.el.snd+.1*f.el.act)+GART[g]+(f.rating==='adult'?4:0)+st.art-(f.ppl!=='none'?4:0)-(f.sequelOf?5:0),1,99));
+  const aq=.3*f.el.story+.3*f.el.act+.2*f.Q+.2*f.pop;
   f.A=clamp(1+8.6*(1-Math.exp(-aq/60))+(f.combo-1.5)*.3+f.aAdj+f.nA,1,9.8);
-  const cq=.35*f.el.dir+.35*f.el.story+.2*f.el.vis+.1*f.el.snd;
+  const cq=.7*f.art+.3*f.Q;
   f.C=clamp(1+8.4*(1-Math.exp(-cq/55))+f.cAdj+f.nC,1,9.8);
 }
 function finishProduction(){
@@ -726,16 +748,16 @@ function finishProduction(){
   el.act+=3*Math.min(3,ch.ls)+2*Math.min(3,ch.dl);el.dir+=2*Math.min(3,ch.dl);el.story+=3*Math.min(3,ch.wd);
   EL.forEach(k=>el[k]=Math.round(clamp(el[k],1,99)));
   const fit=P.ppl!=='none'&&(PPL[P.ppl].fit.includes(P.topic)||g==='코미디');
-  const buzz=Math.round(elVal(P,'buzz')+(P.bon.buzz||0)+L.pop*.6+(S?S.pop*.25:0)+lead.stats.rep*.2+(P.sequelOf?25:0)+(G.office>=2?10:0));
+  const buzz=Math.round(elVal(P,'buzz')+(P.bon.buzz||0)+(P.inv.id==='vc'?10:0)+L.pop*.6+(S?S.pop*.25:0)+lead.stats.rep*.2+(P.sequelOf?25:0)+(G.office>=2?10:0));
   const crewNames={};DKEYS.forEach(k=>crewNames[k]=C_(P,k).name);
   const f={id:G.nextId++,title:P.title,genre:g,topic:P.topic,combo,el,fit,sequelOf:P.sequelOf,H:buzz,budget:P.budget,rating:P.rating,ppl:P.ppl,
     aAdj:(Wr.trait==='대사의 맛'?.2:0)-(P.ppl!=='none'&&!fit?.3:0)-P.apen,cAdj:(P.rating==='adult'&&DARK.includes(g)?.3:0),nA:rnd(-.4,.4),nC:rnd(-.6,.6),
-    leadId:L.id,supId:S?S.id:null,actorName:L.name,supName:S?S.name:'',dirName:lead.name,wriName:Wr.name,crewNames,cost:P.cost,inv:P.inv,chem:ch,minWait:0};
+    style:P.style||'balance',leadPop:L.pop,studioName:studioOf(P.studio).name,leadId:L.id,supId:S?S.id:null,actorName:L.name,supName:S?S.name:'',dirName:lead.name,wriName:Wr.name,crewNames,cost:P.cost,inv:P.inv,chem:ch,minWait:0};
   computeScores(f);G.pending=f;
   [[lead,L],[L,S],[Wr,lead]].forEach(([a,b])=>{if(a&&b&&!a.basic&&!b.basic){const k=chemKey(a,b);G.chem[k]=(G.chem[k]||0)+1}});
   [Wr,...DKEYS.map(k=>C_(P,k))].forEach(p=>{if(p&&!p.basic){p.mastery[g]=(p.mastery[g]||0)+1;if(p.out){for(const s of Object.keys(p.stats))if(s!=='rep')p.stats[s]=clamp(p.stats[s]+ri(0,2),1,95)}if(p.parody)G.flags.legend=1}});
   G.staff.forEach(p=>{p.exp+=f.Q*.5*(p.trait==='성실'?1.5:1);while(p.exp>=p.lv*40){p.exp-=p.lv*40;p.lv++;for(const s of ROLE_STATS[p.role])p.stats[s]=clamp(p.stats[s]+ri(2,5),1,99);if(p.salary)p.salary=Math.round(p.salary*1.08);toast(`${p.name} 레벨 업! Lv.${p.lv}`,'gold');sfx('level')}});
-  G.prod=null;UI.camp=0;UI.when=0;UI.dist=DISTS.filter(d=>distPower(f)>=d.req).slice(-1)[0].id;openSheet('release');save();
+  G.prod=null;UI.camp=0;UI.when=0;UI.dist=DISTS.filter(d=>distOk(d,f)).slice(-1)[0].id;openSheet('release');save();
 }
 const C_=(P,k)=>crewOf(P.crew[k],k);
 function openFilm(f){
@@ -759,10 +781,11 @@ function releaseWeek(){
     if(f.wi===1){toast(`${f.title} 개봉! 관객 ${f.A.toFixed(1)} 평론 ${f.C.toFixed(1)}`,'gold');if(f.luckMsg)toast(f.luckMsg,f.luck>1?'gold':'red');
       if(f.rank>1&&others[0][1])toast(`이번 주 1위는 ${others[0][1].studio}의 '${others[0][1].title}'`,'red')}
     if(f.rank===1&&!f.no1){f.no1=true;toast(`${f.title} 박스오피스 1위!`,'gold');sfx('big')}
+    if(!f.bepHit&&f.rev>=f.cost+f.campCost+(f.pa||0)){f.bepHit=1;toast(`${f.title} 손익분기점 돌파! 이제부터 남는 장사`,'gold');sfx('big')}
     for(const ms of [1e6,3e6,5e6,1e7])if(f.aud>=ms&&!f.ms.includes(ms)){f.ms.push(ms);toast(`${f.title} ${ms/1e4}만 관객 돌파!`,'gold');sfx('big')}
     if(end){
-      f.status='done';f.profit=Math.round(f.rev-f.cost-f.campCost);
-      const df=Math.round(Math.min(8,f.aud/1e6*1.5)+(f.A>=8?1:0)-(f.aud<300000?1:0));f.fameUp=df;G.fame=clamp(G.fame+df,0,100);
+      f.status='done';f.profit=Math.round(f.rev-f.cost-f.campCost-(f.pa||0));
+      const df=Math.round(Math.min(8,f.aud/1e6*1.5)+(f.A>=8?1:0)+(f.art||0)/45-(f.aud<300000?1:0));f.fameUp=df;G.fame=clamp(G.fame+df,0,100);
       growActor(findById(G.actors,f.leadId),f.aud,f.A,'lead');growActor(f.supId&&findById(G.actors,f.supId),f.aud,f.A,'sup');
       if(f.dist==='mega')G.flags.mega=1;
       openSheet('result',f.id);sfx(f.profit>=0?'fanfare':'bad');checkGoals();
@@ -802,23 +825,23 @@ function domesticAwards(){
   if(!fs.length){toast('올해 황금복숭아 영화제에 낼 작품이 없었어요');return}
   const t=f=>f.title,st=f=>G.studio;
   const cats=[
-    buildCat('작품상',fs,f=>f.Q*.85+f.C*3,t,st),
+    buildCat('작품상',fs,f=>(f.art||f.Q)*.55+f.Q*.45,t,st),
     buildCat('감독상',fs,f=>f.el.dir,f=>f.dirName,t),
     buildCat('각본상',fs,f=>f.el.story,f=>f.wriName,t),
     buildCat('주연상',fs,f=>f.el.act,f=>f.actorName,t),
     buildCat('조연상',fs.filter(f=>f.supName),f=>f.el.act*.9+ri(-5,5),f=>f.supName,t),
-    buildCat('기술상',fs,f=>Math.max(f.el.vis,f.el.snd,f.el.vfx),t,f=>'영상, 사운드, 특수효과'),
-    buildCat('인기상',fs,f=>Math.min(99,f.H*.8),t,st),
+    buildCat('기술상',fs,f=>Math.max(f.el.vis,f.el.snd,f.el.vfx),t,f=>'영상, 음악, 특수효과'),
+    buildCat('인기상',fs,f=>f.pop||Math.min(99,f.H*.8),t,st),
     buildCat('흥행상',fs.filter(f=>f.aud),f=>f.aud,t,f=>fmtAud(f.aud),'aud'),
   ].filter(Boolean);
   startCeremony(`${G.year}년차 황금복숭아 영화제`,cats,'domestic');
 }
 function festival(){
   const now=absW();
-  const cand=G.films.filter(f=>f.status!=='scheduled'&&f.openAt!=null&&now-f.openAt<=48&&f.C>=7.3&&f.Q>=70&&!f.fest);
+  const cand=G.films.filter(f=>f.status!=='scheduled'&&f.openAt!=null&&now-f.openAt<=48&&f.C>=7&&(f.art||0)>=70&&!f.fest);
   if(!cand.length)return;
-  const best=cand.sort((a,b)=>b.C-a.C)[0];best.fest=1;
-  const noms=[{label:best.title,sub:G.studio,ours:true,score:best.C*10+ri(-6,6),fid:best.id},...WORLD_FILMS.sort(()=>Math.random()-.5).slice(0,4).map(n=>({label:n,sub:'해외 출품작',ours:false,score:ri(62,86)}))];
+  const best=cand.sort((a,b)=>b.art-a.art)[0];best.fest=1;
+  const noms=[{label:best.title,sub:G.studio,ours:true,score:best.art*.8+best.C*3+ri(-6,6),fid:best.id},...WORLD_FILMS.sort(()=>Math.random()-.5).slice(0,4).map(n=>({label:n,sub:'해외 출품작',ours:false,score:ri(62,86)}))];
   let wi=0;noms.forEach((n,i)=>{if(n.score>noms[wi].score)wi=i});
   toast(`${best.title}, 깐느 영화제 경쟁 부문 초청!`,'gold');
   startCeremony('깐느 국제영화제',[{name:'황금야자상',noms,win:wi}],'cannes');
@@ -826,7 +849,7 @@ function festival(){
 function startCeremony(title,cats,kind){
   let won=0,prize=0;
   cats.forEach(c=>{const w=c.noms[c.win];if(w.ours){won++;prize+=kind==='cannes'?50000:10000;if(c.name==='작품상')G.flags.bestpic=1;if(kind==='cannes')G.flags.cannes=1}});
-  G.money+=prize;G.fame=clamp(G.fame+won*(kind==='cannes'?10:2),0,100);G.trophies+=won;
+  G.money+=prize;G.fame=clamp(G.fame+won*(kind==='cannes'?7:2),0,100);G.trophies+=won;
   UI.cer={title,cats,i:0,stage:'noms',won,prize,kind};openSheet('ceremony');checkGoals();
 }
 
@@ -1082,7 +1105,7 @@ const SFX={
 };
 function drumThen(fn,ms){sfx('drumS');const el=document.createElement('div');el.className='drum pop';el.textContent='두구두구두구...';$('#sheetBody').appendChild(el);el.scrollIntoView({block:'nearest'});setTimeout(()=>{el.remove();fn()},ms)}
 function confetti(){const sh=document.querySelector('.sheet');const cols=['#E2434C','#F7C948','#33AEA3','#F27BA5','#9C7BE0','#FFF5DA'];
-  for(let i=0;i<46;i++){const p=document.createElement('i');p.className='cf';p.style.left=rnd(2,98)+'%';p.style.background=pick(cols);p.style.animationDelay=rnd(0,.5)+'s';p.style.animationDuration=rnd(1.4,2.4)+'s';p.style.setProperty('--dx',rnd(-40,40)+'px');sh.appendChild(p);setTimeout(()=>p.remove(),3200)}}
+  for(let i=0;i<46;i++){const p=document.createElement('i');p.className='confetti';p.style.left=rnd(2,98)+'%';p.style.background=pick(cols);p.style.animationDelay=rnd(0,.5)+'s';p.style.animationDuration=rnd(1.4,2.4)+'s';p.style.setProperty('--dx',rnd(-40,40)+'px');sh.appendChild(p);setTimeout(()=>p.remove(),3200)}}
 function sfx(n){if(!SND.ctx||!SND.sfx||SND.ctx.state!=='running')return;const t=SND.ctx.currentTime+.01;SFX[n].forEach(([m,d,dt,ty,v])=>tone(mf(m),t+dt,d,ty||'square',v||.09))}
 // 32 eighth notes, C major, cheerful office loop
 const MEL=[72,0,76,79,77,76,74,0, 72,74,76,0,74,0,67,0, 69,0,72,76,74,72,71,0, 72,74,72,71,69,0,67,0,
@@ -1132,7 +1155,7 @@ function renderHUD(){
   const sch=G.films.filter(f=>f.status==='scheduled');
   if(sch.length){h+=`<div class="ticker">${sch.map(f=>`<div class="row"><span>개봉 예정 ${esc(f.title)}</span><span class="pix">${weekLabel(f.openAt)}</span></div>`).join('')}</div>`}
   const shw=G.films.filter(f=>f.status==='showing');
-  if(shw.length){h+=`<div class="ticker">${shw.map(f=>`<div class="row"><span><i class="lamp"></i>상영 중 ${esc(f.title)}</span><span class="pix">${f.wi?f.rank+'위 · ':''}${fmtAud(f.aud)}</span></div>`).join('')}</div>`}
+  if(shw.length){h+=`<div class="ticker">${shw.map(f=>`<div class="row"><span><i class="lamp"></i>상영 중 ${esc(f.title)}</span><span class="pix">${f.wi?f.rank+'위 · ':''}${fmtAud(f.aud)}${f.bep?` / ${f.bepHit?'흑자':'BEP '+Math.round(f.aud/f.bep*100)+'%'}`:''}</span></div>`).join('')}</div>`}
   $('#status').innerHTML=h;
 }
 
@@ -1161,9 +1184,13 @@ function actorCard(a,cp){
   return `<div class="card"><img class="av" alt="" src="${avatar(a)}"><span class="main"><span class="nm"><span class="grade ${a.grade}">${GRADE_LABEL[a.grade]}</span>${esc(a.name)}</span><span class="sub">적성 ${a.apt.join(', ')}</span></span><span class="side"><b>${lock?'잠김':fmtMoney(a.fee)}</b><small>${lock?`캐스팅 ${req} 필요`:'주연 출연료'}</small></span>${statGrid([['연기',a.act,'#E2434C'],['인기',a.pop,'#F27BA5']])}</div>`;
 }
 function filmSummary(f){
-  const lines=[['총 매출',f.gross],['배급 수수료',-f.distCut],['투자자 몫',-f.invCut],['홍보비',-f.campCost],['우리가 낸 제작비',-f.cost]];
-  return `<div class="sumtbl">${lines.filter(([,v])=>v).map(([n,v])=>`<div><span>${n}</span><span>${v<0?'-':''}${fmtMoney(Math.abs(v))}</span></div>`).join('')}<div class="tot"><span>순이익</span><span class="${f.profit>=0?'pos':'negc'}">${fmtMoney(f.profit)}</span></div></div>`;
+  const ott=f.status==='ott';
+  const lines=ott?[['OTT 판매가',f.gross],['투자자 몫',-f.invCut],['우리가 낸 제작비',-f.cost]]
+    :[['극장 매출 (관객 × 1만원)',f.gross*2],['극장 몫 50%',-f.gross],['배급 수수료',-f.distCut],['투자자 몫',-f.invCut],['홍보비 (P&A)',-(f.pa||0)-f.campCost],['우리가 낸 제작비',-f.cost]];
+  return `<div class="sumtbl">${lines.filter(([,v])=>v).map(([n,v])=>`<div><span>${n}</span><span>${v<0?'-':''}${fmtMoney(Math.abs(v))}</span></div>`).join('')}<div class="tot"><span>순이익</span><span class="${f.profit>=0?'pos':'negc'}">${fmtMoney(f.profit)}</span></div>${!ott&&f.bep?`<div><span>손익분기점</span><span>${fmtAud(f.bep)} ${f.aud>=f.bep?'달성':'미달'}</span></div>`:''}</div>`;
 }
+const meter=(lab,v,col,note)=>`<div class="ap"><div class="apt"><span>${lab}</span><b>${v}</b></div><div class="apb"><i style="width:${v}%;background:${col}"></i></div>${note?`<small>${note}</small>`:''}</div>`;
+const artPop=f=>`<div class="apg">${meter('예술성',f.art??0,'#9C7BE0','평단, 영화제, 회사 명성')}${meter('대중성',f.pop??0,'#F7C948','관객 수, 입소문')}</div>${(f.art-f.pop)>15?'<div class="muted">예술성에 많이 기운 작품이라 흥행은 쉽지 않을 수 있어요.</div>':(f.pop-f.art)>20?'<div class="muted">대중성 위주라 영화제나 평단 반응은 약할 수 있어요.</div>':''}`;
 const SHEETS={
   intro(){return['새 영화사 설립',`
     <div class="poster" style="background:var(--red)"><span class="t">흥행제작소</span><span>반지하 원룸에서 천만 영화까지</span></div>
@@ -1176,12 +1203,12 @@ const SHEETS={
   wizard(){return WIZ[UI.wiz.step]()},
   prodInfo(){const P=G.prod;const Wr=crewOf(P.wri,'writer'),L=findById(G.actors,P.leadId),S=P.supId?findById(G.actors,P.supId):null;
     return['제작 현황',`<div class="poster" style="background:${GCOLOR[P.genre]}"><span class="t">${esc(P.title)}</span><span>${P.genre} × ${P.topic} · ${BUDGET[P.budget].name}</span></div>
-    <h3>참여진</h3><div class="sumtbl"><div><span>작가</span><span>${esc(Wr.name)}</span></div>${DKEYS.map(k=>`<div><span>${DTYPES[k].name}</span><span>${esc(C_(P,k).name)}</span></div>`).join('')}<div><span>주연</span><span>${esc(L.name)}</span></div><div><span>조연</span><span>${S?esc(S.name):'없음'}</span></div>${P.inv.id!=='none'?`<div><span>투자</span><span>${INVESTORS.find(i=>i.id===P.inv.id).name}</span></div>`:''}</div>
-    <h3>단계별 담당</h3><div class="note">시나리오 개발은 작가와 기획개발 직원, 촬영은 총괄감독과 촬영, 미술감독, 배우들, 후반작업은 음향, CG감독과 총괄감독, 개봉 준비는 마케팅 직원이 맡아요.</div>`]},
-  release(){const f=G.pending;const dp=distPower(f);const d=DISTS.find(x=>x.id===UI.dist);const now=absW();
+    <h3>참여진</h3><div class="sumtbl"><div><span>작가</span><span>${esc(Wr.name)}</span></div>${DKEYS.map(k=>`<div><span>${DTYPES[k].name}</span><span>${esc(C_(P,k).name)}</span></div>`).join('')}<div><span>CG 스튜디오</span><span>${studioOf(P.studio).name}</span></div><div><span>주연</span><span>${esc(L.name)}</span></div><div><span>조연</span><span>${S?esc(S.name):'없음'}</span></div>${P.inv.id!=='none'?`<div><span>투자</span><span>${INVESTORS.find(i=>i.id===P.inv.id).name}</span></div>`:''}</div>
+    <h3>단계별 담당</h3><div class="note">시나리오 개발은 작가와 기획개발 직원, 촬영은 총괄감독과 촬영감독, 배우들, 후반작업은 음악감독과 CG 스튜디오, 총괄감독, 개봉 준비는 마케팅 직원이 맡아요. 연출 방향은 ${STYLES[P.style||'balance'].name}이에요.</div>`]},
+  release(){const f=G.pending;const dp=distPower(f);const d=DISTS.find(x=>x.id===UI.dist);const now=absW();const pa=paOf(d,f);
     const minW=f.minWait||0;if(UI.when<minW)UI.when=minW;const openAt=now+1+UI.when;
     const e=estimate(f,UI.camp,UI.dist,openAt);const err=Math.max(.15,.55-maxStat('dev')/220)*(f.screened?.6:1);const off=ottOffer(f);const camp=CAMPAIGN[UI.camp];const m=G.ottReq&&G.ottReq.genre===f.genre;
-    const fee=distFee(d);const share=f.inv.share;const net=v=>v*.5*(1-fee)*(1-share);
+    const fee=distFee(d,f);const share=f.inv.share;const net=v=>v*.5*(1-fee)*(1-share);const bep=bepOf(f.cost,pa+CAMPAIGN[UI.camp].cost,fee,share);const mid=e;
     const weak=EL.map((k,i)=>[k,f.el[k],GW[f.genre][i]]).sort((a,b)=>(a[1]-b[1])*1-(a[2]-b[2])*40).slice(0,3);
     const scr=f.screened?`<div class="screen-r"><div><small>시사회 관객 반응</small><b>${f.A.toFixed(1)}</b></div><div><small>시사회 평론 반응</small><b>${f.C.toFixed(1)}</b></div></div>
       ${f.reedited?`<div class="note">재편집을 마쳤어요. ${EL_NAME[f.reedited]}이(가) 좋아졌어요.</div>`:`<div class="muted">재편집하면 개봉이 2주 늦어지는 대신 요소 하나를 손볼 수 있어요. 비용 ${fmtMoney(reeditCost(f))}</div>
@@ -1191,14 +1218,15 @@ const SHEETS={
       return `<button class="cal ${UI.when===i?'on':''}" data-act="when" data-v="${i}" ${dis?'disabled':''}><span class="cw">${weekLabel(w)}</span><span class="cs">${seasonName(monthAt(w)).replace(' 시즌','').replace(' 성수기','')}</span><span class="cr">${rv.map(s=>`<i class="rv p${s.power}" title="${esc(s.studio)}">${s.genre}</i>`).join('')||'<i class="free">한산</i>'}</span><span class="cm ${cm<.75?'bad':cm<.95?'mid':''}">${Math.round(cm*100)}%</span></button>`}).join('');
     const rvList=G.slate.filter(s=>s.status==='upcoming'&&s.openAt<=now+10).sort((a,b)=>a.openAt-b.openAt).map(s=>`<div><span>${weekLabel(s.openAt)} · ${esc(s.studio)}</span><span>${esc(s.title)} <span class="stars">${'★'.repeat(s.power)}</span></span></div>`).join('');
     return['개봉 준비',`<div class="poster" style="background:${GCOLOR[f.genre]}"><span class="t">${esc(f.title)}</span><span>${f.genre} × ${f.topic} · ${RATING[f.rating]}</span></div>
-    <h3>작품 분석</h3><div class="muted">밑줄 친 요소가 ${f.genre} 장르에서 특히 중요해요.${f.chem&&(f.chem.ls||f.chem.dl||f.chem.wd)?' 케미 보너스가 붙었어요.':''}</div>${elBarsGraded(f)}
+    ${artPop(f)}<h3>작품 분석</h3><div class="muted">밑줄 친 요소가 ${f.genre} 장르에서 특히 중요해요.${f.chem&&(f.chem.ls||f.chem.dl||f.chem.wd)?' 케미 보너스가 붙었어요.':''}</div>${elBarsGraded(f)}
     <h3>시사회</h3>${scr}
     <h3>개봉 시기</h3><div class="muted">라이벌 영화사 개봉작과 겹치면 관객을 나눠 가져요. 퍼센트는 경쟁을 반영한 관객 비율이에요.</div>
     <div class="calg">${cal}</div>${rvList?`<div class="sumtbl small">${rvList}</div>`:''}
     <h3>배급사</h3><div class="muted">배급 협상력 <b class="pix">${Math.round(dp)}</b>. 배급 담당 직원 능력, 명성, 작품 완성도가 높을수록 큰 배급사가 받아줘요.</div>
-    <div class="list">${DISTS.map(x=>{const ok=dp>=x.req;return `<button class="opt dist" data-act="dist" data-v="${x.id}" aria-pressed="${UI.dist===x.id}" ${ok?'':'disabled'}><span class="om"><span class="on">${x.name}</span><span class="os">${ok?x.desc:`협상력 ${x.req} 필요`}</span></span><span class="of"><b>${Math.round(distFee(x)*100)}%</b><small>수수료</small></span><span class="of"><b>${Math.round(x.reach*100)}</b><small>상영관 규모</small></span></button>`}).join('')}</div>
+    <div class="list">${DISTS.map(x=>{const ok=distOk(x,f);return `<button class="opt dist" data-act="dist" data-v="${x.id}" aria-pressed="${UI.dist===x.id}" ${ok?'':'disabled'}><span class="om"><span class="on">${x.name}</span><span class="os">${ok?x.desc:`협상력 ${x.req} 필요`}</span></span><span class="of"><b>${Math.round(distFee(x,f)*100)}%</b><small>수수료</small></span><span class="of"><b>${fmtShort(paOf(x,f))}</b><small>기본 P&A</small></span><span class="of"><b>${Math.round(x.reach*100)}</b><small>상영관</small></span></button>`}).join('')}</div>
     <h3>홍보</h3>
     <div class="grid4">${CAMPAIGN.map((c,i)=>`<button class="pick" data-act="camp" data-v="${i}" aria-pressed="${UI.camp===i}" ${c.cost>G.money?'disabled':''}>${c.name}<span class="st">${c.cost?fmtMoney(c.cost):'무료'}</span></button>`).join('')}</div>
+    <div class="bep ${mid*(1-err)>=bep?'ok':mid*(1+err)<bep?'bad':''}"><div><small>손익분기점</small><b>${fmtAud(bep)}</b></div><p>제작비 ${fmtShort(f.cost)}에 배급 기본 홍보비 ${fmtShort(pa)}${CAMPAIGN[UI.camp].cost?`, 추가 홍보비 ${fmtShort(CAMPAIGN[UI.camp].cost)}`:''}까지 회수하려면 이만큼 들어야 해요. ${mid*(1-err)>=bep?'예상대로면 넘길 수 있어요.':mid*(1+err)<bep?'지금 예상으로는 넘기기 어려워요.':'아슬아슬해요.'}</p></div>
     <div class="sumtbl"><div><span>기획팀 예상 관객</span><span>${fmtAud(e*(1-err))} ~ ${fmtAud(e*(1+err))}</span></div><div><span>우리 몫 예상 수익</span><span>${fmtShort(net(e*(1-err)))} ~ ${fmtShort(net(e*(1+err)))}</span></div><div><span>개봉 시즌</span><span>${seasonName(monthAt(openAt))}${G.trend===f.genre?' · 유행 장르':''}</span></div>${share?`<div><span>투자자 수익 배분</span><span>${Math.round(share*100)}%</span></div>`:''}<div class="tot"><span>우리가 낸 제작비</span><span>${fmtMoney(f.cost)}</span></div></div>
     <h3>또는 OTT 판매</h3>
     <div class="sumtbl"><div><span>${m?G.ottReq.ott+' (의뢰작)':'최고 제안'}</span><span>${fmtMoney(off)}</span></div>${share?`<div><span>투자자 몫 제외 시</span><span>${fmtMoney(off*(1-share))}</span></div>`:''}<div><span>흥행 보너스</span><span>없음</span></div></div>
@@ -1209,7 +1237,7 @@ const SHEETS={
   ceremony(){const c=UI.cer;if(!c)return['',''];
     if(c.i>=c.cats.length){return[c.title,`<div class="center big">${c.won?'시상식 끝!':'아쉽게 빈손'}</div>
       <div class="sumtbl">${c.cats.map(k=>{const w=k.noms[k.win];return `<div><span>${k.name}</span><span class="${w.ours?'pos':''}">${esc(w.label)}${w.ours?' ★':''}</span></div>`}).join('')}</div>
-      ${c.won?`<div class="note">트로피 ${c.won}개, 상금 ${fmtMoney(c.prize)}, 명성 +${c.won*(c.kind==='cannes'?10:2)}</div>`:'<div class="muted center">내년엔 꼭 레드카펫 위에서 웃어봐요.</div>'}
+      ${c.won?`<div class="note">트로피 ${c.won}개, 상금 ${fmtMoney(c.prize)}, 명성 +${c.won*(c.kind==='cannes'?7:2)}</div>`:'<div class="muted center">내년엔 꼭 레드카펫 위에서 웃어봐요.</div>'}
       <div class="foot"><button class="btn red" data-act="close">시상식 나가기</button></div>`]}
     const k=c.cats[c.i];
     const noms=k.noms.map((n,i)=>`<div class="nom ${c.stage==='win'&&i===k.win?'win':''} ${c.stage==='win'&&i!==k.win?'lose':''} ${n.ours?'ours':''}"><span class="nl">${esc(n.label)}</span><span class="ns">${esc(n.sub)}${n.ours?' · 우리 작품':''}</span>${c.stage==='win'&&i===k.win?'<span class="wt">수상</span>':''}</div>`).join('');
@@ -1230,6 +1258,7 @@ const SHEETS={
     return[ott?'OTT 공개':'최종 성적',`<div class="poster" style="background:${GCOLOR[f.genre]}"><span class="t">${esc(f.title)}</span><span>${f.genre} × ${f.topic}</span></div>
     <div class="scores"><div><small>관객 평점</small><b>${f.A.toFixed(1)}</b></div><div><small>평론가 평점</small><b>${f.C.toFixed(1)}</b></div><div><small>${ott?'시청 순위':'최종 관객'}</small><b>${ott?f.ottRank+'위':fmtAud(f.aud)}</b></div></div>
     <div class="center"><span class="stars big">${stars(f.combo)}</span><div>${COMBO_LABEL[f.combo]}</div></div>
+    ${artPop(f)}
     <h3>작품 분석</h3>${elBarsGraded(f)}
     <h3>정산</h3>${filmSummary(f)}
     ${f.luckMsg?`<div class="note">${f.luckMsg}</div>`:''}
@@ -1286,7 +1315,8 @@ function wizCosts(){
   DKEYS.forEach(k=>{c.crew+=feeOf(w.crew[k],crewOf(w.crew[k],k))});
   c.wri=feeOf(w.wri,crewOf(w.wri,'writer'));
   if(w.lead)c.cast+=findById(G.actors,w.lead).fee;if(w.sup)c.cast+=supFee(findById(G.actors,w.sup));
-  c.total=c.crew+c.wri+c.cast+c.budget;
+  c.studio=studioFee(w.studio,w.budget);c.ov=BUDGET[w.budget].ov*BUDGET[w.budget].ph.reduce((a,b)=>a+b,0);
+  c.total=c.crew+c.wri+c.cast+c.budget+c.studio+c.ov;
   const iv=INVESTORS.find(i=>i.id===w.inv);c.invest=Math.round(c.total*iv.pct/100)*100;
   c.mine=Math.max(0,c.total-c.invest-c.ppl);
   return c;
@@ -1325,8 +1355,10 @@ const WIZ=[
     ${wizFoot(w.genre&&w.topic&&w.title.trim())}`]},
   ()=>{const w=UI.wiz;return['2. 각본',stepsBar(1)+`<div class="muted">작가의 스토리와 캐릭터 능력이 시나리오 개발 단계에서 <b style="color:${EL_COLOR.story}">스토리</b> 점수가 돼요.</div>${crewOptions('writer')}${wizFoot(!!w.wri)}`]},
   ()=>{const w=UI.wiz;const k=w.slot;
-    return['3. 감독진',stepsBar(2)+`<div class="crewtbl">${DKEYS.map(x=>{const p=crewOf(w.crew[x],x);return `<button class="crow" data-act="wslot" data-v="${x}" aria-pressed="${k===x}"><span class="cn">${DTYPES[x].name}</span><span class="cp">${esc(p.name)}</span><span class="ce" style="color:${EL_COLOR[{lead:'dir',cam:'vis',art:'vis',snd:'snd',cg:'vfx'}[x]]}">${DTYPES[x].el}</span><span class="cf pix">${w.crew[x].type==='ex'?'전속':fmtShort(p.fee)}</span></button>`}).join('')}</div>
-    <h3>${DTYPES[k].name} 고르기</h3>${crewOptions(k)}${wizFoot(true)}`]},
+    const so=studioOf(w.studio);
+    return['3. 감독진과 CG',stepsBar(2)+`<div class="crewtbl">${DKEYS.map(x=>{const p=crewOf(w.crew[x],x);return `<button class="crow" data-act="wslot" data-v="${x}" aria-pressed="${k===x}"><span class="cn">${DTYPES[x].name}</span><span class="cp">${esc(p.name)}</span><span class="ce" style="color:${EL_COLOR[{lead:'dir',cam:'vis',snd:'snd'}[x]]}">${DTYPES[x].el}</span><span class="cf pix">${w.crew[x].type==='ex'?'전속':fmtShort(p.fee)}</span></button>`}).join('')}
+    <button class="crow" data-act="wslot" data-v="studio" aria-pressed="${k==='studio'}"><span class="cn">CG 스튜디오</span><span class="cp">${so.name}</span><span class="ce" style="color:${EL_COLOR.vfx}">특수효과</span><span class="cf pix">${fmtShort(studioFee(so.id,w.budget))}</span></button></div>
+    ${k==='studio'?`<h3>CG 스튜디오 고르기</h3><div class="muted">특수효과는 외부 VFX 스튜디오에 맡겨요. 제작 규모가 클수록 컷이 많아져 비용이 올라가요.</div><div class="olist">${STUDIOS.map(t=>{const lock=t.fame&&G.fame<t.fame;return `<button class="opt" data-act="wstudio" data-v="${t.id}" aria-pressed="${w.studio===t.id}" ${lock?'disabled':''}><span class="om"><span class="on">${t.name}</span><span class="os">${lock?`명성 ${t.fame} 필요`:t.desc}</span></span><span class="of"><b>${t.skill}</b><small>실력</small></span><span class="of"><b>${fmtShort(studioFee(t.id,w.budget))}</b><small>계약금</small></span></button>`}).join('')}</div>`:`<h3>${DTYPES[k].name} 고르기</h3>${crewOptions(k)}`}${wizFoot(true)}`]},
   ()=>{const w=UI.wiz;const cp=castPower();const role=w.aslot;
     const list=[...G.actors].sort((a,b)=>(cp>=GRADE[b.grade].req)-(cp>=GRADE[a.grade].req)||(b.apt.includes(w.genre))-(a.apt.includes(w.genre))||b.pop-a.pop);
     const pickId=role==='lead'?w.lead:w.sup;const other=role==='lead'?w.sup:w.lead;
@@ -1337,6 +1369,8 @@ const WIZ=[
     ${wizFoot(!!w.lead)}`]},
   ()=>{const w=UI.wiz;return['5. 규모와 등급',stepsBar(4)+`
     <h3>제작 규모</h3><div class="list">${Object.entries(BUDGET).map(([k,b])=>`<button class="opt" data-act="wbudget" data-v="${k}" aria-pressed="${w.budget===k}"><span class="om"><span class="on">${b.name}</span><span class="os">${b.desc}</span></span><span class="of"><b>${fmtMoney(b.cost)}</b><small>제작비</small></span></button>`).join('')}</div>
+    <h3>연출 방향</h3><div class="grid4" style="grid-template-columns:repeat(3,1fr)">${Object.entries(STYLES).map(([k,t])=>`<button class="pick" data-act="wstyle" data-v="${k}" aria-pressed="${w.style===k}">${t.name}</button>`).join('')}</div>
+    <div class="muted">${STYLES[w.style].desc}. 예술성이 높으면 평단과 영화제, 회사 명성에 유리하고, 대중성이 높으면 흥행에 유리해요.</div>
     <h3>관람 등급</h3><div class="grid4" style="grid-template-columns:repeat(3,1fr)">${Object.entries(RATING).map(([k,n])=>`<button class="pick" data-act="wrating" data-v="${k}" aria-pressed="${w.rating===k}">${n}</button>`).join('')}</div>
     <div class="muted">전체관람가는 관객층이 넓지만 어두운 장르와는 안 맞아요. 청불은 관객이 줄지만 호러와 스릴러는 평론가가 좋아해요.</div>
     <h3>PPL</h3><div class="grid4" style="grid-template-columns:repeat(3,1fr)">${Object.entries(PPL).map(([k,p])=>`<button class="pick" data-act="wppl" data-v="${k}" aria-pressed="${w.ppl===k}">${p.name}${p.support?`<span class="st">+${fmtMoney(p.support)}</span>`:''}</button>`).join('')}</div>
@@ -1344,18 +1378,20 @@ const WIZ=[
     ${wizFoot(true)}`]},
   ()=>{const w=UI.wiz;const c=wizCosts();const ip=investPower();
     return['6. 투자와 최종 확인',stepsBar(5)+`
-    <h3>투자 유치</h3><div class="muted">투자 유치력 <b class="pix">${ip}</b>. 투자자는 제작비 일부를 내주는 대신 개봉 수익을 나눠 가져요. 대박이 나면 아깝지만 쪽박의 위험을 덜어줘요.</div>
+    <h3>투자 유치</h3><div class="muted">투자 유치력 <b class="pix">${ip}</b>. 투자자는 제작비를 낸 만큼 수익을 나눠 가지고, 규모가 큰 투자자는 마케팅이나 배급까지 도와줘요. 돈이 모자랄 때 큰 영화를 찍을 수 있고 쪽박 위험도 나눠져요.</div>
     <div class="list">${INVESTORS.map(iv=>{const ok=ip>=iv.req;const t=invTerms(iv);return `<button class="opt" data-act="winv" data-v="${iv.id}" aria-pressed="${w.inv===iv.id}" ${ok?'':'disabled'}><span class="om"><span class="on">${iv.name}</span><span class="os">${ok?iv.desc:`유치력 ${iv.req} 필요`}</span></span>${iv.pct?`<span class="of"><b>${fmtMoney(Math.round(c.total*iv.pct/100)*100)}</b><small>투자금</small></span><span class="of"><b>${Math.round(t.share*100)}%</b><small>수익 배분</small></span>`:''}</button>`}).join('')}</div>
     <h3>최종 확인</h3>
     <div class="sumtbl"><div><span>${esc(w.title)}</span><span>${w.genre} × ${w.topic}</span></div>
-    <div><span>감독진 섭외비</span><span>${fmtMoney(c.crew)}</span></div><div><span>작가 원고료</span><span>${fmtMoney(c.wri)}</span></div><div><span>배우 출연료</span><span>${fmtMoney(c.cast)}</span></div><div><span>${BUDGET[w.budget].name} 제작비</span><span>${fmtMoney(c.budget)}</span></div>
+    <div><span>${BUDGET[w.budget].name} 순제작비</span><span>${fmtMoney(c.budget)}</span></div><div><span>감독진 섭외비</span><span>${fmtMoney(c.crew)}</span></div><div><span>작가 원고료</span><span>${fmtMoney(c.wri)}</span></div><div><span>배우 출연료</span><span>${fmtMoney(c.cast)}</span></div><div><span>CG 스튜디오</span><span>${fmtMoney(c.studio)}</span></div><div><span>현장 진행비 (${BUDGET[w.budget].ph.reduce((a,b)=>a+b,0)}주)</span><span>${fmtMoney(c.ov)}</span></div>
     ${c.invest?`<div><span>투자금</span><span>-${fmtMoney(c.invest)}</span></div>`:''}${c.ppl?`<div><span>PPL 지원</span><span>-${fmtMoney(c.ppl)}</span></div>`:''}
-    <div class="tot"><span>우리가 낼 돈</span><span>${fmtMoney(c.mine)}</span></div><div><span>보유 자금</span><span>${fmtMoney(G.money)}</span></div><div><span>제작 기간</span><span>${BUDGET[w.budget].ph.reduce((a,b)=>a+b,0)}주</span></div></div>
+    <div class="tot"><span>우리가 낼 돈</span><span>${fmtMoney(c.mine)}</span></div><div><span>보유 자금</span><span>${fmtMoney(G.money)}</span></div></div>
+    ${(()=>{const iv=INVESTORS.find(i=>i.id===w.inv);const t=invTerms(iv);const fk={budget:w.budget,inv:{id:w.inv}};const d=[...DISTS].reverse().find(x=>maxStat('dist')+G.fame*.3>=x.req||(x.id==='mega'&&w.inv==='major'))||DISTS[1];const pa=paOf(d,fk);const bep=bepOf(c.mine,pa,distFee(d,fk),iv.pct?t.share:0);
+      return `<div class="bep"><div><small>예상 손익분기점</small><b>${fmtAud(bep)}</b></div><p>${d.name} 배급, 기본 홍보비 ${fmtShort(pa)} 기준이에요. 관객 한 명당 우리 몫은 약 ${Math.round(5000*(1-distFee(d,fk))*(1-(iv.pct?t.share:0))).toLocaleString()}원이에요.</p></div>`})()}
     ${wizFoot(c.mine<=G.money,true)}`]},
 ];
 
 /* ---------- actions ---------- */
-const newWiz=()=>({step:0,genre:null,topic:null,title:'',wri:{type:'basic'},crew:Object.fromEntries(DKEYS.map(k=>[k,{type:'basic'}])),lead:null,sup:null,budget:'low',rating:'15',ppl:'none',inv:'none',slot:'lead',aslot:'lead',sequelOf:null});
+const newWiz=()=>({step:0,genre:null,topic:null,title:'',wri:{type:'basic'},crew:Object.fromEntries(DKEYS.map(k=>[k,{type:'basic'}])),lead:null,sup:null,budget:'low',rating:'15',ppl:'none',inv:'none',studio:'local',style:'balance',slot:'lead',aslot:'lead',sequelOf:null});
 const ACT={
   speed(d){G.speed=+d.v;renderHUD();save()},
   backdrop(){if(!LOCKED_SHEETS.includes(UI.sheet)&&UI.sheet!=='result')closeSheet()},
@@ -1383,12 +1419,14 @@ const ACT={
   wbudget(d){UI.wiz.budget=d.v;renderSheet()},
   wrating(d){UI.wiz.rating=d.v;renderSheet()},
   wppl(d){UI.wiz.ppl=d.v;renderSheet()},
+  wstudio(d){UI.wiz.studio=d.v;const st=$('#sheetBody').scrollTop;renderSheet();$('#sheetBody').scrollTop=st},
+  wstyle(d){UI.wiz.style=d.v;renderSheet()},
   winv(d){UI.wiz.inv=d.v;const st=$('#sheetBody').scrollTop;renderSheet();$('#sheetBody').scrollTop=st},
   wstart(){const w=UI.wiz;const c=wizCosts();if(c.mine>G.money)return;G.money-=c.mine;
     const iv=INVESTORS.find(i=>i.id===w.inv);const t=invTerms(iv);
     const ph=[...BUDGET[w.budget].ph];const Wr=crewOf(w.wri,'writer');if(Wr.trait==='다작')ph[0]=Math.max(2,ph[0]-1);
     G.prod={title:w.title.trim(),genre:w.genre,topic:w.topic,crew:JSON.parse(JSON.stringify(w.crew)),wri:{...w.wri},leadId:w.lead,supId:w.sup,budget:w.budget,rating:w.rating,ppl:w.ppl,sequelOf:w.sequelOf,
-      inv:{id:iv.id,share:iv.pct?t.share:0,amount:c.invest},ph,w:0,sum:{},cnt:{},bon:{},apen:0,used:[],lastEvt:0,cost:c.mine};
+      inv:{id:iv.id,share:iv.pct?t.share:0,amount:c.invest},studio:w.studio,style:w.style,ph,w:0,sum:{},cnt:{},bon:{},apen:0,used:[],lastEvt:0,cost:c.mine};
     if(w.sup){const S=findById(G.actors,w.sup),L=findById(G.actors,w.lead);const diff=S.pop-L.pop;G.prod.supUpset=Math.random()<(diff>0?.65:diff>=-10?.35:0)}
     UI.wiz=null;closeSheet();toast(`${G.prod.title} 시나리오 개발 시작!`,'gold');sfx('level');save()},
   camp(d){UI.camp=+d.v;renderSheet()},
@@ -1396,13 +1434,13 @@ const ACT={
   when(d){UI.when=+d.v;const st=$('#sheetBody').scrollTop;renderSheet();$('#sheetBody').scrollTop=st},
   screen(){const f=G.pending;const c=screenCost(f);if(G.money<c||f.screened)return;G.money-=c;f.screened=1;drumThen(()=>{const st=$('#sheetBody').scrollTop;renderSheet();$('#sheetBody').scrollTop=st;renderHUD()},900)},
   reedit(d){const f=G.pending;const c=reeditCost(f);if(G.money<c||f.reedited)return;G.money-=c;f.el[d.v]=Math.min(99,f.el[d.v]+ri(6,9));f.reedited=d.v;f.minWait=2;computeScores(f);toast(`재편집 완료! ${EL_NAME[d.v]} 개선`,'gold');sfx('level');const st=$('#sheetBody').scrollTop;renderSheet();$('#sheetBody').scrollTop=st;renderHUD()},
-  theater(){const f=G.pending;const c=CAMPAIGN[UI.camp];const d=DISTS.find(x=>x.id===UI.dist);G.money-=c.cost;const now=absW();
-    Object.assign(f,{status:'scheduled',openAt:now+1+Math.max(UI.when,f.minWait||0),camp:UI.camp,dist:d.id,distName:d.name,fee:distFee(d),invShare:f.inv.share,campCost:c.cost,year:G.year,month:G.month,aud:0,gross:0,distCut:0,invCut:0,rev:0});
+  theater(){const f=G.pending;const c=CAMPAIGN[UI.camp];const d=DISTS.find(x=>x.id===UI.dist);const pa=paOf(d,f);G.money-=c.cost+pa;const now=absW();
+    Object.assign(f,{status:'scheduled',openAt:now+1+Math.max(UI.when,f.minWait||0),camp:UI.camp,dist:d.id,distName:d.name,fee:distFee(d,f),pa,bep:bepOf(f.cost,pa+c.cost,distFee(d,f),f.inv.share),invShare:f.inv.share,campCost:c.cost,year:G.year,month:G.month,aud:0,gross:0,distCut:0,invCut:0,rev:0});
     G.films.push(f);G.pending=null;
     closeSheet();toast(`${f.title}, ${weekLabel(f.openAt)} ${d.name} 배급으로 개봉 확정!`,'gold');sfx('fanfare');save()},
   ott(){const f=G.pending;const off=ottOffer(f);const m=G.ottReq&&G.ottReq.genre===f.genre;const mine=off*(1-f.inv.share);
     G.money+=mine;Object.assign(f,{status:'ott',openAt:absW(),gross:off,distCut:0,invCut:off-mine,rev:mine,aud:0,campCost:0,profit:Math.round(mine-f.cost),year:G.year,month:G.month,ottRank:clamp(Math.round(11-f.Q/10+rnd(-1,1)),1,10)});
-    f.fameUp=1+(f.A>=8?1:0);G.fame=clamp(G.fame+f.fameUp,0,100);if(m)G.ottReq=null;
+    f.fameUp=1+(f.A>=8?1:0)+Math.round((f.art||0)/40);G.fame=clamp(G.fame+f.fameUp,0,100);if(m)G.ottReq=null;
     G.combos[f.genre+'|'+f.topic]=f.combo;G.films.push(f);G.pending=null;closeSheet();openSheet('result',f.id);sfx('coin');checkGoals();save()},
   choose(d){const c=UI.choice;const P=G.prod;if(!c||!P)return;const msg=c.o[+d.v][2](P);UI.choice=null;closeSheet();toast(msg,/[-]\d|떨어|역풍|흔들|등을|고장|대충|지칠/.test(msg)?'red':'gold');renderHUD();save()},
   cerReveal(){const c=UI.cer;c.stage='drum';renderSheet();sfx('drum');setTimeout(()=>{if(UI.sheet!=='ceremony')return;c.stage='win';renderSheet();const w=c.cats[c.i].noms[c.cats[c.i].win];if(w.ours){sfx('big');confetti()}else sfx('bad')},1900)},
@@ -1435,7 +1473,7 @@ function loop(now){
 function start(data){
   G=(data&&data.G)||load();
   if(G&&G.over)G=null;
-  if(G){ensureSlate();renderHUD();if(G.pending)openSheet('release')}else{openSheet("intro")}
+  if(G){ensureSlate();if(G.pending)computeScores(G.pending);renderHUD();if(G.pending)openSheet('release')}else{openSheet("intro")}
   requestAnimationFrame(loop);
 }
 window.claude?.hot?.snapshot?.(()=>({G}));
