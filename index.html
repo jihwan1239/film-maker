@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#55101F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="흥행제작소">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>흥행제작소</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+<style>
+/* Layout: arcade cabinet in a theater. Red marquee sign, film-strip screen for the pixel office,
+   clapper slate for the current film, chunky pixel tab buttons, ticket-style bottom sheets.
+   Every frame uses notched pixel corners (offset box-shadows). Single deliberate look, no dark switch. */
+:root{
+  --ink:#231A2B; --ink2:#3B2D47; --ink3:#56456A;
+  --paper:#FFF5DA; --paper2:#F8E5B0; --paper3:#E2C47F;
+  --red:#E2434C; --red-d:#A62A37; --red-l:#FF8A8C;
+  --gold:#F7C948; --gold-d:#C48A22; --gold-l:#FFE89A;
+  --teal:#33AEA3; --teal-d:#1E7A73; --teal-l:#8FE3D8;
+  --pink:#F27BA5; --pink-l:#FFD0E0; --mint-l:#CFF3EC; --butter-l:#FFEFA8;
+  --muted:#7B6670;
+  --curtain:#55101F; --curtain2:#741B2F; --curtain3:#93283F;
+  --display:"Jua","Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --pixel:"DotGothic16","Jua","Apple SD Gothic Neo",monospace;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{
+  background-color:var(--curtain);
+  background-image:linear-gradient(180deg,rgba(0,0,0,.35),transparent 140px),
+    repeating-linear-gradient(90deg,var(--curtain) 0,var(--curtain2) 9px,var(--curtain3) 15px,var(--curtain2) 21px,var(--curtain) 30px);
+  color:var(--ink); font-family:var(--body); font-size:15px; position:relative;
+  padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.valance{position:absolute;left:0;right:0;top:0;height:20px;pointer-events:none;
+  background:radial-gradient(circle at 50% 0,var(--curtain3) 0 9px,var(--ink) 9px 11px,transparent 11.5px) 0 0/24px 20px repeat-x,
+    linear-gradient(var(--gold-d),var(--gold-d)) 0 0/100% 3px no-repeat}
+.app{max-width:460px;margin:0 auto;padding-block:22px 28px;display:flex;flex-direction:column;gap:14px;position:relative}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+button:focus-visible,input:focus-visible{outline:3px solid var(--teal-l);outline-offset:3px}
+img.ic{width:18px;height:18px;image-rendering:pixelated;display:inline-block;vertical-align:middle;flex:none}
+
+/* pixel frames: notched corners */
+.fr{margin:4px;box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,6,14,.45)}
+.fr2{margin:2px;box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink)}
+
+/* marquee */
+.marquee{background:var(--red);padding:16px 12px 16px;position:relative;
+  box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,6,14,.45),inset 0 3px 0 0 var(--red-l),inset 0 -3px 0 0 var(--red-d)}
+.marquee::before,.marquee::after{content:"";position:absolute;left:8px;right:8px;height:6px;
+  background:radial-gradient(circle,#FFFBE0 0 1.4px,var(--gold) 1.8px 2.6px,transparent 3px) 0 0/12px 6px repeat-x,
+    radial-gradient(circle,var(--gold-d) 0 2.2px,transparent 2.8px) 6px 0/12px 6px repeat-x;
+  animation:chase 1.2s steps(1) infinite}
+.marquee::before{top:5px}.marquee::after{bottom:5px;animation-delay:-.6s}
+@keyframes chase{50%{background-position:6px 0,0 0}}
+.mq-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.studio{font-family:var(--display);font-size:25px;line-height:1.15;color:var(--gold-l);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:2px 2px 4px;
+  text-shadow:2px 0 var(--ink),-2px 0 var(--ink),0 2px var(--ink),0 -2px var(--ink),2px 2px var(--ink),-2px 2px var(--ink),2px -2px var(--ink),-2px -2px var(--ink),0 4px var(--ink)}
+.ctrl{display:flex;gap:6px;flex:none}
+.ctrl button{width:28px;height:28px;display:grid;place-items:center;background:var(--paper);margin:2px;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -3px 0 0 var(--paper3),0 4px 0 0 var(--red-d)}
+.ctrl button img{width:14px;height:14px;image-rendering:pixelated}
+.ctrl button[aria-pressed="true"]{background:var(--ink);box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 2px 0 0 #000;transform:translateY(2px)}
+.hud{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--paper);padding:3px 9px 3px 6px;font-family:var(--pixel);font-size:14px;line-height:20px;font-variant-numeric:tabular-nums;white-space:nowrap;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -2px 0 0 var(--ink3);margin:2px}
+.pill img{width:14px;height:14px;image-rendering:pixelated}
+.pill.money{color:var(--gold-l)}.pill.money.neg{color:var(--red-l)}
+
+/* screen with film strip */
+.scene{background:#120C17;padding:8px 18px;position:relative}
+.scene::before,.scene::after{content:"";position:absolute;top:8px;bottom:8px;width:8px;
+  background:repeating-linear-gradient(180deg,var(--ink3) 0 6px,transparent 6px 12px)}
+.scene::before{left:5px}.scene::after{right:5px}
+.screen{position:relative;box-shadow:0 0 0 2px #000;overflow:hidden}
+.screen canvas{display:block;width:100%;height:auto;aspect-ratio:4/3;max-width:100%;image-rendering:pixelated;image-rendering:crisp-edges}
+#fx{position:absolute;inset:0;pointer-events:none}
+.bub{position:absolute;transform:translate(-50%,0);font-family:var(--display);font-size:12px;line-height:16px;padding:0 4px;white-space:nowrap;margin:2px;background:#fff;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink);animation:up 1.15s ease-out forwards}
+.bub.fun{background:var(--pink-l)}.bub.craft{background:var(--mint-l)}.bub.buzz{background:var(--butter-l)}.bub.cash{background:var(--gold)}
+@keyframes up{0%{opacity:0;translate:0 6px}15%{opacity:1;translate:0 0}75%{opacity:1}100%{opacity:0;translate:0 -16px}}
+#toasts{position:absolute;left:8px;right:8px;bottom:8px;display:flex;flex-direction:column;gap:6px;pointer-events:none}
+.toast{background:var(--paper);padding:3px 9px;font-size:12.5px;font-family:var(--display);margin:2px;animation:tin .25s ease-out;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),0 4px 0 0 rgba(0,0,0,.35)}
+.toast.gold{background:var(--gold)}.toast.red{background:#FFC6C6}
+@keyframes tin{from{transform:translateY(6px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.bub,.toast,.sheet,.marquee::before,.marquee::after{animation:none!important}}
+
+/* slate (status) */
+.panel{background:var(--paper);padding:0 14px 14px;display:flex;flex-direction:column;gap:10px;position:relative;
+  box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,6,14,.45),inset 0 -4px 0 0 var(--paper3);margin:4px}
+.panel::before{content:"";display:block;height:14px;margin:0 -14px 0;background:repeating-linear-gradient(-45deg,var(--ink) 0 9px,var(--paper) 9px 18px);border-bottom:4px solid var(--ink)}
+.st-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.st-title{font-family:var(--display);font-size:20px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.st-sub{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
+.st-sub .pix{color:var(--ink)}
+.chip{display:inline-block;font-family:var(--display);font-size:12px;line-height:18px;padding:0 7px;background:#fff;white-space:nowrap;margin:2px;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink)}
+.chip.g{color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.45)}
+.bar{height:16px;background:var(--ink);padding:3px;margin:2px;box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink)}
+.bar>i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--teal-l) 0 7px,var(--teal) 7px 9px);transition:width .3s steps(4)}
+.pts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pt{display:flex;align-items:center;gap:5px;padding:4px 6px;font-size:12.5px;font-family:var(--display);margin:2px;min-width:0;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -3px 0 0 rgba(0,0,0,.1)}
+.pt b{font-family:var(--pixel);font-weight:400;margin-left:auto;font-size:14px}
+.pt img{width:14px;height:14px;image-rendering:pixelated}
+.pt.fun{background:var(--pink-l)}.pt.craft{background:var(--mint-l)}.pt.buzz{background:var(--butter-l)}
+.muted{color:var(--muted);font-size:13px}
+.pix{font-family:var(--pixel);font-variant-numeric:tabular-nums}
+.ticker{background:var(--ink);color:var(--paper);padding:6px 9px;display:flex;flex-direction:column;gap:4px;font-size:13px;margin:2px;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink)}
+.ticker .row{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.ticker .row span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ticker .row .pix{color:var(--gold-l)}
+.ticker .lamp{display:inline-block;width:6px;height:6px;background:var(--red);margin-right:6px;box-shadow:0 0 0 1px #000;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{background:var(--red-d)}}
+
+/* tabs */
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 7px;background:var(--paper);font-family:var(--display);font-size:14px;margin:3px;
+  box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink),0 7px 0 0 rgba(20,6,14,.5),inset 0 3px 0 0 #fff,inset 0 -4px 0 0 var(--paper3)}
+.tab img{width:22px;height:22px;image-rendering:pixelated}
+.tab.main{background:var(--gold);box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink),0 7px 0 0 rgba(20,6,14,.5),inset 0 3px 0 0 var(--gold-l),inset 0 -4px 0 0 var(--gold-d)}
+.tab:active{transform:translateY(4px);box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink)}
+
+/* buttons */
+.btn{white-space:nowrap;background:var(--gold);font-family:var(--display);font-size:16px;padding:8px 12px;margin:3px;
+  box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink),0 6px 0 0 rgba(20,6,14,.35),inset 0 3px 0 0 rgba(255,255,255,.5),inset 0 -4px 0 0 rgba(0,0,0,.2)}
+.btn:active{transform:translateY(3px);box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink),inset 0 3px 0 0 rgba(0,0,0,.15)}
+.btn.red{background:var(--red);color:#fff;text-shadow:0 2px 0 var(--red-d)}.btn.teal{background:var(--teal);color:#fff;text-shadow:0 2px 0 var(--teal-d)}.btn.plain{background:var(--paper)}
+.btn:disabled{background:#DCD0BE;color:var(--muted);text-shadow:none;cursor:not-allowed;transform:none}
+.btn.sm{font-size:13px;padding:3px 9px;margin:2px;box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -3px 0 0 rgba(0,0,0,.18)}
+
+/* sheet */
+#sheetWrap{position:fixed;inset:0;z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.backdrop{position:absolute;inset:0;background:rgba(25,10,20,.62)}
+.sheet{position:relative;width:100%;max-width:480px;max-height:88%;display:flex;flex-direction:column;background:var(--paper);animation:sup .22s ease-out;
+  background-image:radial-gradient(rgba(35,26,43,.07) 1px,transparent 1.3px);background-size:8px 8px;
+  box-shadow:0 -4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink);padding-bottom:env(safe-area-inset-bottom,0px)}
+@keyframes sup{from{transform:translateY(30px);opacity:.4}}
+.sheet-h{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 16px;background:var(--gold);position:relative;
+  box-shadow:inset 0 3px 0 0 var(--gold-l),inset 0 -3px 0 0 var(--gold-d)}
+.sheet-h::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:6px;background:radial-gradient(circle at 6px 0,var(--gold-d) 0 3px,transparent 3.5px) 0 0/12px 6px repeat-x}
+.sheet-h h2{margin:0;font-family:var(--display);font-weight:400;font-size:21px;text-shadow:0 2px 0 var(--gold-l)}
+#sheetBody{overflow-y:auto;padding:16px 16px 20px;display:flex;flex-direction:column;gap:12px}
+h3{margin:4px 0 0;font-family:var(--display);font-weight:400;font-size:17px;display:flex;align-items:center;gap:6px}
+h3::before{content:"";width:8px;height:8px;background:var(--red);box-shadow:0 0 0 2px var(--ink);flex:none}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.pick{background:#fff;font-family:var(--display);font-size:14px;padding:7px 2px 6px;position:relative;margin:2px;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -3px 0 0 rgba(0,0,0,.09)}
+.pick[aria-pressed="true"]{background:var(--ink);color:var(--gold-l);box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 2px 0 0 #000}
+.pick:disabled{background:#EDE3D0;color:#AE9F95;cursor:not-allowed}
+.pick .st{display:block;font-size:10px;color:var(--red);line-height:1;margin-top:3px;font-family:var(--pixel)}
+.pick[aria-pressed="true"] .st{color:var(--gold)}
+.card{background:#fff;padding:9px;display:flex;gap:10px;align-items:center;text-align:left;width:calc(100% - 4px);margin:2px;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -3px 0 0 rgba(0,0,0,.07)}
+.card[aria-pressed="true"]{background:var(--butter-l);box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 0 0 3px var(--gold)}
+.card:disabled{background:#F1E8D8;color:var(--muted);cursor:not-allowed}
+.card:disabled .av{opacity:.55}
+.card .av{width:40px;height:40px;image-rendering:pixelated;flex:none;background:var(--paper2);margin:2px;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -6px 0 0 var(--paper3)}
+.card .main{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.card .nm{font-family:var(--display);font-size:16px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.card .side{text-align:right;font-family:var(--pixel);font-size:13px;white-space:nowrap}
+.stats{display:flex;flex-wrap:wrap;gap:3px 10px;font-size:12px}
+.stats span b{font-family:var(--pixel);font-weight:400}
+.list{display:flex;flex-direction:column;gap:8px}
+.grade{font-family:var(--pixel);font-size:12px;line-height:16px;padding:0 4px;background:var(--gold);margin:2px;box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink)}
+.grade.S,.grade.P{background:var(--red);color:#fff}.grade.A{background:var(--pink)}.grade.B{background:var(--teal);color:#fff}
+.sumtbl{display:flex;flex-direction:column;gap:4px;background:#fff;padding:10px;margin:2px;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink)}
+.sumtbl div{display:flex;justify-content:space-between;gap:10px}
+.sumtbl div span:last-child{font-family:var(--pixel);text-align:right}
+.sumtbl .tot{border-top:2px dashed var(--ink);padding-top:5px;font-family:var(--display)}
+.foot{display:flex;gap:10px;justify-content:space-between}
+.foot .btn{flex:1}
+.big{font-family:var(--display);font-size:30px;line-height:1.1}
+.center{text-align:center}
+.poster{padding:16px 12px;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.45);display:flex;flex-direction:column;gap:4px;align-items:center;margin:4px;position:relative;
+  box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),inset 0 0 0 4px rgba(255,255,255,.25),inset 0 -6px 0 0 rgba(0,0,0,.2)}
+.poster .t{font-family:var(--display);font-size:27px;text-align:center;text-wrap:balance}
+.poster img{width:36px;height:36px;image-rendering:pixelated}
+input[type=text]{box-sizing:border-box;font:inherit;font-family:var(--display);font-size:17px;padding:7px 9px;width:calc(100% - 4px);background:#fff;min-width:0;border:0;margin:2px;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 3px 0 0 rgba(0,0,0,.08)}
+.row2{display:flex;gap:8px;align-items:center}
+.row2 input{flex:1}
+.note{background:var(--paper2);padding:8px 10px;font-size:13px;margin:2px;box-shadow:0 -2px 0 0 var(--gold-d),0 2px 0 0 var(--gold-d),-2px 0 0 0 var(--gold-d),2px 0 0 0 var(--gold-d)}
+.stars{color:var(--red);font-family:var(--pixel)}
+.dex{display:flex;flex-direction:column;gap:8px}
+.dex .g{display:flex;gap:8px;align-items:flex-start}
+.dex .g>.chip{flex:none;min-width:52px;text-align:center}
+.dex .ts{display:flex;flex-wrap:wrap;gap:4px;min-width:0}
+.steps{display:flex;gap:6px}
+.steps i{flex:1;height:8px;background:#fff;margin:2px;box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink)}
+.steps i.on{background:var(--red)}
+.film{background:#fff;padding:9px;display:flex;flex-direction:column;gap:5px;margin:2px;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 6px 0 0 0 var(--gc,var(--gold))}
+.film>*{padding-left:6px}
+.film .top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.film .top b{font-family:var(--display);font-weight:400;font-size:16px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pos{color:#1E7F5A}.negc{color:var(--red)}
+</style>
+
+</head>
+<body>
+<div class="valance" aria-hidden="true"></div>
+<div class="app">
+  <header class="marquee">
+    <div class="mq-top">
+      <span id="studioName" class="studio">흥행제작소</span>
+      <div class="ctrl" role="group" aria-label="소리와 게임 속도">
+        <button data-act="mute" id="muteBtn" aria-label="소리 켜고 끄기"><img data-ic="note" alt=""></button>
+        <button data-act="speed" data-v="0" aria-label="일시정지"><img data-ic="pause" alt=""></button>
+        <button data-act="speed" data-v="1" aria-label="보통 속도"><img data-ic="play" alt=""></button>
+        <button data-act="speed" data-v="2" aria-label="빠른 속도"><img data-ic="ff" alt=""></button>
+      </div>
+    </div>
+    <div class="hud">
+      <span class="pill"><img data-ic="cal" alt=""><span id="date">설립 준비 중</span></span>
+      <span class="pill money" id="moneyPill"><img data-ic="coin" alt=""><span id="money">-</span></span>
+      <span class="pill" title="명성"><img data-ic="star" alt=""><span id="fame">0</span></span>
+    </div>
+  </header>
+  <div class="scene fr"><div class="screen"><canvas id="cv" width="160" height="120"></canvas><div id="fx"></div><div id="toasts"></div></div></div>
+  <section id="status" class="panel"></section>
+  <nav class="tabs">
+    <button class="tab main" data-act="tab" data-v="prod"><img data-ic="clap" alt=""><span>제작</span></button>
+    <button class="tab" data-act="tab" data-v="staff"><img data-ic="people" alt=""><span>직원</span></button>
+    <button class="tab" data-act="tab" data-v="actors"><img data-ic="star" alt=""><span>배우</span></button>
+    <button class="tab" data-act="tab" data-v="office"><img data-ic="build" alt=""><span>회사</span></button>
+    <button class="tab" data-act="tab" data-v="records"><img data-ic="trophy" alt=""><span>기록</span></button>
+  </nav>
+</div>
+<div id="sheetWrap" hidden>
+  <div class="backdrop" data-act="backdrop"></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="sheet-h"><h2 id="sheetTitle"></h2><button class="btn sm plain" id="sheetClose" data-act="close">닫기</button></div>
+    <div id="sheetBody"></div>
+  </div>
+</div>
+
+<script>
+(()=>{
+/* ---------- data ---------- */
+const W=160,H=120,WEEK_MS=1400,SPEEDS=[0,1,2.4],KEY='heunghaeng-save-v1';
+const GENRES=['액션','코미디','로맨스','호러','SF','스릴러','드라마','사극','판타지','애니'];
+const GCOLOR={액션:'#E0434B',코미디:'#E3A92A',로맨스:'#F27BA5',호러:'#5B3F7A',SF:'#2FA79E',스릴러:'#3A4A6B',드라마:'#6FA54E',사극:'#B5763C',판타지:'#9C7BE0',애니:'#FF8F3A'};
+const TOPICS_START=['좀비','첫사랑','형사','가족','학교','복수','요리','조폭','귀신','스포츠'];
+const TOPICS_LOCKED=['재벌','타임슬립','우주','로봇','반려견','은행강도','바다','아이돌','마법','재난'];
+const GREAT=new Set(['액션|좀비','액션|형사','액션|은행강도','액션|조폭','액션|재난','코미디|조폭','코미디|가족','코미디|요리','코미디|반려견','코미디|아이돌','로맨스|첫사랑','로맨스|재벌','로맨스|타임슬립','로맨스|학교','호러|귀신','호러|학교','호러|좀비','호러|바다','SF|우주','SF|로봇','SF|타임슬립','SF|재난','스릴러|복수','스릴러|형사','스릴러|재벌','드라마|가족','드라마|스포츠','드라마|요리','사극|복수','사극|귀신','사극|요리','판타지|마법','판타지|귀신','판타지|바다','애니|반려견','애니|로봇','애니|마법','애니|우주']);
+const BAD=new Set(['애니|조폭','애니|좀비','로맨스|은행강도','사극|우주','사극|로봇','사극|아이돌','호러|요리','호러|아이돌','드라마|좀비','코미디|재난','판타지|형사','로맨스|재난','SF|조폭','애니|복수']);
+const COMBO_MULT=[0.7,1,1.15,1.35], COMBO_LABEL=['최악의 조합...','무난한 조합','좋은 조합','최고의 조합!'];
+const DARK=['호러','스릴러','액션'];
+const BUDGET={low:{name:'저예산',cost:80000,weeks:8,reach:1,bonus:0,desc:'8주 제작, 상영관 적음'},mid:{name:'중예산',cost:400000,weeks:12,reach:1.7,bonus:8,desc:'12주 제작, 완성도 +8'},big:{name:'블록버스터',cost:1500000,weeks:16,reach:2.6,bonus:16,desc:'16주 제작, 완성도 +16, 상영관 최다'}};
+const RATING={all:'전체관람가','15':'15세 관람가',adult:'청소년 관람불가'};
+const CAMPAIGN=[{name:'홍보 없음',cost:0,h:0},{name:'온라인 바이럴',cost:5000,h:20},{name:'TV 광고',cost:30000,h:50},{name:'대대적 홍보',cost:100000,h:100}];
+const OFFICE=[{name:'반지하 원룸',cap:4,rent:100,cost:0,perk:'시작 사무실'},{name:'상가 2층 사무실',cap:7,rent:800,cost:100000,perk:'7명까지 근무'},{name:'강남 빌딩 한 층',cap:11,rent:3000,cost:500000,perk:'11명까지, 화제성 +10'},{name:'자체 촬영 스튜디오',cap:16,rent:8000,cost:2000000,perk:'16명까지, 완성도 +10%'}];
+const OTTS=['꿀잼플릭스','팝콘플레이','왓더필름'];
+const PPL={none:{name:'PPL 없음',support:0,fit:[]},peach:{name:'이가네 복숭아',support:30000,fit:['요리','가족','첫사랑']},fish:{name:'청해진 건어물',support:30000,fit:['요리','바다','가족']}};
+const STAT_LABEL={plan:'기획',mkt:'마케팅',cast:'캐스팅',tech:'촬영편집',nego:'협상',dir:'연출',write:'각본'};
+const ROLE_STATS={staff:['plan','mkt','cast','tech','nego'],boss:['plan','mkt','cast','tech','nego'],director:['dir','plan'],writer:['write','plan']};
+const ROLE_LABEL={staff:'직원',boss:'대표',director:'전속 감독',writer:'전속 작가'};
+const TRAITS=[['흥행 감각','마케팅 효과 +25%'],['완벽주의','완성도 기여 +20%'],['아이디어 뱅크','재미 기여 +20%'],['인맥왕','캐스팅 +15'],['협상의 달인','협상 +15'],['성실','경험치 +50%']];
+const SURN=['김','이','박','최','정','강','조','윤','장','임','한','오','서','신','권','황','안','송','류','홍','문','배'];
+const GIVEN=['민준','서연','지호','하은','도윤','수아','예준','지우','시우','하린','주원','유나','건우','채원','현우','소율','우진','다인','선우','윤서','태오','나연','은호','가은','시아','준서','예린','로운','하율','지안','도하','세아'];
+const TITLE_T=['{t} 대소동','나의 {t}','{t} 주의보','안녕, {t}','{t} 특공대','{t} 2049','비밀의 {t}','{t} 연대기','{t} 대작전','오늘부터 {t}','{t} 클럽','한밤의 {t}','{t} 랩소디','우리들의 {t}'];
+const HAIR=['#2A1F33','#5A3A2A','#8A5A3A','#C9A35A','#3A3A5A','#7A2B3A','#B8B0A8'];
+const SKIN=['#F6D2B0','#EDC09A','#D9A27A'];
+const BODY=['#F27BA5','#2FA79E','#F5C542','#9C7BE0','#FF8F3A','#6FA54E','#4F7BD9','#E0434B'];
+
+const LEG_DIR=[{name:'뽕준호',dir:96,plan:82,fav:['스릴러','드라마','SF']},{name:'빡찬욱',dir:94,plan:80,fav:['스릴러','드라마','사극']},{name:'뉴승완',dir:88,plan:70,fav:['액션','코미디']},{name:'채동훈',dir:87,plan:78,fav:['액션','판타지','코미디']},{name:'이짱동',dir:92,plan:85,fav:['드라마']}];
+const LEG_WRI=[{name:'킴은숙',write:92,plan:80,fav:['로맨스','드라마']},{name:'김은휘',write:93,plan:84,fav:['스릴러','호러','사극']},{name:'박해용',write:90,plan:78,fav:['드라마','코미디']}];
+const LEG_ACT=[['쏭강호','M',97,92,['드라마','스릴러','코미디']],['마둥석','M',82,96,['액션','코미디']],['이빙헌','M',94,90,['액션','스릴러','사극']],['황정밍','M',93,88,['액션','드라마','스릴러']],['전지횬','F',85,94,['로맨스','판타지','액션']],['김혜쑤','F',93,90,['스릴러','드라마','코미디']],['손예찐','F',90,91,['로맨스','드라마']],['공유기','M',86,93,['로맨스','판타지','SF']],['정우썽','M',85,89,['액션','드라마']],['하쩡우','M',90,87,['스릴러','드라마','코미디']],['김태뤼','F',92,88,['사극','SF','드라마']],['이쩡재','M',88,90,['액션','스릴러']]];
+const GRADE={D:{req:0,pop:[10,30],act:[15,40],fee:[3000,6000]},C:{req:22,pop:[25,45],act:[30,55],fee:[8000,15000]},B:{req:40,pop:[40,65],act:[45,70],fee:[20000,35000]},A:{req:58,pop:[60,80],act:[60,85],fee:[40000,70000]},S:{req:75,pop:[78,90],act:[75,92],fee:[80000,120000]},P:{req:85}};
+const GRADE_LABEL={D:'D',C:'C',B:'B',A:'A',S:'S',P:'S+'};
+
+/* ---------- utils ---------- */
+const $=s=>document.querySelector(s);
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const ri=(a,b)=>Math.floor(rnd(a,b+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const gauss=()=>{let u=0,v=0;while(!u)u=Math.random();while(!v)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)};
+const hash=s=>{let h=7;for(const c of s)h=(h*31+c.charCodeAt(0))>>>0;return h};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function fmtMoney(n){if(!Math.round(n))return '0원';const s=n<0?'-':'';n=Math.abs(Math.round(n));const e=Math.floor(n/10000),m=n%10000;if(e&&m)return s+e+'억 '+m.toLocaleString()+'만';if(e)return s+e+'억';return s+m.toLocaleString()+'만';}
+function fmtAud(n){n=Math.round(n);if(n>=10000)return (n/10000).toFixed(n>=1e6?0:1)+'만명';return n.toLocaleString()+'명';}
+const comboLevel=(g,t)=>GREAT.has(g+'|'+t)?3:BAD.has(g+'|'+t)?0:(hash(g+t)%3===0?2:1);
+const stars=n=>'★'.repeat(n)+'☆'.repeat(3-n);
+const randName=()=>pick(SURN)+pick(GIVEN);
+const makeTitle=t=>pick(TITLE_T).replace('{t}',t);
+
+/* ---------- state ---------- */
+let G=null;
+const UI={sheet:null,wiz:null,camp:0,confirm:null,avatars:{}};
+
+function look(){return{hair:pick(HAIR),skin:pick(SKIN),body:pick(BODY),long:Math.random()<.45}}
+function mkPerson(role,opt={}){
+  const p={id:G.nextId++,name:opt.name||randName(),role,lv:1,exp:0,stats:{},trait:opt.trait||pick(TRAITS)[0],mastery:{},parody:!!opt.parody,...look()};
+  const base=opt.base??(15+G.fame*0.45);
+  for(const s of ROLE_STATS[role])p.stats[s]=clamp(Math.round(base+rnd(0,38)),5,95);
+  if(role==='staff'){const sp=pick(ROLE_STATS.staff);p.stats[sp]=clamp(p.stats[sp]+15,5,95)}
+  if(opt.stats)Object.assign(p.stats,opt.stats);
+  if(opt.fav)for(const g of opt.fav)p.mastery[g]=4;
+  const avg=ROLE_STATS[role].reduce((a,s)=>a+p.stats[s],0)/ROLE_STATS[role].length;
+  p.salary=opt.salary??(role==='staff'?Math.round(avg*7):role==='director'?Math.round(p.stats.dir*12):Math.round(p.stats.write*10));
+  if(role==='director')p.acc='beret';if(role==='writer')p.acc='glasses';if(opt.parody)p.acc='shades';
+  return p;
+}
+function mkOut(role,opt={}){
+  const p={id:G.nextId++,name:opt.name||randName(),role,mastery:{},parody:!!opt.parody,stats:{},...look()};
+  const key=role==='director'?'dir':'write';
+  p.stats[key]=opt[key]??ri(25,72);p.stats.plan=opt.plan??ri(20,60);
+  if(opt.fav)for(const g of opt.fav)p.mastery[g]=4;else p.mastery[pick(GENRES)]=ri(1,2);
+  p.fee=opt.fee??Math.round(p.stats[key]*p.stats[key]*(role==='director'?11:9)/100)*100;
+  p.fameReq=opt.fameReq||0;p.acc=opt.parody?'shades':role==='director'?'beret':'glasses';
+  return p;
+}
+function mkActor(grade,opt={}){
+  const g=GRADE[grade];const a={id:G.nextId++,grade,parody:!!opt.parody,...look()};
+  if(opt.parody){a.name=opt.name;a.long=opt.sex==='F';a.act=opt.act;a.pop=opt.pop;a.apt=opt.apt;a.fee=ri(10,18)*10000;a.acc='shades'}
+  else{a.name=randName();a.act=ri(...g.act);a.pop=ri(...g.pop);const g1=pick(GENRES);let g2=pick(GENRES);while(g2===g1)g2=pick(GENRES);a.apt=[g1,g2];a.fee=Math.round(ri(...g.fee)/100)*100}
+  return a;
+}
+function newGame(studio,boss){
+  G={v:1,started:true,over:false,studio,year:1,month:1,week:1,money:200000,fame:0,office:0,speed:1,nextId:1,
+     staff:[],films:[],prod:null,pending:null,topics:[...TOPICS_START],combos:{},outDir:[],outWri:[],actors:[],recruits:[],
+     trend:pick(GENRES),ottReq:null,awards:0,trophies:0,compT:0};
+  const b=mkPerson('boss',{name:boss,base:30,salary:0,trait:'성실'});for(const s in b.stats)b.stats[s]=ri(28,36);b.acc='tie';G.staff.push(b);
+  G.staff.push(mkPerson('staff',{base:24}));
+  for(let i=0;i<7;i++)G.outDir.push(mkOut('director'));
+  LEG_DIR.forEach(l=>G.outDir.push(mkOut('director',{...l,parody:true,fee:ri(10,20)*10000,fameReq:25})));
+  for(let i=0;i<6;i++)G.outWri.push(mkOut('writer'));
+  LEG_WRI.forEach(l=>G.outWri.push(mkOut('writer',{...l,parody:true,fee:ri(8,15)*10000,fameReq:25})));
+  const dist={D:6,C:6,B:5,A:4,S:3};for(const k in dist)for(let i=0;i<dist[k];i++)G.actors.push(mkActor(k));
+  LEG_ACT.forEach(([name,sex,act,pop,apt])=>G.actors.push(mkActor('P',{parody:true,name,sex,act,pop,apt})));
+  refreshRecruits();save();
+}
+function refreshRecruits(){
+  G.recruits=[];
+  for(let i=0;i<4;i++){const r=Math.random();G.recruits.push(mkPerson(r<.6?'staff':r<.8?'director':'writer'))}
+  if(G.fame>=50&&Math.random()<.12){
+    const hired=new Set(G.staff.map(s=>s.name));
+    const pool=[...LEG_DIR.map(l=>['director',l]),...LEG_WRI.map(l=>['writer',l])].filter(([,l])=>!hired.has(l.name));
+    if(pool.length){const[role,l]=pick(pool);G.recruits[3]=mkPerson(role,{name:l.name,parody:true,fav:l.fav,stats:role==='director'?{dir:l.dir,plan:l.plan}:{write:l.write,plan:l.plan},salary:ri(30,50)*100})}
+  }
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(G))}catch(e){}}
+const RENAME={봉준호떡:'뽕준호',박찬국:'빡찬욱',류승완자:'뉴승완',최동훈제:'채동훈',이창동치미:'이짱동',김은숙면:'킴은숙',김은희망:'김은휘',박해영양제:'박해용',송강호두:'쏭강호',마동석쇠:'마둥석',이병헌혈:'이빙헌',황정민트:'황정밍',전지현미:'전지횬',김혜수박:'김혜쑤',손예진주:'손예찐',정우성게:'정우썽',하정우유:'하쩡우',김태리본:'김태뤼',이정재래시장:'이쩡재'};
+function migrate(g){[g.actors,g.outDir,g.outWri,g.staff,g.recruits].forEach(a=>(a||[]).forEach(p=>{if(RENAME[p.name])p.name=RENAME[p.name]}));(g.films||[]).forEach(f=>['actorName','dirName','wriName'].forEach(k=>{if(RENAME[f[k]])f[k]=RENAME[f[k]]}));if(g.pending)['actorName','dirName','wriName'].forEach(k=>{if(RENAME[g.pending[k]])g.pending[k]=RENAME[g.pending[k]]});return g}
+function load(){try{const s=localStorage.getItem(KEY);if(s){const g=JSON.parse(s);if(g&&g.v===1)return migrate(g)}}catch(e){}return null}
+
+/* ---------- helpers ---------- */
+const eff=(p,s)=>(p.stats[s]||0)+((s==='cast'&&p.trait==='인맥왕')||(s==='nego'&&p.trait==='협상의 달인')?15:0);
+const maxStat=s=>Math.max(0,...G.staff.map(p=>eff(p,s)));
+const castPower=()=>Math.round(maxStat('cast')+G.fame*0.3);
+const findById=(arr,id)=>arr.find(x=>x.id===id);
+const ref=(r,role)=>r.type==='ex'?findById(G.staff,r.id):findById(role==='director'?G.outDir:G.outWri,r.id);
+const phaseOf=P=>{const p=P.w/P.weeks;return p<.3?'시나리오':p<.8?'촬영':'후반작업'};
+const salaries=()=>G.staff.reduce((a,p)=>a+p.salary,0);
+function seasonMult(g,t,m){
+  if(m===7||m===8)return ['액션','SF','호러','판타지'].includes(g)?1.25:1.05;
+  if(m===12)return ['로맨스','애니','판타지'].includes(g)?1.25:1;
+  if(m===1||m===2||m===9||m===10)return (['코미디','드라마'].includes(g)||t==='가족')?1.2:1;
+  if(m===3||m===4||m===11)return .85;return 1;
+}
+const seasonName=m=>m===7||m===8?'여름 성수기':m===12?'연말 시즌':(m<=2||m===9||m===10)?'명절 시즌':(m===3||m===4||m===11)?'비수기':'평시즌';
+function ratingMult(f){if(f.rating==='all')return DARK.includes(f.genre)?.85:1.12;if(f.rating==='adult')return DARK.includes(f.genre)?.75:.62;return 1}
+function estimate(f,camp){
+  const Hh=f.H+CAMPAIGN[camp].h;const buzz=.5+2*(1-Math.exp(-Hh/120));
+  const raw=200000*Math.pow(f.Q/45,1.6)*buzz*BUDGET[f.budget].reach*seasonMult(f.genre,f.topic,G.month)*(G.trend===f.genre?1.2:1)*ratingMult(f)*(.6+f.A*.06);
+  return 2e7*(1-Math.exp(-raw/2e7));
+}
+function ottOffer(f){const m=G.ottReq&&G.ottReq.genre===f.genre;return Math.max(20000,Math.round(estimate(f,0)*.5*.55*(1+maxStat('nego')/200)*(m?1.6:1)/100)*100)}
+
+/* ---------- time ---------- */
+function tick(){
+  const fx=[];
+  if(G.prod&&!G.pending)prodWeek(fx);else if(!G.pending)idleWork(fx);
+  releaseWeek();
+  if(G.month===12&&G.week===4)awards();
+  G.week++;
+  if(G.week>4){G.week=1;G.month++;if(G.month>12){G.month=1;G.year++;G.trend=pick(GENRES);toast(`${G.year}년차 시작! 올해의 유행 장르는 ${G.trend}`,'gold')}monthly()}
+  fx.sort(()=>Math.random()-.5).slice(0,6).forEach(b=>bubble(...b));if(fx.length)sfx(fx.some(b=>b[2]==='cash')?'coin':'pop');renderHUD();
+}
+function idleWork(fx){
+  let sum=0;
+  G.staff.forEach((p,i)=>{const st=ROLE_STATS[p.role];const v=Math.round(st.reduce((a,s)=>a+p.stats[s],0)/st.length*2.4);sum+=v;if(Math.random()<.5)fx.push([i,'+'+v+'만','cash'])});
+  G.money+=sum;
+}
+function prodWeek(fx){
+  const P=G.prod,ph=phaseOf(P),D=ref(P.dir,'director'),Wr=ref(P.wri,'writer'),A=findById(G.actors,P.actorId);
+  const m=p=>1+.08*Math.min(5,(p.mastery||{})[P.genre]||0);
+  const craftB=G.office>=3?1.1:1;
+  let tf=0,tc=0,tm=0;
+  const add=(p,f,c,k,slot)=>{
+    const r=rnd(.75,1.25);
+    f*=r*(p.trait==='아이디어 뱅크'?1.2:1);c*=r*craftB*(p.trait==='완벽주의'?1.2:1);k*=(p.trait==='흥행 감각'?1.25:1);
+    tf+=f;tc+=c;tm+=k;
+    const best=Math.max(f,c,k*.4);
+    if(best>=1&&slot!=null){if(best===f)fx.push([slot,'재미+'+Math.round(f),'fun']);else if(best===c)fx.push([slot,'완성+'+Math.round(c),'craft']);else fx.push([slot,'화제+'+Math.round(k*.6),'buzz'])}
+  };
+  const dirC=p=>{const d=p.stats.dir,k=m(p);return ph==='시나리오'?[d*.15,0]:ph==='촬영'?[d*.4*k,d*.8*k]:[d*.2*k,d*.3*k]};
+  const wriC=p=>{const w=p.stats.write,k=m(p);return ph==='시나리오'?[w*.9*k,w*.3*k]:ph==='촬영'?[w*.15,0]:[0,0]};
+  G.staff.forEach((p,i)=>{
+    if(P.dir.type==='ex'&&p.id===P.dir.id){const[f,c]=dirC(p);add(p,f,c,0,i)}
+    else if(P.wri.type==='ex'&&p.id===P.wri.id){const[f,c]=wriC(p);add(p,f,c,0,i)}
+    else if(p.role==='staff'||p.role==='boss'){
+      const f=ph==='시나리오'?eff(p,'plan')*.25:0, c=ph==='촬영'?p.stats.tech*.3:ph==='후반작업'?p.stats.tech*.6:0;
+      add(p,f,c,p.stats.mkt,i);
+    }else{add(p,ph==='시나리오'?p.stats.plan*.12:0,0,0,i)}
+  });
+  if(P.dir.type==='out'){const[f,c]=dirC(D);add(D,f,c,0,'vd')}
+  if(P.wri.type==='out'){const[f,c]=wriC(Wr);add(Wr,f,c,0,'vw')}
+  if(ph==='촬영'){const act=A.act*(A.apt.includes(P.genre)?1.2:1);add({},act*.4,act*.3,0,'va')}
+  P.fun+=tf;P.craft+=tc;P.mk+=tm;P.w++;
+  if(P.w>=P.weeks)finishProduction();
+}
+function finishProduction(){
+  const P=G.prod,weeks=P.weeks,combo=comboLevel(P.genre,P.topic);
+  const qraw=(P.fun+P.craft)/weeks;
+  const fit=P.ppl!=='none'&&(PPL[P.ppl].fit.includes(P.topic)||P.genre==='코미디');
+  let Q=100*(1-Math.exp(-qraw/170))*COMBO_MULT[combo]+BUDGET[P.budget].bonus+(fit?3:0);
+  if(P.sequelOf)Q*=.95;Q=Math.max(5,Q);
+  const craftQ=100*(1-Math.exp(-(P.craft/weeks)/90));
+  const A=clamp(1+8.6*(1-Math.exp(-Q/60))+(combo-1.5)*.3+rnd(-.5,.5)-(P.ppl!=='none'&&!fit?.3:0),1,9.8);
+  const C=clamp(1+8.4*(1-Math.exp(-craftQ/45))+(P.rating==='adult'&&DARK.includes(P.genre)?.4:0)+rnd(-.8,.8),1,9.8);
+  const actor=findById(G.actors,P.actorId);const D=ref(P.dir,'director'),Wr=ref(P.wri,'writer');
+  const Hh=(P.mk/weeks)*.6+actor.pop+P.buzz+(P.sequelOf?30:0)+(G.office>=2?10:0);
+  G.pending={id:G.nextId++,title:P.title,genre:P.genre,topic:P.topic,combo,Q,A,C,H:Hh,budget:P.budget,rating:P.rating,ppl:P.ppl,sequelOf:P.sequelOf,
+    actorId:actor.id,actorName:actor.name,dirName:D.name,wriName:Wr.name,dirId:D.id,wriId:Wr.id,dirEx:P.dir.type==='ex',wriEx:P.wri.type==='ex',cost:P.cost};
+  [D,Wr].forEach(p=>{p.mastery[P.genre]=(p.mastery[P.genre]||0)+1});
+  G.staff.forEach(p=>{p.exp+=Q*.5*(p.trait==='성실'?1.5:1);while(p.exp>=p.lv*40){p.exp-=p.lv*40;p.lv++;for(const s of ROLE_STATS[p.role])p.stats[s]=clamp(p.stats[s]+ri(2,6),1,99);if(p.salary)p.salary=Math.round(p.salary*1.08);toast(`${p.name} 레벨 업! Lv.${p.lv}`,'gold');sfx('level')}});
+  G.prod=null;UI.camp=0;openSheet('release');save();
+}
+function releaseWeek(){
+  G.films.filter(f=>f.status==='showing').forEach(f=>{
+    let wk=f.wi===0?f.total*(1-f.d):f.last*f.d;
+    if(f.aud+wk>f.total)wk=f.total-f.aud;
+    let end=f.wi>=14||wk<3000;
+    if(wk<0)wk=0;
+    f.aud+=wk;f.rev+=wk*.5;G.money+=wk*.5;f.last=wk;f.wi++;
+    let comp=0;for(let i=0;i<4;i++)if(10000*Math.exp(gauss()*.9+2.6)>wk)comp++;
+    f.rank=comp+1;
+    if(f.wi===1){toast(`${f.title} 개봉! 관객 평점 ${f.A.toFixed(1)} / 평론가 ${f.C.toFixed(1)}`,'gold');if(f.luckMsg)toast(f.luckMsg,f.luck>1?'gold':'red')}
+    if(f.rank===1&&!f.no1){f.no1=true;toast(`${f.title} 박스오피스 1위!`,'gold');sfx('big');bubble(0,'1위!','cash')}
+    for(const ms of [1e6,3e6,5e6,1e7])if(f.aud>=ms&&!f.ms.includes(ms)){f.ms.push(ms);toast(`${f.title} ${ms/1e4}만 관객 돌파!`,'gold');sfx('big')}
+    if(end){
+      f.status='done';f.profit=Math.round(f.rev-f.cost-f.campCost);
+      const df=Math.round(Math.min(8,f.aud/1e6*1.5)+(f.A>=8?1:0)-(f.aud<300000?1:0));f.fameUp=df;G.fame=clamp(G.fame+df,0,100);
+      const a=findById(G.actors,f.actorId);if(a)a.pop=clamp(a.pop+(f.aud>3e6?5:f.aud>1e6?2:0),0,99);
+      UI.resultId=f.id;openSheet('result');sfx(f.profit>=0?'fanfare':'bad');
+    }
+  });
+}
+function monthly(){
+  const pay=salaries()+OFFICE[G.office].rent;G.money-=pay;
+  toast(`월급과 임대료 ${fmtMoney(pay)} 지출`);
+  refreshRecruits();
+  const locked=TOPICS_LOCKED.filter(t=>!G.topics.includes(t));
+  if(locked.length&&Math.random()<maxStat('plan')/260){const t=pick(locked);G.topics.push(t);toast(`기획 회의에서 새 소재 발견: ${t}`,'gold')}
+  if(G.ottReq&&(G.year*12+G.month)>G.ottReq.until){toast(`${G.ottReq.ott}의 ${G.ottReq.genre} 의뢰가 만료됐어요`);G.ottReq=null}
+  if(!G.ottReq&&Math.random()<.22){const genre=pick(GENRES);G.ottReq={ott:pick(OTTS),genre,until:G.year*12+G.month+10};toast(`${G.ottReq.ott}에서 ${genre} 영화 의뢰! OTT 판매가 1.6배`,'gold')}
+  if(Math.random()<.3)randomEvent();
+  if(G.money<-100000){G.over=true;openSheet('gameover')}
+  save();
+}
+function randomEvent(){
+  const P=G.prod;const ev=[];
+  if(P){
+    const a=findById(G.actors,P.actorId);
+    ev.push(()=>{P.buzz+=15;toast('촬영장 비하인드 영상이 SNS에서 화제! 화제성 상승','gold')});
+    ev.push(()=>{P.fun+=40;toast('밤샘 회의 끝에 대박 아이디어가 나왔어요! 재미 상승','gold')});
+    ev.push(()=>{P.weeks++;toast('폭우로 촬영이 1주 미뤄졌어요','red')});
+    ev.push(()=>{P.buzz+=20;toast(`${a.name}의 촬영장 미담 기사가 퍼졌어요`,'gold')});
+    if(!a.parody)ev.push(()=>{P.buzz-=15;toast(`${a.name}, 예능에서 말실수... 화제성 하락`,'red')});
+  }
+  ev.push(()=>{G.money+=50000;toast('엔젤 투자자 등장! 5억 투자 유치','gold')});
+  ev.push(()=>{G.fame=Math.min(100,G.fame+2);toast('영화 커뮤니티에서 우리 회사 밈이 유행 중','gold')});
+  ev.push(()=>{G.money-=300;toast('사무실 에어컨 고장... 수리비 300만','red')});
+  pick(ev)();
+}
+function awards(){
+  const fs=G.films.filter(f=>f.year===G.year);
+  const res=[];
+  if(fs.length){
+    const bq=fs.reduce((a,b)=>b.Q>a.Q?b:a);
+    if(bq.Q>=75)res.push(['작품상',bq.title]);
+    if(bq.Q>=70)res.push(['감독상',bq.dirName+' ('+bq.title+')']);
+    const bw=fs.reduce((a,b)=>b.C>a.C?b:a);if(bw.C>=7.5)res.push(['각본상',bw.wriName+' ('+bw.title+')']);
+    const ba=fs.reduce((a,b)=>b.A>a.A?b:a);if(ba.A>=7.5)res.push(['주연상',ba.actorName+' ('+ba.title+')']);
+    const bh=fs.reduce((a,b)=>(b.aud||0)>(a.aud||0)?b:a);if((bh.aud||0)>=5e6)res.push(['흥행상',bh.title]);
+  }
+  UI.awards=res;
+  if(res.length){G.money+=res.length*10000;G.fame=clamp(G.fame+res.length*2,0,100);G.trophies+=res.length}
+  openSheet('awards');sfx(res.length?'big':'bad');
+}
+
+/* ---------- pixel icons ---------- */
+const ICON_PAL={k:'#231A2B',w:'#FFF5DA',y:'#F7C948',o:'#C48A22',r:'#E2434C',t:'#33AEA3',p:'#F27BA5',g:'#8FE3D8'};
+const ICON_MAP={
+  clap:['kkkkkkkkk','kwkkwkkwk','kkkkkkkkk','kwwwwwwwk','kwkkkkwwk','kwwwwwwwk','kwkkkwwwk','kwwwwwwwk','kkkkkkkkk'],
+  people:['.kk...kk.','kppk.kttk','kppk.kttk','.kk...kk.','kkkk.kkkk','kppk.kttk','kppk.kttk','kppk.kttk','kkkk.kkkk'],
+  star:['....k....','...kyk...','...kyk...','kkkyyykkk','kyyyyyyyk','.kyyyyyk.','.kyykyyk.','.kyk.kyk.','.kk...kk.'],
+  build:['kkkkkk...','ktwtwk...','kkkkkkkkk','kwtwtwtwk','kkkkkkkkk','kwtwtwtwk','kkkkkkkkk','kwtkkktwk','kkkkykkkk'],
+  trophy:['kkkkkkkkk','kyyyyyyok','.kyyyyok.','..kyyok..','...kyk...','...kok...','..kkkkk..','..kyyok..','..kkkkk..'],
+  coin:['..kkkkk..','.kyyyyok.','kywyyyyok','kwyyoyyok','kyyyoyyok','kyyyoyyok','kyyyyyyok','.kooooook','..kkkkk..'],
+  cal:['.k.....k.','kkkkkkkkk','krrrrrrrk','kkkkkkkkk','kwwwwwwwk','kwkwkwkwk','kwwwwwwwk','kwkwkrkwk','kkkkkkkkk'],
+  heart:['.kk...kk.','kppk.kppk','kpwpkpppk','kpppppppk','.kpppppk.','..kpppk..','...kpk...','....k....','.........'],
+  reel:['..kkkkk..','.ktttttk.','ktwtttwtk','ktttttttk','ktttktttk','ktttttttk','ktwtttwtk','.ktttttk.','..kkkkk..'],
+  mega:['......k..','....kkyk.','kkkkyyyk.','kwwkyyyk.','kwwkyyyk.','kkkkyyyk.','..k.kkyk.','..k...k..','..k......'],
+  note:['....kk...','....kyk..','....kkyk.','....k.kk.','....k....','.kkkk....','kyyyk....','kyyyk....','.kkk.....'],
+  mute:['r...kk..r','.r..kyk.r','..r.kkr..','...rkr.k.','....r....','.kkr.r...','kyryk.r..','kryyk..r.','rkkk....r'],
+  pause:['.........','.kkk.kkk.','.kwk.kwk.','.kwk.kwk.','.kwk.kwk.','.kwk.kwk.','.kwk.kwk.','.kkk.kkk.','.........'],
+  play:['.kk......','.kwk.....','.kwwk....','.kwwwk...','.kwwwwk..','.kwwwk...','.kwwk....','.kwk.....','.kk......'],
+  ff:['k...k....','kk..kk...','kwk.kwk..','kwwkkwwk.','kwwwkwwwk','kwwkkwwk.','kwk.kwk..','kk..kk...','k...k....'],
+};
+const IC={};
+for(const[n,m]of Object.entries(ICON_MAP)){const c=document.createElement('canvas');c.width=c.height=9;const x=c.getContext('2d');m.forEach((r,y)=>[...r].forEach((ch,i)=>{if(ch!=='.'){x.fillStyle=ICON_PAL[ch];x.fillRect(i,y,1,1)}}));IC[n]=c.toDataURL()}
+const ic=n=>`<img class="ic" src="${IC[n]}" alt="">`;
+document.querySelectorAll('img[data-ic]').forEach(i=>i.src=IC[i.dataset.ic]);
+
+/* ---------- canvas ---------- */
+const cv=$('#cv'),ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=false;
+const OUTC='#231A2B';
+const shc={};
+function sh(hex,a){const k=hex+a;if(shc[k])return shc[k];const n=parseInt(hex.slice(1),16);let r=n>>16,g=(n>>8)&255,b=n&255;const t=a<0?0:255,f=Math.abs(a);r=Math.round(r+(t-r)*f);g=Math.round(g+(t-g)*f);b=Math.round(b+(t-b)*f);return shc[k]='#'+((1<<24)|(r<<16)|(g<<8)|b).toString(16).slice(1)}
+const R_=(c,x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(x,y,w,h)};
+const SPR=[
+'...oooooo...',
+'..ohhhhhho..',
+'.ohhhhhhhho.',
+'.ohssssssho.',
+'.osesssseso.',
+'.osrssssrso.',
+'.osssmmssso.',
+'..osssssso..',
+'..obbccbbo..',
+'.obbbbbbbbo.',
+'obbbbbbbbbbo',
+'obbbbbbbbbbo',
+'obbbbbbbbbbo',
+'.obbbbbbbbo.',
+'..oppppppo..',
+'..opp..ppo..',
+'..okk..kko..'];
+const sprCache={};
+function sprRows(p){
+  const key=(p.long?1:0)+'|'+(p.acc||'');if(sprCache[key])return sprCache[key];
+  const r=SPR.map(s=>s.split(''));
+  if(p.long)for(let y=3;y<=8;y++){r[y][1]='h';r[y][0]='o';r[y][10]='h';r[y][11]='o'}
+  if(p.acc==='beret'){r[0]='...ooooooo..'.split('');r[1]='..oaaaaaaao.'.split('');r[2]='.oaaaaaaaaao'.split('')}
+  if(p.acc==='glasses'){[2,4,5,6,7,9].forEach(i=>r[4][i]='g')}
+  if(p.acc==='shades'){for(let i=2;i<=9;i++)r[4][i]='k';r[4][3]='w'}
+  if(p.acc==='tie'){r[8][5]=r[8][6]='t';for(let y=9;y<=12;y++){r[y][5]=r[y][6]='t'}}
+  return sprCache[key]=r;
+}
+function pcol(ch,x,y,p,blink){
+  switch(ch){
+    case'o':case'k':return OUTC;
+    case'h':return x>=7?sh(p.hair,-.25):(y<=2&&x>=3&&x<=4)?sh(p.hair,.3):p.hair;
+    case's':return x>=9?sh(p.skin,-.12):p.skin;
+    case'e':return blink?sh(p.skin,-.35):OUTC;
+    case'r':return '#F49A9A';case'm':return '#B5505C';
+    case'b':return x>=8?sh(p.body,-.22):x<=2?sh(p.body,.18):p.body;
+    case'c':return '#FFF4E0';case't':return '#E2434C';case'p':return '#3B3550';
+    case'a':return x>=7?'#2A2238':'#3A2F4A';case'g':return '#3D6FD9';case'w':return '#FFFFFF';
+  }
+  return null;
+}
+function drawSprite(c,x,y,p,rows=17,blink=false,stand=false){
+  const r=sprRows(p);
+  for(let j=0;j<rows;j++)for(let i=0;i<12;i++){const ch=r[j][i];if(ch==='.')continue;c.fillStyle=pcol(ch,i,j,p,blink);c.fillRect(x+i,y+j,1,1)}
+  if(stand&&rows>12){c.fillStyle=p.skin;c.fillRect(x+1,y+12,1,1);c.fillRect(x+10,y+12,1,1)}
+}
+function avatar(p){
+  const k=p.id+'|'+(p.acc||'')+'|'+p.hair+p.body;if(UI.avatars[k])return UI.avatars[k];
+  const c=document.createElement('canvas');c.width=c.height=16;const x=c.getContext('2d');drawSprite(x,2,2,p,14);
+  return UI.avatars[k]=c.toDataURL();
+}
+
+/* office layouts: 0 반지하 원룸, 1 상가, 2 빌딩, 3 스튜디오 */
+const WALL=38;
+const LAY=[
+  {wall:'#E3CFA8',wall2:'#D4BC91',wain:'#B58A5C',trim:'#F2E2C2',fl:['#C48A55','#B57D4B','#A97245'],floor:'plank',wood:['#D9A066','#A86E3E'],chair:'#6B5A7B',door:'#9A6A43',win:[[7,6,22,15]],posters:[48,61],doorX:104,curtain:'#F27BA5'},
+  {wall:'#C6E2DB',wall2:'#B3D4CC',wain:'#7FB3AA',trim:'#E5F4F0',fl:['#7F9FBC','#7694B0'],floor:'carpet',wood:['#EFE8D8','#BDB29E'],chair:'#3F5E8C',door:'#E8E2D4',win:[[4,4,22,17],[30,4,22,17]],posters:[86,99,112],doorX:130,blinds:true},
+  {wall:'#E8E3F0',wall2:'#D8D0E6',wain:'#9D93B4',trim:'#F7F4FB',fl:['#D3CDE0','#C6BFD6'],floor:'tile',wood:['#8C6E54','#5F4635'],chair:'#2F2A3D',door:'#5F4635',win:[[4,3,50,22]],posters:[78,91,104,117],doorX:136,city:true},
+  {wall:'#4A3354',wall2:'#3E2A47',wain:'#2E1F36',trim:'#C9A24A',fl:['#B23A48','#A33441'],floor:'red',wood:['#3B3046','#272030'],chair:'#7A2B3A',door:'#2E1F36',win:[],posters:[36,49,62,75,88],doorX:126},
+];
+const GLYPH={액션:['#.#.#','.###.','#####','.###.','#.#.#'],코미디:['.###.','#.#.#','#####','#.#.#','.#.#.'].map((r,i)=>i===3?'#...#':i===4?'.###.':r),로맨스:['##.##','#####','#####','.###.','..#..'],호러:['.###.','#.#.#','#####','#####','#.#.#'],SF:['..#..','.###.','.#.#.','.###.','#.#.#'],스릴러:['.###.','#...#','#.#.#','#...#','.###.'],드라마:['..#..','.###.','#####','#####','.###.'],사극:['.###.','.###.','#####','..#..','.#.#.'],판타지:['#...#','.#.#.','..#..','.#.#.','#...#'],애니:['#...#','##.##','#####','#.#.#','.###.']};
+let bgKey='',bgC=null,vigC=null;
+function slotPos(i){const col=i%4,row=Math.floor(i/4);return{x:4+col*39,y:56+row*18}}
+function visPos(){const d=LAY[G?G.office:0].doorX;return{vd:{x:d-3,y:21},vw:{x:d+9,y:21},va:{x:d+9,y:21}}}
+function buildBg(o,winter){
+  const L=LAY[o];const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  R_(x,0,0,W,WALL,L.wall);
+  if(o===0)for(let i=0;i<W;i+=6){R_(x,i,0,1,27,L.wall2);if(i%12===0)for(let j=4;j<26;j+=8)R_(x,i+3,j,1,1,L.wall2)}
+  if(o===1)for(let j=3;j<26;j+=6)for(let i=(j/6%2)*3;i<W;i+=6)R_(x,i,j,1,1,L.wall2);
+  if(o===2)for(let i=0;i<W;i+=20)R_(x,i,0,1,27,L.wall2);
+  if(o===3){for(let i=0;i<W;i+=4)R_(x,i,0,2,27,L.wall2);for(let i=8;i<W;i+=16)R_(x,i,0,1,27,'#6A4A3A')}
+  R_(x,0,26,W,1,L.trim);R_(x,0,27,W,9,L.wain);for(let i=0;i<W;i+=16){R_(x,i,29,14,5,sh(L.wain,-.08));R_(x,i,29,14,1,sh(L.wain,.15))}
+  R_(x,0,36,W,2,OUTC);
+  if(L.floor==='plank'){for(let r=0;r*5+WALL<H;r++){const y=WALL+r*5;for(let i=-((r*7)%16);i<W;i+=16){R_(x,i,y,16,5,L.fl[(r+i/16+3)%3|0]);R_(x,i,y,1,5,sh(L.fl[0],-.25))}R_(x,0,y,W,1,sh(L.fl[0],-.15))}}
+  if(L.floor==='carpet'){R_(x,0,WALL,W,H-WALL,L.fl[0]);for(let y=WALL;y<H;y+=2)for(let i=(y/2%2)*2;i<W;i+=4)R_(x,i,y,1,1,L.fl[1])}
+  if(L.floor==='tile'){for(let y=WALL;y<H;y+=10)for(let i=0;i<W;i+=10){R_(x,i,y,10,10,((i+y)/10)%2?L.fl[0]:L.fl[1]);R_(x,i,y,10,1,'#B3ABC6');R_(x,i,y,1,10,'#B3ABC6');R_(x,i+1,y+1,2,1,'#EEEAF5')}}
+  if(L.floor==='red'){R_(x,0,WALL,W,H-WALL,L.fl[0]);for(let y=WALL+3;y<H;y+=6)R_(x,0,y,W,1,L.fl[1]);R_(x,0,WALL+1,W,1,'#C9A24A')}
+  R_(x,0,WALL,W,2,'rgba(0,0,0,.2)');
+  L.win.forEach(([wx,wy,ww,wh])=>{
+    R_(x,wx-2,wy-2,ww+4,wh+4,OUTC);R_(x,wx-1,wy-1,ww+2,wh+2,'#F6F1E6');
+    const g=x.createLinearGradient(0,wy,0,wy+wh);g.addColorStop(0,winter?'#AFC6DE':'#6CC4EE');g.addColorStop(1,winter?'#DCE7F1':'#BDEBFA');x.fillStyle=g;x.fillRect(wx,wy,ww,wh);
+    if(L.city){x.fillStyle='#8A95B8';for(let i=0;i<ww;i+=5){const h=4+((i*13)%11);x.fillRect(wx+i,wy+wh-h,4,h);x.fillStyle='#FFE89A';if(i%10===0)x.fillRect(wx+i+1,wy+wh-h+2,1,1);x.fillStyle='#8A95B8'}}
+    R_(x,wx-2,wy+wh+2,ww+4,2,'#F6F1E6');R_(x,wx-2,wy+wh+4,ww+4,1,OUTC);
+  });
+  if(o===0){const[wx,wy,ww,wh]=L.win[0];R_(x,wx-4,wy-3,5,wh+6,L.curtain);R_(x,wx+ww-1,wy-3,5,wh+6,L.curtain);[wx-3,wx+ww].forEach(cx=>R_(x,cx+1,wy-3,1,wh+6,sh(L.curtain,-.2)));R_(x,wx-5,wy-4,ww+10,1,'#8A5A3A');
+    R_(x,33,6,10,12,OUTC);R_(x,34,7,8,10,'#fff');R_(x,34,7,8,3,'#E2434C');for(let j=11;j<16;j+=2)for(let i=35;i<41;i+=2)R_(x,i,j,1,1,'#B9A9A0');
+    R_(x,76,16,20,2,'#8A5A3A');R_(x,78,10,5,6,'#FFF5DA');R_(x,78,10,5,2,'#E2434C');R_(x,85,11,5,5,'#FFF5DA');R_(x,85,11,5,2,'#F7C948');R_(x,91,12,3,4,'#6FA54E');
+    R_(x,146,27,13,10,'#C9975E');R_(x,146,27,13,1,OUTC);R_(x,151,27,3,10,'#E8C08A');R_(x,149,20,9,7,'#B9864E');R_(x,149,20,9,1,OUTC)}
+  if(o===1){L.win.forEach(([wx,wy,ww,wh])=>{for(let j=wy+2;j<wy+wh;j+=3)R_(x,wx,j,ww,1,'rgba(255,255,255,.55)')});
+    R_(x,57,5,26,16,OUTC);R_(x,58,6,24,14,'#FFFFFF');R_(x,60,9,8,1,'#E2434C');R_(x,60,12,12,1,'#3D6FD9');R_(x,60,15,6,1,'#3D6FD9');R_(x,72,15,2,3,'#33AEA3');R_(x,75,13,2,5,'#33AEA3');R_(x,78,10,2,8,'#33AEA3');R_(x,57,21,26,1,'#9A8F86');
+    R_(x,151,14,7,9,'#BFE6F5');R_(x,151,14,7,1,OUTC);R_(x,150,23,9,14,'#F3EEE6');R_(x,150,23,9,1,OUTC);R_(x,153,27,3,2,'#3D6FD9')}
+  if(o===2){R_(x,57,3,18,34,OUTC);R_(x,58,4,16,32,'#7A5A42');[12,20,28].forEach(j=>R_(x,58,j,16,1,OUTC));const bc=['#E2434C','#33AEA3','#F7C948','#9C7BE0','#F27BA5','#4F7BD9'];for(let s=0;s<4;s++)for(let i=0;i<5;i++)R_(x,59+i*3,5+s*8,2,7-((i+s)%3),bc[(i+s*2)%6]);
+    R_(x,152,24,7,13,'#C9975E');R_(x,151,14,9,10,'#4F8A3A');R_(x,153,12,5,3,'#6FA54E')}
+  if(o===3){R_(x,4,5,26,22,OUTC);R_(x,5,6,24,20,'#2A1F33');R_(x,5,15,24,1,'#C9A24A');R_(x,5,6,1,20,'rgba(255,255,255,.18)');
+    R_(x,103,6,18,15,OUTC);R_(x,104,7,16,13,'#3A2346');const st=['....#....','...###...','#########','.#######.','..#####..','.##...##.'];st.forEach((r,j)=>[...r].forEach((ch,i)=>{if(ch==='#')R_(x,108+i,9+j,1,1,'#FFE89A')}));
+    R_(x,146,14,10,7,OUTC);R_(x,147,15,6,5,'#4A4058');R_(x,153,16,3,3,'#8A95B8');R_(x,150,21,2,13,OUTC);R_(x,146,33,10,2,OUTC);R_(x,147,31,1,3,OUTC);R_(x,154,31,1,3,OUTC)}
+
+  if(o===0){
+    const rx=44,ry=80,rw=72,rh=24;R_(x,rx+2,ry,rw-4,rh,OUTC);R_(x,rx,ry+2,rw,rh-4,OUTC);R_(x,rx+3,ry+1,rw-6,rh-2,'#E89BB5');R_(x,rx+1,ry+3,rw-2,rh-6,'#E89BB5');
+    R_(x,rx+5,ry+4,rw-10,rh-8,'#F6C3D4');for(let i=rx+8;i<rx+rw-8;i+=6)R_(x,i,ry+rh/2,3,1,'#E89BB5');
+    R_(x,14,90,16,12,OUTC);R_(x,15,91,14,10,'#F7C948');R_(x,16,91,6,3,'#FFE89A');R_(x,15,100,14,1,'#C48A22');
+    R_(x,132,84,18,18,OUTC);R_(x,133,85,16,16,'#F3EEE6');R_(x,133,92,16,1,OUTC);R_(x,146,87,1,3,'#9A8F86');R_(x,146,95,1,4,'#9A8F86');
+    [[124,104],[127,99]].forEach(([cx,cy])=>{R_(x,cx,cy,9,5,OUTC);R_(x,cx+1,cy+1,7,3,'#4A4058');R_(x,cx+3,cy+2,3,1,'#8A95B8')});
+  }
+  if(o===1){
+    R_(x,10,94,40,16,OUTC);R_(x,11,95,38,6,'#2F8F86');R_(x,11,101,38,8,'#33AEA3');R_(x,11,95,38,1,'#8FE3D8');R_(x,13,103,15,4,'#2F8F86');R_(x,32,103,15,4,'#2F8F86');
+    R_(x,60,100,30,8,OUTC);R_(x,61,101,28,4,'#C9975E');R_(x,61,101,28,1,'#E8C08A');R_(x,62,105,2,3,OUTC);R_(x,86,105,2,3,OUTC);R_(x,66,99,4,2,'#FFF5DA');R_(x,78,99,3,2,'#E2434C');
+    R_(x,132,92,10,12,'#C9975E');R_(x,132,92,10,1,OUTC);R_(x,129,80,16,12,'#4F8A3A');R_(x,132,78,10,3,'#6FA54E');R_(x,135,76,4,2,'#6FA54E');
+  }
+  if(o===2){R_(x,8,113,144,1,'rgba(0,0,0,.12)')}
+  const d=L.doorX;R_(x,d-1,7,20,31,OUTC);R_(x,d,8,18,28,L.door);R_(x,d,8,18,1,sh(L.door,.25));R_(x,d+3,11,12,8,sh(L.door,-.12));R_(x,d+3,22,12,11,sh(L.door,-.12));R_(x,d+14,22,2,2,'#F7C948');R_(x,d+5,1,9,5,OUTC);R_(x,d+6,2,7,3,'#5A1E26');
+  return c;
+}
+function buildVig(){const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');const g=x.createRadialGradient(W/2,H*.55,H*.35,W/2,H*.55,H*.95);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(30,10,30,.32)');x.fillStyle=g;x.fillRect(0,0,W,H);return c}
+function drawPoster(f,x,y){
+  R_(ctx,x-1,y-1,13,18,OUTC);R_(ctx,x,y,11,16,GCOLOR[f.genre]);R_(ctx,x,y,11,1,sh(GCOLOR[f.genre],.3));
+  (GLYPH[f.genre]||[]).forEach((r,j)=>[...r].forEach((ch,i)=>{if(ch==='#')R_(ctx,x+3+i,y+3+j,1,1,'#FFF5DA')}));
+  R_(ctx,x+2,y+11,7,1,'#FFF5DA');R_(ctx,x+3,y+13,5,1,sh(GCOLOR[f.genre],.45));
+  if(f.ms&&f.ms.includes(1e7)){R_(ctx,x+7,y-3,5,5,OUTC);R_(ctx,x+8,y-2,3,3,'#F7C948')}
+}
+const snow=Array.from({length:18},()=>({x:Math.random()*60,y:Math.random()*30,s:rnd(.15,.4)}));
+const clouds=[{x:0,y:3,s:.12},{x:30,y:9,s:.08}];
+let frame=0,lastDraw=0;
+function deskAt(i,p,o,working){
+  const{x,y}=slotPos(i);const L=LAY[o];const top=y-11;
+  R_(ctx,x+1,y+9,32,2,'rgba(0,0,0,.2)');
+  R_(ctx,x+3,top+3,14,y-top-3,OUTC);R_(ctx,x+4,top+4,12,y-top-4,L.chair);R_(ctx,x+4,top+4,12,1,sh(L.chair,.3));
+  if(p){const blink=((frame+p.id*13)%46)<1;const bob=working?((frame+i)%4<2?0:-1):((frame+i*5)%18<1?-1:0);drawSprite(ctx,x+4,top+bob,p,11,blink)}
+  R_(ctx,x,y,32,3,L.wood[0]);R_(ctx,x,y,32,1,sh(L.wood[0],.3));R_(ctx,x,y+3,32,6,L.wood[1]);R_(ctx,x,y+3,32,1,sh(L.wood[1],-.3));
+  R_(ctx,x,y,1,9,OUTC);R_(ctx,x+31,y,1,9,OUTC);R_(ctx,x,y+8,32,1,OUTC);R_(ctx,x+21,y+5,7,1,sh(L.wood[1],.25));
+  if(o===3)R_(ctx,x,y+2,32,1,'#C9A24A');
+  R_(ctx,x+19,y-9,10,9,OUTC);R_(ctx,x+20,y-8,8,7,'#4A4058');R_(ctx,x+21,y-7,2,1,'#6C6080');R_(ctx,x+22,y-1,4,1,OUTC);
+  if(p){R_(ctx,x+26,y-3,1,1,working?'#8FE3D8':((frame>>2)%2?'#F7C948':'#4A4058'));
+    const t=working&&(frame+i)%2;R_(ctx,x+6,y-(t?1:0),2,1,p.skin);R_(ctx,x+12,y-(t?0:1),2,1,p.skin);
+    if(working){R_(ctx,x+8,y+1,4,1,'#3B3550')}}
+  const k=i%4;
+  if(k===0){R_(ctx,x+1,y-3,3,3,'#FFF5DA');R_(ctx,x+1,y-3,3,1,'#E2434C');R_(ctx,x+4,y-2,1,1,'#FFF5DA')}
+  if(k===1){R_(ctx,x+29,y-4,2,4,'#C9975E');R_(ctx,x+28,y-7,4,3,'#6FA54E')}
+  if(k===2){R_(ctx,x+1,y-1,4,1,'#FFFFFF');R_(ctx,x+1,y-2,4,1,'#F2EDE3')}
+  if(k===3){R_(ctx,x+29,y-7,1,7,OUTC);R_(ctx,x+28,y-8,3,2,'#F7C948')}
+}
+function draw(now){
+  if(now-lastDraw<110)return;lastDraw=now;frame++;
+  const o=G?G.office:0;const winter=G?(G.month===12||G.month<=2):false;
+  const key=o+'|'+winter;if(key!==bgKey){bgC=buildBg(o,winter);bgKey=key}
+  if(!vigC)vigC=buildVig();
+  ctx.drawImage(bgC,0,0);
+  const L=LAY[o];
+  L.win.forEach(([wx,wy,ww,wh])=>{
+    ctx.save();ctx.beginPath();ctx.rect(wx,wy,ww,wh);ctx.clip();
+    if(!L.city)clouds.forEach(cl=>{const cx=wx+((cl.x+frame*cl.s)%(ww+10))-8;R_(ctx,cx,wy+cl.y,7,2,'#FFFFFF');R_(ctx,cx+2,wy+cl.y-1,3,1,'#FFFFFF')});
+    if(winter)snow.forEach(s=>R_(ctx,wx+(s.x%ww)|0,wy+((s.y+frame*s.s)%wh)|0,1,1,'#FFFFFF'));
+    ctx.restore();R_(ctx,wx+(ww>>1),wy,1,wh,'#F6F1E6');
+  });
+  if(!G){ctx.drawImage(vigC,0,0);return}
+  const n=L.posters.length;G.films.slice(-n).forEach((f,i)=>drawPoster(f,L.posters[i],6));
+  if(G.trophies){const t=Math.min(o===3?8:5,G.trophies);for(let i=0;i<t;i++){const tx=o===3?6+i*3:L.doorX-6-i*5,ty=o===3?10+(i%2?9:0)-((i%2)?0:0):20;R_(ctx,tx,ty,3,3,'#F7C948');R_(ctx,tx+1,ty+3,1,2,'#C48A22');R_(ctx,tx,ty+5,3,1,'#C48A22')}}
+  if(o===3)for(let i=0;i<3;i++){const sx=36+i*30+Math.sin(frame/12+i*2)*6;ctx.globalAlpha=.13;ctx.fillStyle='#FFE89A';ctx.beginPath();ctx.moveTo(sx,0);ctx.lineTo(sx-14,H);ctx.lineTo(sx+14,H);ctx.fill();ctx.globalAlpha=1;R_(ctx,sx-2,0,5,2,OUTC)}
+  const P=G.prod;const shooting=P&&phaseOf(P)==='촬영';
+  R_(ctx,L.doorX+6,2,7,3,shooting?((frame>>2)%2?'#FF5A5F':'#E2434C'):'#5A1E26');
+  const V=visPos();
+  if(P){
+    if(shooting){const a=findById(G.actors,P.actorId);ctx.globalAlpha=.28;ctx.fillStyle='#FFF2B0';ctx.beginPath();ctx.moveTo(V.va.x+6,0);ctx.lineTo(V.va.x-4,40);ctx.lineTo(V.va.x+16,40);ctx.fill();ctx.globalAlpha=1;
+      R_(ctx,V.va.x+1,38,10,1,'rgba(0,0,0,.25)');drawSprite(ctx,V.va.x,V.va.y+((frame%4<2)?0:-1),a,17,((frame+7)%40)<1,true)}
+    if(P.dir.type==='out'){R_(ctx,V.vd.x+1,38,10,1,'rgba(0,0,0,.25)');drawSprite(ctx,V.vd.x,V.vd.y+((frame%6<3)?0:-1),ref(P.dir,'director'),17,false,true)}
+    if(P.wri.type==='out'&&phaseOf(P)==='시나리오'){R_(ctx,V.vw.x+1,38,10,1,'rgba(0,0,0,.25)');drawSprite(ctx,V.vw.x,V.vw.y,ref(P.wri,'writer'),17,false,true)}
+  }
+  const cap=OFFICE[o].cap;const working=!!P;
+  for(let i=0;i<cap;i++)deskAt(i,G.staff[i],o,working);
+  ctx.drawImage(vigC,0,0);
+}
+function bubble(slot,text,cls){
+  let x,y;
+  if(typeof slot==='string'){const v=visPos()[slot];x=v.x+6;y=v.y-6}else{if(slot>=OFFICE[G.office].cap)return;const s=slotPos(slot);x=s.x+10;y=s.y-20}
+  const el=document.createElement('span');el.className='bub '+cls;el.textContent=text;
+  el.style.left=(x/W*100)+'%';el.style.top=(y/H*100)+'%';el.style.animationDelay=(Math.random()*.25)+'s';
+  $('#fx').appendChild(el);setTimeout(()=>el.remove(),1500);
+}
+function toast(t,cls=''){
+  if(cls==='red')sfx('bad');
+  const box=$('#toasts');const el=document.createElement('div');el.className='toast '+cls;el.textContent=t;box.appendChild(el);
+  while(box.children.length>2)box.firstChild.remove();
+  setTimeout(()=>el.remove(),3200);
+}
+
+
+/* ---------- sound (synthesized chiptune, no files) ---------- */
+const SND={ctx:null,bgm:true,sfx:true,master:null,bg:null,timer:null,step:0,next:0};
+try{const v=JSON.parse(localStorage.getItem('heunghaeng-sound')||'null');if(v){SND.bgm=!!v.bgm;SND.sfx=!!v.sfx}}catch(e){}
+function sndSave(){try{localStorage.setItem('heunghaeng-sound',JSON.stringify({bgm:SND.bgm,sfx:SND.sfx}))}catch(e){}}
+function audioInit(){
+  if(!SND.ctx){try{const C=window.AudioContext||window.webkitAudioContext;SND.ctx=new C();SND.master=SND.ctx.createGain();SND.master.gain.value=.45;SND.master.connect(SND.ctx.destination);SND.bg=SND.ctx.createGain();SND.bg.gain.value=.13;SND.bg.connect(SND.master)}catch(e){return}}
+  if(SND.ctx.state==='suspended')SND.ctx.resume();
+  if(SND.bgm&&!SND.timer)startBgm();
+}
+const mf=n=>440*Math.pow(2,(n-69)/12);
+function tone(f,t,d,type='square',v=.12,dest){const c=SND.ctx,o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0008,t+d);o.connect(g);g.connect(dest||SND.master);o.start(t);o.stop(t+d+.03)}
+const SFX={
+  click:[[76,.05,0,'square',.07]],
+  pop:[[81,.06,0,'triangle',.12],[88,.06,.05,'triangle',.1]],
+  coin:[[83,.06,0,'square',.07],[88,.18,.06,'square',.07]],
+  hire:[[79,.07,0],[84,.12,.07]],
+  level:[[72,.08,0],[76,.08,.08],[79,.08,.16],[84,.22,.24]],
+  fanfare:[[67,.1,0],[72,.1,.1],[76,.1,.2],[79,.18,.3],[76,.08,.5],[79,.35,.58]],
+  big:[[72,.1,0],[76,.1,.1],[79,.1,.2],[84,.15,.3],[79,.08,.45],[84,.1,.53],[88,.45,.63],[60,.6,.63,'triangle',.18]],
+  bad:[[64,.16,0,'sawtooth',.06],[59,.16,.16,'sawtooth',.06],[55,.35,.32,'sawtooth',.06]],
+};
+function sfx(n){if(!SND.ctx||!SND.sfx||SND.ctx.state!=='running')return;const t=SND.ctx.currentTime+.01;SFX[n].forEach(([m,d,dt,ty,v])=>tone(mf(m),t+dt,d,ty||'square',v||.09))}
+// 32 eighth notes, C major, cheerful office loop
+const MEL=[72,0,76,79,77,76,74,0, 72,74,76,0,74,0,67,0, 69,0,72,76,74,72,71,0, 72,74,72,71,69,0,67,0,
+           76,0,79,84,83,79,77,0, 76,77,79,0,77,0,72,0, 74,0,77,81,79,77,76,74, 72,0,67,0,72,0,0,0];
+const BAS=[48,55,53,48,45,52,43,50, 48,55,53,48,50,53,43,48];
+function startBgm(){
+  if(!SND.ctx||SND.timer)return;SND.next=SND.ctx.currentTime+.1;
+  SND.timer=setInterval(()=>{const c=SND.ctx;const spb=60/116/2;
+    while(SND.next<c.currentTime+.2){const i=SND.step%MEL.length;
+      if(MEL[i])tone(mf(MEL[i]),SND.next,spb*.9,'square',.09,SND.bg);
+      if(i%4===0)tone(mf(BAS[(i/4)%BAS.length]),SND.next,spb*3.6,'triangle',.28,SND.bg);
+      if(i%2===1)tone(2400,SND.next,.02,'square',.015,SND.bg);
+      SND.next+=spb;SND.step++}
+  },60);
+}
+function stopBgm(){clearInterval(SND.timer);SND.timer=null}
+document.addEventListener('pointerdown',()=>{if(SND.bgm||SND.sfx)audioInit()},{passive:true});
+document.addEventListener('visibilitychange',()=>{if(!SND.ctx)return;if(document.hidden)SND.ctx.suspend();else if(SND.bgm||SND.sfx)SND.ctx.resume()});
+
+/* ---------- HUD ---------- */
+function renderHUD(){
+  if(!G)return;
+  $('#studioName').textContent=G.studio;
+  $('#fame').textContent=Math.round(G.fame);
+  $('#date').textContent=`${G.year}년차 ${G.month}월 ${G.week}주`;
+  $('#money').textContent=Math.abs(G.money)>=10000?(G.money/10000).toFixed(Math.abs(G.money)>=1e6?0:1).replace(/\.0$/,'')+'억':fmtMoney(G.money);$('#moneyPill').classList.toggle('neg',G.money<0);
+  const on=SND.bgm||SND.sfx;const mb=$('#muteBtn');mb.setAttribute('aria-pressed','false');mb.querySelector('img').src=IC[on?'note':'mute'];
+  document.querySelectorAll('[data-act="speed"]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.v===G.speed)));
+  const P=G.prod;let h='';
+  if(P){
+    const pct=Math.round(P.w/P.weeks*100);
+    h+=`<div class="st-head"><span class="st-title">${esc(P.title)}</span><span class="chip g" style="background:${GCOLOR[P.genre]}">${P.genre}</span></div>
+    <div class="st-sub"><span>${phaseOf(P)} 중 · 소재 ${P.topic}</span><span class="pix">남은 ${P.weeks-P.w}주</span></div>
+    <div class="bar"><i style="width:${pct}%"></i></div>
+    <div class="pts"><div class="pt fun">${ic('heart')}재미<b>${Math.round(P.fun)}</b></div><div class="pt craft">${ic('reel')}완성<b>${Math.round(P.craft)}</b></div><div class="pt buzz">${ic('mega')}화제<b>${Math.round(P.mk*.6/Math.max(1,P.w)+P.buzz)}</b></div></div>`;
+  }else if(G.pending){
+    h+=`<div class="st-head"><span class="st-title">${esc(G.pending.title)}</span><span class="chip" style="background:var(--gold)">완성!</span></div><button class="btn red" data-act="tab" data-v="prod">개봉 방식 정하기</button>`;
+  }else{
+    h+=`<div class="st-head"><span class="st-title">다음 작품 기획 중</span><span class="chip">외주 작업 중</span></div>
+    <div class="st-sub"><span>직원들이 광고와 뮤직비디오 외주로 돈을 벌고 있어요.</span></div>
+    <button class="btn red" data-act="tab" data-v="prod">새 영화 만들기</button>`;
+  }
+  const shw=G.films.filter(f=>f.status==='showing');
+  if(shw.length){h+=`<div class="ticker">${shw.map(f=>`<div class="row"><span><i class="lamp"></i>상영 중 ${esc(f.title)}</span><span class="pix">${f.wi?f.rank+'위 · ':''}${fmtAud(f.aud)}</span></div>`).join('')}</div>`}
+  $('#status').innerHTML=h;
+}
+
+/* ---------- sheets ---------- */
+function openSheet(kind){UI.sheet=kind;UI.confirm=null;renderSheet();$('#sheetWrap').hidden=false;$('#sheetBody').scrollTop=0}
+function closeSheet(){UI.sheet=null;$('#sheetWrap').hidden=true;renderHUD()}
+const LOCKED_SHEETS=['intro','release','gameover'];
+function renderSheet(){
+  const k=UI.sheet;if(!k||!SHEETS[k])return;const r=SHEETS[k]();$('#sheetTitle').textContent=r[0];$('#sheetBody').innerHTML=r[1];
+  $('#sheetClose').hidden=LOCKED_SHEETS.includes(k)||k==='result'||k==='awards';
+}
+function personCard(p,{act='',sel=false,dis=false,side='',extra=''}={}){
+  const st=ROLE_STATS[p.role]||Object.keys(p.stats);
+  return `<button class="card" ${act} aria-pressed="${sel}" ${dis?'disabled':''}><img class="av" alt="" src="${avatar(p)}"><span class="main"><span class="nm">${esc(p.name)}${p.lv?` <span class="chip">Lv.${p.lv}</span>`:''}${p.parody?' <span class="chip" style="background:#F5C542">거장</span>':''}</span>
+  <span class="stats">${st.map(s=>`<span>${STAT_LABEL[s]} <b>${p.stats[s]}</b></span>`).join('')}</span>${extra}</span><span class="side">${side}</span></button>`;
+}
+const masteryTxt=(p,g)=>{const n=Math.min(5,(p.mastery||{})[g]||0);return n?`<span class="muted">${g} 숙련 ${'●'.repeat(n)}</span>`:`<span class="muted">${g} 경험 없음</span>`};
+const SHEETS={
+  intro(){return['새 영화사 설립',`
+    <div class="poster" style="background:var(--red)"><span class="t">흥행제작소</span><span>반지하 원룸에서 천만 영화까지</span></div>
+    <label class="muted" for="inStudio">영화사 이름</label><input type="text" id="inStudio" maxlength="12" placeholder="예: 복숭아필름" autocomplete="off">
+    <div id="introErr" class="muted" style="color:var(--red)" hidden>영화사 이름을 지어주세요.</div>
+    <label class="muted" for="inBoss">대표 이름</label><input type="text" id="inBoss" maxlength="8" placeholder="예: 김대표" autocomplete="off">
+    <div class="note">장르와 소재를 조합해 영화를 만들고, 감독과 작가, 배우를 섭외해 흥행을 노려보세요. 자금이 -10억 아래로 떨어지면 파산이에요.</div>
+    <button class="btn red" data-act="start">영화사 차리기</button>`]},
+  gameover(){return['파산했어요',`<div class="center big">THE END</div><div class="center muted">${G.year}년차 ${G.month}월, 자금이 바닥났어요. 만든 영화 ${G.films.length}편.</div><button class="btn red" data-act="restart">처음부터 다시</button>`]},
+  wizard(){return WIZ[UI.wiz.step]()},
+  prodInfo(){const P=G.prod;const D=ref(P.dir,'director'),Wr=ref(P.wri,'writer'),A=findById(G.actors,P.actorId);
+    return['제작 현황',`<div class="poster" style="background:${GCOLOR[P.genre]}"><span class="t">${esc(P.title)}</span><span>${P.genre} × ${P.topic}</span></div>
+    <div class="sumtbl"><div><span>감독</span><span>${esc(D.name)}</span></div><div><span>작가</span><span>${esc(Wr.name)}</span></div><div><span>주연</span><span>${esc(A.name)}</span></div><div><span>규모</span><span>${BUDGET[P.budget].name}</span></div><div><span>등급</span><span>${RATING[P.rating]}</span></div><div><span>진행</span><span>${P.w}/${P.weeks}주 (${phaseOf(P)})</span></div></div>
+    <div class="note">제작이 끝나면 극장 개봉과 OTT 판매 중에서 고를 수 있어요.</div>`]},
+  release(){const f=G.pending;const e=estimate(f,UI.camp);const err=Math.max(.15,.6-maxStat('plan')/250);const off=ottOffer(f);const camp=CAMPAIGN[UI.camp];
+    const m=G.ottReq&&G.ottReq.genre===f.genre;
+    return['개봉 준비',`<div class="poster" style="background:${GCOLOR[f.genre]}"><span class="t">${esc(f.title)}</span><span>${f.genre} × ${f.topic} · ${RATING[f.rating]}</span></div>
+    <h3>극장 개봉</h3>
+    <div class="grid4">${CAMPAIGN.map((c,i)=>`<button class="pick" data-act="camp" data-v="${i}" aria-pressed="${UI.camp===i}" ${c.cost>G.money?'disabled':''}>${c.name}<span class="st">${c.cost?fmtMoney(c.cost):'무료'}</span></button>`).join('')}</div>
+    <div class="sumtbl"><div><span>기획팀 예상 관객</span><span>${fmtAud(e*(1-err))} ~ ${fmtAud(e*(1+err))}</span></div><div><span>예상 매출</span><span>${fmtMoney(e*(1-err)*.5)} ~ ${fmtMoney(e*(1+err)*.5)}</span></div><div><span>시즌</span><span>${seasonName(G.month)}${G.trend===f.genre?' · 유행 장르':''}</span></div><div class="tot"><span>제작비</span><span>${fmtMoney(f.cost)}</span></div></div>
+    <div class="muted">흥행은 운도 따라요. 대박이 날 수도, 쪽박이 날 수도 있어요.</div>
+    <button class="btn red" data-act="theater">극장 개봉하기${camp.cost?' ('+fmtMoney(camp.cost)+' 홍보)':''}</button>
+    <h3>OTT 판매</h3>
+    <div class="sumtbl"><div><span>${m?G.ottReq.ott+' (의뢰작)':'최고 제안'}</span><span>${fmtMoney(off)}</span></div><div><span>흥행 보너스</span><span>없음</span></div></div>
+    <button class="btn teal" data-act="ott">OTT에 ${fmtMoney(off)}에 팔기</button>`]},
+  result(){const f=G.films.find(x=>x.id===UI.resultId);if(!f)return['결과',''];
+    const ott=f.status==='ott';
+    return[ott?'OTT 공개':'최종 성적',`<div class="poster" style="background:${GCOLOR[f.genre]}"><span class="t">${esc(f.title)}</span><span>${f.genre} × ${f.topic}</span></div>
+    <div class="center"><div class="stars big">${stars(f.combo)}</div><div style="font-family:var(--display)">${COMBO_LABEL[f.combo]}</div></div>
+    <div class="sumtbl"><div><span>관객 평점</span><span>${f.A.toFixed(1)}</span></div><div><span>평론가 평점</span><span>${f.C.toFixed(1)}</span></div>
+    ${ott?`<div><span>공개 첫 주 시청 순위</span><span>${f.ottRank}위</span></div><div><span>판매가</span><span>${fmtMoney(f.rev)}</span></div>`:`<div><span>최종 관객</span><span>${fmtAud(f.aud)}</span></div><div><span>매출</span><span>${fmtMoney(f.rev)}</span></div><div><span>홍보비</span><span>${fmtMoney(f.campCost)}</span></div>`}
+    <div><span>제작비</span><span>${fmtMoney(f.cost)}</span></div><div class="tot"><span>순이익</span><span class="${f.profit>=0?'pos':'negc'}">${fmtMoney(f.profit)}</span></div><div><span>명성</span><span>${f.fameUp>=0?'+':''}${f.fameUp}</span></div></div>
+    ${f.luckMsg?`<div class="note">${f.luckMsg}</div>`:''}
+    <button class="btn red" data-act="close">확인</button>`]},
+  awards(){const r=UI.awards||[];return[`${G.year}년차 황금복숭아 영화제`,r.length?`<div class="center big">축하해요!</div><div class="sumtbl">${r.map(([a,b])=>`<div><span>${a}</span><span>${esc(b)}</span></div>`).join('')}</div><div class="note">상금 ${fmtMoney(r.length*10000)}, 명성 +${r.length*2}</div><button class="btn red" data-act="close">확인</button>`:`<div class="center big">수상 실패</div><div class="center muted">올해는 빈손이에요. 내년엔 레드카펫을 밟아봐요.</div><button class="btn red" data-act="close">확인</button>`]},
+  staff(){const cap=OFFICE[G.office].cap;
+    return[`직원 (${G.staff.length}/${cap})`,`<div class="list">${G.staff.map(p=>personCard(p,{side:`${ROLE_LABEL[p.role]}<br>${p.salary?'월 '+fmtMoney(p.salary):''}<br>${p.role==='boss'?'':UI.confirm===p.id?`<span class="btn sm red" data-act="fire" data-id="${p.id}">정말 해고</span>`:`<span class="btn sm plain" data-act="askfire" data-id="${p.id}">해고</span>`}`,extra:`<span class="muted">${p.trait} · ${TRAITS.find(t=>t[0]===p.trait)[1]}</span>`})).join('')}</div>
+    <h3>채용 공고</h3><div class="muted">매달 새 지원자가 와요. 채용비는 월급 3개월치.</div>
+    <div class="list">${G.recruits.map(p=>{const fee=p.salary*3;const full=G.staff.length>=cap;return personCard(p,{act:`data-act="hire" data-id="${p.id}"`,dis:full||fee>G.money,side:`${ROLE_LABEL[p.role]}<br>월 ${fmtMoney(p.salary)}<br>채용 ${fmtMoney(fee)}`,extra:`<span class="muted">${p.trait}${full?' · 자리 없음':''}</span>`})}).join('')||'<div class="muted">이번 달 지원자를 모두 채용했어요.</div>'}</div>
+    <button class="btn plain" data-act="repost" ${G.money<300?'disabled':''}>공고 다시 내기 (300만)</button>`]},
+  actors(){const cp=castPower();
+    const list=[...G.actors].sort((a,b)=>GRADE[b.grade].req-GRADE[a.grade].req||b.pop-a.pop);
+    return['배우 명단',`<div class="note">캐스팅 역량 <b class="pix">${cp}</b>. 캐스팅 직원의 능력과 회사 명성이 높을수록 더 유명한 배우를 섭외할 수 있어요.</div>
+    <div class="list">${list.map(a=>actorCard(a,cp)).join('')}</div>`]},
+  office(){const o=OFFICE[G.office],n=OFFICE[G.office+1];
+    return['회사 정보',`<h3>영화사 이름</h3><div class="row2"><input type="text" id="renameIn" maxlength="12" value="${esc(G.studio)}" autocomplete="off"><button class="btn sm" data-act="rename">바꾸기</button></div>
+    <h3>소리</h3><div class="grid4" style="grid-template-columns:repeat(2,1fr)"><button class="pick" data-act="sndBgm" aria-pressed="${SND.bgm}">배경음악 ${SND.bgm?'켬':'끔'}</button><button class="pick" data-act="sndSfx" aria-pressed="${SND.sfx}">효과음 ${SND.sfx?'켬':'끔'}</button></div>
+    <h3>회사 현황</h3><div class="sumtbl"><div><span>사무실</span><span>${o.name}</span></div><div><span>정원</span><span>${o.cap}명</span></div><div><span>월 임대료</span><span>${fmtMoney(o.rent)}</span></div><div><span>월 인건비</span><span>${fmtMoney(salaries())}</span></div><div><span>명성</span><span>${Math.round(G.fame)}</span></div><div><span>올해 유행 장르</span><span>${G.trend}</span></div><div><span>이번 달</span><span>${seasonName(G.month)}</span></div></div>
+    ${G.ottReq?`<div class="note"><b>${G.ottReq.ott}</b> 의뢰: ${G.ottReq.genre} 영화를 만들어 팔면 판매가 1.6배</div>`:''}
+    ${n?`<h3>이사하기</h3><div class="sumtbl"><div><span>${n.name}</span><span>${fmtMoney(n.cost)}</span></div><div><span>혜택</span><span>${n.perk}</span></div><div><span>월 임대료</span><span>${fmtMoney(n.rent)}</span></div></div><button class="btn red" data-act="upgrade" ${G.money<n.cost?'disabled':''}>${G.money<n.cost?'자금이 부족해요':'이사하기'}</button>`:'<div class="note">최고 사무실이에요. 이제 천만 영화만 남았어요.</div>'}
+    <h3>시즌 팁</h3><div class="muted">여름엔 액션, SF, 호러, 판타지. 12월엔 로맨스와 애니. 설과 추석 시즌엔 코미디, 드라마, 가족 영화가 잘 돼요.</div>
+    ${UI.confirm==='reset'?`<button class="btn red" data-act="restart">정말 처음부터 다시 하기</button>`:`<button class="btn plain" data-act="askreset">처음부터 다시 하기</button>`}`]},
+  records(){
+    const fs=[...G.films].reverse();
+    return['작품 기록',`<div class="list">${fs.map(f=>`<div class="film" style="--gc:${GCOLOR[f.genre]}"><div class="top"><b>${esc(f.title)}</b><span class="chip g" style="background:${GCOLOR[f.genre]}">${f.genre}</span></div>
+      <div class="muted">${f.year}년차 ${f.month}월 · ${f.topic} · ${f.status==='ott'?'OTT 판매':f.status==='showing'?'상영 중':'극장 개봉'}</div>
+      <div class="stats"><span>관객 <b>${f.status==='ott'?'-':fmtAud(f.aud)}</b></span><span>평점 <b>${f.A.toFixed(1)}</b></span><span>순이익 <b class="${(f.profit??0)>=0?'pos':'negc'}">${f.status==='showing'?'집계 중':fmtMoney(f.profit)}</b></span></div>
+      ${f.status==='done'&&f.aud>=2e6&&!G.prod&&!G.pending?`<button class="btn sm" data-act="sequel" data-id="${f.id}">속편 제작</button>`:''}</div>`).join('')||'<div class="muted">아직 만든 영화가 없어요.</div>'}</div>
+      <h3>조합 도감</h3><div class="muted">개봉한 조합만 기록돼요. 별 3개가 최고의 조합.</div>
+      <div class="dex">${GENRES.map(g=>{const ts=G.topics.filter(t=>G.combos[g+'|'+t]!=null);return `<div class="g"><span class="chip" style="background:${GCOLOR[g]}">${g}</span><span class="ts">${ts.map(t=>`<span class="chip">${t} <span class="stars">${stars(G.combos[g+'|'+t])}</span></span>`).join('')||'<span class="muted">-</span>'}</span></div>`}).join('')}</div>`]},
+};
+function actorCard(a,cp,act='',sel=false){
+  const req=GRADE[a.grade].req;const lock=cp<req;
+  const g=UI.wiz&&UI.sheet==='wizard'?UI.wiz.genre:null;
+  return `<button class="card" ${act} aria-pressed="${sel}" ${lock||(act&&a.fee>G.money)?'disabled':''}><img class="av" alt="" src="${avatar(a)}"><span class="main"><span class="nm"><span class="grade ${a.grade}">${GRADE_LABEL[a.grade]}</span>${esc(a.name)}</span>
+  <span class="stats"><span>연기 <b>${a.act}</b></span><span>인기 <b>${a.pop}</b></span></span><span class="muted">적성 ${a.apt.map(x=>x===g?`<b style="color:var(--red)">${x}</b>`:x).join(', ')}</span></span>
+  <span class="side">${lock?`캐스팅 ${req} 필요`:fmtMoney(a.fee)}</span></button>`;
+}
+
+/* ---------- wizard ---------- */
+function wizCost(){
+  const w=UI.wiz;let c=BUDGET[w.budget].cost-PPL[w.ppl].support;
+  if(w.dir&&w.dir.type==='out')c+=findById(G.outDir,w.dir.id).fee;
+  if(w.wri&&w.wri.type==='out')c+=findById(G.outWri,w.wri.id).fee;
+  if(w.actor)c+=findById(G.actors,w.actor).fee;
+  return c;
+}
+function stepsBar(n){return `<div class="steps">${[0,1,2,3,4].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</div>`}
+function wizFoot(nextOk,last){const s=UI.wiz.step;return `<div class="foot">${s>0?`<button class="btn plain" data-act="wprev">이전</button>`:''}${last?`<button class="btn red" data-act="wstart" ${nextOk?'':'disabled'}>${nextOk?'제작 시작':'자금이 부족해요'}</button>`:`<button class="btn red" data-act="wnext" ${nextOk?'':'disabled'}>다음</button>`}</div>`}
+const WIZ=[
+  ()=>{const w=UI.wiz;return['1. 장르와 소재',stepsBar(0)+`
+    <h3>장르</h3><div class="grid5">${GENRES.map(g=>`<button class="pick" data-act="wgenre" data-v="${g}" aria-pressed="${w.genre===g}">${g}${G.trend===g?'<span class="st">유행</span>':''}</button>`).join('')}</div>
+    <h3>소재</h3><div class="grid5">${[...TOPICS_START,...TOPICS_LOCKED].map(t=>{const un=G.topics.includes(t);const k=G.combos[w.genre+'|'+t];return `<button class="pick" data-act="wtopic" data-v="${t}" aria-pressed="${w.topic===t}" ${un?'':'disabled'}>${un?t:'???'}${k!=null?`<span class="st">${stars(k)}</span>`:''}</button>`}).join('')}</div>
+    <div class="muted">잠긴 소재는 기획 능력이 좋은 직원이 회의에서 찾아내요.</div>
+    <h3>제목</h3><div class="row2"><input type="text" id="titleIn" maxlength="16" value="${esc(w.title)}"><button class="btn sm" data-act="wtitle">다시 짓기</button></div>
+    ${wizFoot(w.genre&&w.topic&&w.title.trim())}`]},
+  ()=>{const w=UI.wiz;const ex=G.staff.filter(p=>p.role==='director');
+    return['2. 감독',stepsBar(1)+`${ex.length?`<h3>전속 감독</h3><div class="list">${ex.map(p=>personCard(p,{act:`data-act="wdir" data-type="ex" data-id="${p.id}"`,sel:w.dir&&w.dir.id===p.id,side:'추가 비용 없음',extra:masteryTxt(p,w.genre)})).join('')}</div>`:''}
+    <h3>외주 감독</h3><div class="list">${G.outDir.map(p=>{const lock=G.fame<p.fameReq;return personCard(p,{act:`data-act="wdir" data-type="out" data-id="${p.id}"`,sel:w.dir&&w.dir.id===p.id,dis:lock,side:lock?`명성 ${p.fameReq} 필요`:fmtMoney(p.fee),extra:masteryTxt(p,w.genre)})}).join('')}</div>${wizFoot(!!w.dir)}`]},
+  ()=>{const w=UI.wiz;const ex=G.staff.filter(p=>p.role==='writer');
+    return['3. 작가',stepsBar(2)+`${ex.length?`<h3>전속 작가</h3><div class="list">${ex.map(p=>personCard(p,{act:`data-act="wwri" data-type="ex" data-id="${p.id}"`,sel:w.wri&&w.wri.id===p.id,side:'추가 비용 없음',extra:masteryTxt(p,w.genre)})).join('')}</div>`:''}
+    <h3>외주 작가</h3><div class="list">${G.outWri.map(p=>{const lock=G.fame<p.fameReq;return personCard(p,{act:`data-act="wwri" data-type="out" data-id="${p.id}"`,sel:w.wri&&w.wri.id===p.id,dis:lock,side:lock?`명성 ${p.fameReq} 필요`:fmtMoney(p.fee),extra:masteryTxt(p,w.genre)})}).join('')}</div>${wizFoot(!!w.wri)}`]},
+  ()=>{const w=UI.wiz;const cp=castPower();const list=[...G.actors].sort((a,b)=>(cp>=GRADE[b.grade].req)-(cp>=GRADE[a.grade].req)||(b.apt.includes(w.genre))-(a.apt.includes(w.genre))||b.pop-a.pop);
+    return['4. 주연 배우',stepsBar(3)+`<div class="note">캐스팅 역량 <b class="pix">${cp}</b> · 장르 적성이 맞는 배우는 연기력이 20% 올라가요.</div><div class="list">${list.map(a=>actorCard(a,cp,`data-act="wactor" data-id="${a.id}"`,w.actor===a.id)).join('')}</div>${wizFoot(!!w.actor)}`]},
+  ()=>{const w=UI.wiz;const cost=wizCost();const D=ref(w.dir,'director'),Wr=ref(w.wri,'writer'),A=findById(G.actors,w.actor);
+    return['5. 규모와 등급',stepsBar(4)+`
+    <h3>제작 규모</h3><div class="list">${Object.entries(BUDGET).map(([k,b])=>`<button class="card" data-act="wbudget" data-v="${k}" aria-pressed="${w.budget===k}"><span class="main"><span class="nm">${b.name}</span><span class="muted">${b.desc}</span></span><span class="side">${fmtMoney(b.cost)}</span></button>`).join('')}</div>
+    <h3>관람 등급</h3><div class="grid4" style="grid-template-columns:repeat(3,1fr)">${Object.entries(RATING).map(([k,n])=>`<button class="pick" data-act="wrating" data-v="${k}" aria-pressed="${w.rating===k}">${n}</button>`).join('')}</div>
+    <div class="muted">전체관람가는 관객층이 넓지만 어두운 장르와는 안 맞아요. 청불은 관객이 줄지만 호러와 스릴러는 평론가가 좋아해요.</div>
+    <h3>PPL</h3><div class="grid4" style="grid-template-columns:repeat(3,1fr)">${Object.entries(PPL).map(([k,p])=>`<button class="pick" data-act="wppl" data-v="${k}" aria-pressed="${w.ppl===k}">${p.name}${p.support?`<span class="st">+${fmtMoney(p.support)}</span>`:''}</button>`).join('')}</div>
+    <div class="muted">${w.ppl==='none'?'PPL을 넣으면 제작비를 지원받아요.':(PPL[w.ppl].fit.includes(w.topic)||w.genre==='코미디')?'이 영화엔 자연스럽게 녹아들어서 재미가 살짝 올라가요.':'영화와 안 어울려서 관객 평점이 살짝 깎일 수 있어요.'}</div>
+    <div class="sumtbl"><div><span>${esc(w.title)}</span><span>${w.genre} × ${w.topic}</span></div>
+    <div><span>감독 ${esc(D.name)}</span><span>${w.dir.type==='out'?fmtMoney(D.fee):'전속'}</span></div>
+    <div><span>작가 ${esc(Wr.name)}</span><span>${w.wri.type==='out'?fmtMoney(Wr.fee):'전속'}</span></div>
+    <div><span>주연 ${esc(A.name)}</span><span>${fmtMoney(A.fee)}</span></div>
+    <div><span>${BUDGET[w.budget].name} 제작비</span><span>${fmtMoney(BUDGET[w.budget].cost)}</span></div>
+    ${PPL[w.ppl].support?`<div><span>PPL 지원</span><span>-${fmtMoney(PPL[w.ppl].support)}</span></div>`:''}
+    <div class="tot"><span>총 비용</span><span>${fmtMoney(cost)}</span></div><div><span>보유 자금</span><span>${fmtMoney(G.money)}</span></div></div>
+    ${wizFoot(cost<=G.money,true)}`]},
+];
+
+/* ---------- actions ---------- */
+const ACT={
+  speed(d){G.speed=+d.v;renderHUD();save()},
+  backdrop(){if(!LOCKED_SHEETS.includes(UI.sheet)&&UI.sheet!=='result'&&UI.sheet!=='awards')closeSheet()},
+  close(){closeSheet()},
+  tab(d){if(!G||G.over)return;
+    if(d.v==='prod'){if(G.pending){openSheet('release');return}if(G.prod){openSheet('prodInfo');return}
+      UI.wiz={step:0,genre:null,topic:null,title:'',dir:null,wri:null,actor:null,budget:'low',rating:'15',ppl:'none',sequelOf:null};openSheet('wizard');return}
+    openSheet(d.v)},
+  start(){const s=($('#inStudio').value||'').trim(),b=($('#inBoss').value||'').trim()||'김대표';if(!s){$('#introErr').hidden=false;$('#inStudio').focus();return}audioInit();newGame(s,b);sfx('fanfare');closeSheet();toast('제작 버튼을 눌러 첫 영화를 만들어보세요!','gold')},
+  restart(){try{localStorage.removeItem(KEY)}catch(e){}G=null;UI.avatars={};$('#fx').innerHTML='';openSheet('intro')},
+  rename(){const v=($('#renameIn').value||'').trim();if(!v)return;G.studio=v;renderHUD();toast(`영화사 이름을 ${v}로 바꿨어요`,'gold');save()},
+  sndBgm(){SND.bgm=!SND.bgm;audioInit();SND.bgm?startBgm():stopBgm();sndSave();renderSheet();renderHUD()},
+  sndSfx(){SND.sfx=!SND.sfx;audioInit();sndSave();sfx('click');renderSheet();renderHUD()},
+  mute(){audioInit();const on=!(SND.bgm||SND.sfx);SND.bgm=on;SND.sfx=on;on?startBgm():stopBgm();sndSave();renderHUD()},
+  askreset(){UI.confirm='reset';renderSheet()},
+  wgenre(d){const w=UI.wiz;w.genre=d.v;if(w.topic&&!w.title)w.title=makeTitle(w.topic);renderSheet()},
+  wtopic(d){const w=UI.wiz;const old=w.topic;w.topic=d.v;if(!w.title||(old&&w.title.includes(old)))w.title=makeTitle(d.v);renderSheet()},
+  wtitle(){const w=UI.wiz;if(w.topic)w.title=makeTitle(w.topic);renderSheet()},
+  wnext(){UI.wiz.step++;renderSheet();$('#sheetBody').scrollTop=0},
+  wprev(){UI.wiz.step--;renderSheet();$('#sheetBody').scrollTop=0},
+  wdir(d){UI.wiz.dir={type:d.type,id:+d.id};renderSheet()},
+  wwri(d){UI.wiz.wri={type:d.type,id:+d.id};renderSheet()},
+  wactor(d){UI.wiz.actor=+d.id;renderSheet()},
+  wbudget(d){UI.wiz.budget=d.v;renderSheet()},
+  wrating(d){UI.wiz.rating=d.v;renderSheet()},
+  wppl(d){UI.wiz.ppl=d.v;renderSheet()},
+  wstart(){const w=UI.wiz;const cost=wizCost();if(cost>G.money)return;G.money-=cost;
+    G.prod={title:w.title.trim(),genre:w.genre,topic:w.topic,dir:w.dir,wri:w.wri,actorId:w.actor,budget:w.budget,rating:w.rating,ppl:w.ppl,sequelOf:w.sequelOf,weeks:BUDGET[w.budget].weeks,w:0,fun:0,craft:0,mk:0,buzz:0,cost};
+    UI.wiz=null;closeSheet();toast(`${G.prod.title} 크랭크인!`,'gold');sfx('level');save()},
+  camp(d){UI.camp=+d.v;renderSheet()},
+  theater(){const f=G.pending;const c=CAMPAIGN[UI.camp];G.money-=c.cost;
+    const e=estimate(f,UI.camp);let luck,msg='';const r=Math.random();
+    if(r<.07){luck=.45;msg=pick(['개봉 주에 초대형 경쟁작과 맞붙었어요... 쪽박의 기운','개봉 직전 스포일러가 퍼져버렸어요'])}
+    else if(r>.93){luck=2.1;msg=pick(['명장면이 SNS 밈이 되어 역주행 중!','입소문이 터져 N차 관람 열풍!'])}
+    else luck=Math.exp(gauss()*.18);
+    Object.assign(f,{status:'showing',total:Math.round(e*luck),d:clamp(.3+f.A*.055,.3,.86),wi:0,aud:0,rev:0,last:0,ms:[],luck,luckMsg:msg,campCost:c.cost,year:G.year,month:G.month});
+    G.combos[f.genre+'|'+f.topic]=f.combo;G.films.push(f);G.pending=null;
+    if(G.ottReq&&G.ottReq.genre===f.genre)toast('극장 개봉을 택해 OTT 의뢰는 그대로 남아있어요');
+    closeSheet();toast(`${f.title} 다음 주 개봉!`,'gold');sfx('fanfare');save()},
+  ott(){const f=G.pending;const off=ottOffer(f);const m=G.ottReq&&G.ottReq.genre===f.genre;
+    G.money+=off;Object.assign(f,{status:'ott',rev:off,aud:0,campCost:0,profit:off-f.cost,year:G.year,month:G.month,ottRank:clamp(Math.round(11-f.Q/10+rnd(-1,1)),1,10)});
+    f.fameUp=1+(f.A>=8?1:0);G.fame=clamp(G.fame+f.fameUp,0,100);if(m)G.ottReq=null;
+    G.combos[f.genre+'|'+f.topic]=f.combo;G.films.push(f);G.pending=null;UI.resultId=f.id;openSheet('result');sfx('coin');save()},
+  hire(d){const p=G.recruits.find(x=>x.id===+d.id);if(!p)return;const fee=p.salary*3;if(fee>G.money||G.staff.length>=OFFICE[G.office].cap)return;
+    G.money-=fee;G.staff.push(p);G.recruits=G.recruits.filter(x=>x!==p);toast(`${p.name} 입사! 환영해요`,'gold');sfx('hire');renderSheet();renderHUD();save()},
+  askfire(d){UI.confirm=+d.id;renderSheet()},
+  fire(d){const id=+d.id;if(G.prod&&((G.prod.dir.type==='ex'&&G.prod.dir.id===id)||(G.prod.wri.type==='ex'&&G.prod.wri.id===id))){toast('제작 중인 영화의 감독이나 작가는 내보낼 수 없어요','red');UI.confirm=null;renderSheet();return}
+    G.staff=G.staff.filter(p=>p.id!==id);UI.confirm=null;renderSheet();renderHUD();save()},
+  repost(){if(G.money<300)return;G.money-=300;refreshRecruits();renderSheet();renderHUD()},
+  upgrade(){const n=OFFICE[G.office+1];if(!n||G.money<n.cost)return;G.money-=n.cost;G.office++;toast(`${n.name}로 이사했어요!`,'gold');sfx('big');renderSheet();renderHUD();save()},
+  sequel(d){const f=G.films.find(x=>x.id===+d.id);if(!f)return;const mt=f.title.match(/^(.*?)\s*(\d+)$/);
+    const title=mt&&+mt[2]<10?mt[1]+' '+(+mt[2]+1):f.title+' 2';
+    UI.wiz={step:1,genre:f.genre,topic:f.topic,title,dir:null,wri:null,actor:null,budget:f.budget,rating:f.rating,ppl:'none',sequelOf:f.id};openSheet('wizard')},
+};
+const QUIET=new Set(['start','hire','theater','ott','wstart','upgrade','sndSfx','mute','sndBgm']);
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b||b.disabled)return;const f=ACT[b.dataset.act];if(!f)return;if(!QUIET.has(b.dataset.act))sfx('click');f(b.dataset,b)});
+document.addEventListener('input',e=>{if(e.target.id==='titleIn'&&UI.wiz){UI.wiz.title=e.target.value;const nb=document.querySelector('[data-act="wnext"]');if(nb)nb.disabled=!(UI.wiz.genre&&UI.wiz.topic&&UI.wiz.title.trim())}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&G)save()});
+
+/* ---------- loop ---------- */
+let acc=0,last=performance.now();
+function loop(now){
+  const dt=Math.min(500,now-last);last=now;
+  if(G&&!UI.sheet&&!G.over&&G.speed>0){acc+=dt*SPEEDS[G.speed];while(acc>=WEEK_MS){acc-=WEEK_MS;tick();if(UI.sheet){acc=0;break}}}
+  draw(now);requestAnimationFrame(loop);
+}
+function start(data){
+  G=(data&&data.G)||load();
+  if(G&&G.over)G=null;
+  if(G){renderHUD();if(G.pending)openSheet('release')}else{openSheet("intro")}
+  requestAnimationFrame(loop);
+}
+window.claude?.hot?.snapshot?.(()=>({G}));
+window.__snd=SND;
+window.claude?.hot?.ready?window.claude.hot.ready(start):start(window.claude?.hot?.data??{});
+window.__game={get G(){return G},tick:()=>tick(),ACT,UI};
+})();
+</script>
+
+<script>if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
+</body>
+</html>

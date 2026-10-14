@@ -1,0 +1,17 @@
+{
+  "name": "흥행제작소",
+  "short_name": "흥행제작소",
+  "description": "반지하 원룸에서 천만 영화까지, 픽셀 영화사 경영 게임",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#6E1A2A",
+  "theme_color": "#6E1A2A",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
