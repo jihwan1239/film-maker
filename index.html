@@ -16,7 +16,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Jua&display=swap" rel="stylesheet">
 <style>
 /* Layout: arcade cabinet in a theater. Red marquee sign, film-strip screen for the pixel office,
    clapper slate for the current film, chunky pixel tab buttons, ticket-style bottom sheets.
@@ -31,7 +31,7 @@
   --muted:#7B6670;
   --curtain:#55101F; --curtain2:#741B2F; --curtain3:#93283F;
   --display:"Jua","Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --body:"Jua","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --pixel:"DotGothic16","Jua","Apple SD Gothic Neo",monospace;
   color-scheme:light;
 }
@@ -56,7 +56,7 @@ img.ic{width:18px;height:18px;image-rendering:pixelated;display:inline-block;ver
 .fr2{margin:2px;box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink)}
 
 /* marquee */
-.marquee{background:var(--red);padding:16px 12px 16px;position:relative;
+.marquee{background:var(--red);padding:16px 12px 16px;position:relative;margin:4px;
   box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,6,14,.45),inset 0 3px 0 0 var(--red-l),inset 0 -3px 0 0 var(--red-d)}
 .marquee::before,.marquee::after{content:"";position:absolute;left:8px;right:8px;height:6px;
   background:radial-gradient(circle,#FFFBE0 0 1.4px,var(--gold) 1.8px 2.6px,transparent 3px) 0 0/12px 6px repeat-x,
@@ -72,11 +72,12 @@ img.ic{width:18px;height:18px;image-rendering:pixelated;display:inline-block;ver
   box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -3px 0 0 var(--paper3),0 4px 0 0 var(--red-d)}
 .ctrl button img{width:14px;height:14px;image-rendering:pixelated}
 .ctrl button[aria-pressed="true"]{background:var(--ink);box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 2px 0 0 #000;transform:translateY(2px)}
-.hud{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.pill{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--paper);padding:3px 9px 3px 6px;font-family:var(--pixel);font-size:14px;line-height:20px;font-variant-numeric:tabular-nums;white-space:nowrap;
-  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -2px 0 0 var(--ink3);margin:2px}
-.pill img{width:14px;height:14px;image-rendering:pixelated}
-.pill.money{color:var(--gold-l)}.pill.money.neg{color:var(--red-l)}
+.hud{display:grid;grid-template-columns:1.25fr 1.1fr .65fr;margin:12px 2px 0;background:var(--ink);
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -3px 0 0 var(--ink3)}
+.seg1{display:flex;align-items:center;justify-content:center;gap:6px;padding:5px 6px 7px;color:var(--paper);font-family:var(--pixel);font-size:14px;line-height:18px;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:0}
+.seg1+.seg1{box-shadow:inset 2px 0 0 0 var(--ink3)}
+.seg1 img{width:14px;height:14px;image-rendering:pixelated}
+.seg1.money{color:var(--gold-l)}.seg1.money.neg{color:var(--red-l)}
 
 /* screen with film strip */
 .scene{background:#120C17;padding:8px 18px;position:relative;flex:1 0 auto;display:flex;flex-direction:column}
@@ -90,20 +91,21 @@ img.ic{width:18px;height:18px;image-rendering:pixelated;display:inline-block;ver
   box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink);animation:up 1.15s ease-out forwards}
 .bub.fun{background:var(--pink-l)}.bub.craft{background:var(--mint-l)}.bub.buzz{background:var(--butter-l)}.bub.cash{background:var(--gold)}
 @keyframes up{0%{opacity:0;translate:0 6px}15%{opacity:1;translate:0 0}75%{opacity:1}100%{opacity:0;translate:0 -16px}}
-#toasts{position:absolute;left:8px;right:8px;bottom:8px;display:flex;flex-direction:column;gap:6px;pointer-events:none}
-.toast{background:var(--paper);padding:3px 9px;font-size:12.5px;font-family:var(--display);margin:2px;animation:tin .25s ease-out;
+#toasts{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);width:max-content;max-width:calc(100% - 16px);display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+.toast{background:var(--paper);padding:2px 10px;font-size:12px;line-height:18px;max-width:100%;font-family:var(--display);margin:2px;animation:tin .25s ease-out;
   box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),0 4px 0 0 rgba(0,0,0,.35)}
 .toast.gold{background:var(--gold)}.toast.red{background:#FFC6C6}
 @keyframes tin{from{transform:translateY(6px);opacity:0}}
 @media (prefers-reduced-motion:reduce){.bub,.toast,.sheet,.marquee::before,.marquee::after{animation:none!important}}
 
 /* slate (status) */
-.panel{background:var(--paper);padding:0 14px 14px;display:flex;flex-direction:column;gap:10px;position:relative;
+.panel{background:var(--paper);padding:0 14px 14px;display:flex;flex-direction:column;gap:10px;min-height:178px;box-sizing:border-box;position:relative;
   box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),0 10px 0 0 rgba(20,6,14,.45),inset 0 -4px 0 0 var(--paper3);margin:4px}
 .panel::before{content:"";display:block;height:14px;margin:0 -14px 0;background:repeating-linear-gradient(-45deg,var(--ink) 0 9px,var(--paper) 9px 18px);border-bottom:4px solid var(--ink)}
 .st-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .st-title{font-family:var(--display);font-size:20px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.st-sub{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
+.st-sub{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);margin-top:-4px}
+.panel>.btn{margin-top:auto}
 .st-sub .pix{color:var(--ink)}
 .chip{display:inline-block;font-family:var(--display);font-size:12px;line-height:18px;padding:0 7px;background:#fff;white-space:nowrap;margin:2px;
   box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink)}
@@ -127,8 +129,8 @@ img.ic{width:18px;height:18px;image-rendering:pixelated;display:inline-block;ver
 @keyframes blink{50%{background:var(--red-d)}}
 
 /* tabs */
-.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 7px;background:var(--paper);font-family:var(--display);font-size:14px;margin:3px;
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-inline:1px}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 7px;background:var(--paper);font-family:var(--display);font-size:14px;margin:3px 3px 7px;
   box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink),0 7px 0 0 rgba(20,6,14,.5),inset 0 3px 0 0 #fff,inset 0 -4px 0 0 var(--paper3)}
 .tab img{width:22px;height:22px;image-rendering:pixelated}
 .tab.main{background:var(--gold);box-shadow:0 -3px 0 0 var(--ink),0 3px 0 0 var(--ink),-3px 0 0 0 var(--ink),3px 0 0 0 var(--ink),0 7px 0 0 rgba(20,6,14,.5),inset 0 3px 0 0 var(--gold-l),inset 0 -4px 0 0 var(--gold-d)}
@@ -164,17 +166,28 @@ h3::before{content:"";width:8px;height:8px;background:var(--red);box-shadow:0 0 
 .pick:disabled{background:#EDE3D0;color:#AE9F95;cursor:not-allowed}
 .pick .st{display:block;font-size:10px;color:var(--red);line-height:1;margin-top:3px;font-family:var(--pixel)}
 .pick[aria-pressed="true"] .st{color:var(--gold)}
-.card{background:#fff;padding:9px;display:grid;grid-template-columns:auto 1fr auto;gap:8px 10px;align-items:center;text-align:left;width:calc(100% - 4px);margin:2px;
+.card{background:#fff;padding:10px 12px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px 12px;align-items:center;text-align:left;width:calc(100% - 4px);margin:2px;box-sizing:border-box;
   box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -3px 0 0 rgba(0,0,0,.07)}
 .card[aria-pressed="true"]{background:var(--butter-l);box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 0 0 3px var(--gold)}
 .card:disabled{background:#F1E8D8;color:var(--muted);cursor:not-allowed}
 .card:disabled .av{opacity:.55}
 .card .av{width:40px;height:40px;image-rendering:pixelated;flex:none;background:var(--paper2);margin:2px;
   box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -6px 0 0 var(--paper3)}
-.card .main{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
-.card .nm{font-family:var(--display);font-size:16px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.card .side{text-align:right;font-family:var(--pixel);font-size:13px;white-space:nowrap}
-.sg{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:5px 14px;padding-top:7px;border-top:2px dashed rgba(35,26,43,.18)}
+.card .main{display:flex;flex-direction:column;gap:3px;min-width:0}
+.card .nm{font-family:var(--display);font-size:16px;display:flex;gap:4px;align-items:center;flex-wrap:wrap;line-height:22px}
+.card .sub{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .side{display:flex;flex-direction:column;align-items:flex-end;gap:2px;text-align:right}
+.card .side b{font-family:var(--pixel);font-weight:400;font-size:14px;white-space:nowrap}
+.card .side small{font-size:11px;color:var(--muted);white-space:nowrap}
+.cfoot{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:8px;border-top:2px dashed rgba(35,26,43,.18)}
+.chip.gold{background:var(--gold)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.post{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n b" "d r";gap:3px 10px;align-items:center;background:#fff;padding:10px 12px;margin:2px;
+  box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -3px 0 0 rgba(0,0,0,.07)}
+.post .pn{grid-area:n;font-size:16px}.post .btn{grid-area:b;min-width:72px}
+.post .pd{grid-area:d;font-size:12.5px;color:var(--muted);min-width:0}.post .pr{grid-area:r;font-size:12px;text-align:right;white-space:nowrap}
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:18px 10px;margin:2px;line-height:1.6;box-shadow:0 -2px 0 0 rgba(35,26,43,.25),0 2px 0 0 rgba(35,26,43,.25),-2px 0 0 0 rgba(35,26,43,.25),2px 0 0 0 rgba(35,26,43,.25)}
+.sg{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;padding-top:8px;border-top:2px dashed rgba(35,26,43,.18)}
 .sr{display:flex;align-items:center;gap:6px;min-width:0;font-size:12px}
 .sl{flex:none;width:50px;color:var(--muted);white-space:nowrap}
 .sb{flex:1;height:8px;background:#EFE6D3;position:relative;min-width:20px;box-shadow:0 0 0 2px var(--ink)}
@@ -235,9 +248,9 @@ input[type=text]{box-sizing:border-box;font:inherit;font-family:var(--display);f
       </div>
     </div>
     <div class="hud">
-      <span class="pill"><img data-ic="cal" alt=""><span id="date">설립 준비 중</span></span>
-      <span class="pill money" id="moneyPill"><img data-ic="coin" alt=""><span id="money">-</span></span>
-      <span class="pill" title="명성"><img data-ic="star" alt=""><span id="fame">0</span></span>
+      <span class="seg1"><img data-ic="cal" alt=""><span id="date">설립 준비 중</span></span>
+      <span class="seg1 money" id="moneyPill"><img data-ic="coin" alt=""><span id="money">-</span></span>
+      <span class="seg1" title="명성"><img data-ic="star" alt=""><span id="fame">0</span></span>
     </div>
   </header>
   <div class="scene fr"><div class="screen"><canvas id="cv" width="160" height="120"></canvas><div id="fx"></div><div id="toasts"></div></div></div>
@@ -317,7 +330,7 @@ function look(){return{hair:pick(HAIR),skin:pick(SKIN),body:pick(BODY),long:Math
 function mkPerson(role,opt={}){
   const p={id:G.nextId++,name:opt.name||randName(),role,lv:1,exp:0,stats:{},trait:opt.trait||pick(TRAITS)[0],mastery:{},parody:!!opt.parody,...look()};
   const base=opt.base??(15+G.fame*0.45);
-  for(const s of ROLE_STATS[role])p.stats[s]=clamp(Math.round(base+rnd(0,38)),5,95);
+  const spread=opt.spread??38;for(const s of ROLE_STATS[role])p.stats[s]=clamp(Math.round(base+rnd(0,spread)),5,95);
   if(role==='staff'){const sp=pick(ROLE_STATS.staff);p.stats[sp]=clamp(p.stats[sp]+15,5,95)}
   if(opt.stats)Object.assign(p.stats,opt.stats);
   if(opt.fav)for(const g of opt.fav)p.mastery[g]=4;
@@ -353,7 +366,22 @@ function newGame(studio,boss){
   LEG_WRI.forEach(l=>G.outWri.push(mkOut('writer',{...l,parody:true,fee:ri(8,15)*10000,fameReq:25})));
   const dist={D:6,C:6,B:5,A:4,S:3};for(const k in dist)for(let i=0;i<dist[k];i++)G.actors.push(mkActor(k));
   LEG_ACT.forEach(([name,sex,act,pop,apt])=>G.actors.push(mkActor('P',{parody:true,name,sex,act,pop,apt})));
-  refreshRecruits();save();
+  G.recruits=[];save();
+}
+const POSTS=[
+  {id:'board',name:'동네 구인 게시판',cost:300,base:10,spread:28,desc:'경험은 적지만 월급이 싸요'},
+  {id:'comm',name:'영화인 커뮤니티',cost:2000,base:25,spread:32,desc:'현장 경험이 있는 지원자'},
+  {id:'hunt',name:'헤드헌터 의뢰',cost:10000,base:42,spread:32,desc:'검증된 실력자'},
+  {id:'scout',name:'업계 스카우트',cost:50000,base:58,spread:32,fame:40,desc:'업계 최고 인재, 거장이 올 수도 있어요'}];
+function postJob(tier,role){
+  const t=POSTS.find(x=>x.id===tier);if(!t||G.money<t.cost||(t.fame&&G.fame<t.fame))return false;
+  G.money-=t.cost;const b=t.base+G.fame*.15;
+  G.recruits=[0,1,2].map(()=>mkPerson(role,{base:b,spread:t.spread}));
+  if(t.id==='scout'&&role!=='staff'&&Math.random()<.3){
+    const hired=new Set(G.staff.map(s=>s.name));const pool=(role==='director'?LEG_DIR:LEG_WRI).filter(l=>!hired.has(l.name));
+    if(pool.length){const l=pick(pool);G.recruits[0]=mkPerson(role,{name:l.name,parody:true,fav:l.fav,stats:role==='director'?{dir:l.dir,plan:l.plan}:{write:l.write,plan:l.plan},salary:ri(30,50)*100})}
+  }
+  return true;
 }
 function refreshRecruits(){
   G.recruits=[];
@@ -400,7 +428,7 @@ function tick(){
   if(G.month===12&&G.week===4)awards();
   G.week++;
   if(G.week>4){G.week=1;G.month++;if(G.month>12){G.month=1;G.year++;G.trend=pick(GENRES);toast(`${G.year}년차 시작! 올해의 유행 장르는 ${G.trend}`,'gold')}monthly()}
-  fx.sort(()=>Math.random()-.5).slice(0,6).forEach(b=>bubble(...b));if(fx.length)sfx(fx.some(b=>b[2]==='cash')?'coin':'pop');renderHUD();
+  fx.sort(()=>Math.random()-.5).slice(0,5).forEach(b=>bubble(...b));if(fx.length)sfx(fx.some(b=>b[2]==='cash')?'coin':'pop');renderHUD();
 }
 function idleWork(fx){
   let sum=0;
@@ -475,7 +503,6 @@ function releaseWeek(){
 function monthly(){
   const pay=salaries()+OFFICE[G.office].rent;G.money-=pay;
   toast(`월급과 임대료 ${fmtMoney(pay)} 지출`);
-  refreshRecruits();
   const locked=TOPICS_LOCKED.filter(t=>!G.topics.includes(t));
   if(locked.length&&Math.random()<maxStat('plan')/260){const t=pick(locked);G.topics.push(t);toast(`기획 회의에서 새 소재 발견: ${t}`,'gold')}
   if(G.ottReq&&(G.year*12+G.month)>G.ottReq.until){toast(`${G.ottReq.ott}의 ${G.ottReq.genre} 의뢰가 만료됐어요`);G.ottReq=null}
@@ -720,7 +747,9 @@ function draw(now){
 }
 function fitCanvas(){const r=$('.screen').getBoundingClientRect();if(!r.width)return;const nh=clamp(Math.round(W*r.height/r.width),120,300);if(nh!==H){H=nh;cv.height=H;ctx.imageSmoothingEnabled=false;bgKey='';vigC=null;lastDraw=0}}
 if(window.ResizeObserver)new ResizeObserver(fitCanvas).observe($('.screen'));
+const bubT={};
 function bubble(slot,text,cls){
+  const nowT=performance.now();if(bubT[slot]&&nowT-bubT[slot]<1000)return;bubT[slot]=nowT;
   let x,y;
   if(typeof slot==='string'){const v=visPos()[slot];x=v.x+6;y=v.y-6}else{if(slot>=OFFICE[G.office].cap)return;const s=slotPos(slot);x=s.x+10;y=s.y-20}
   const el=document.createElement('span');el.className='bub '+cls;el.textContent=text;
@@ -792,10 +821,10 @@ function renderHUD(){
     <div class="bar"><i style="width:${pct}%"></i></div>
     <div class="pts"><div class="pt fun">${ic('heart')}재미<b>${Math.round(P.fun)}</b></div><div class="pt craft">${ic('reel')}완성<b>${Math.round(P.craft)}</b></div><div class="pt buzz">${ic('mega')}화제<b>${Math.round(P.mk*.6/Math.max(1,P.w)+P.buzz)}</b></div></div>`;
   }else if(G.pending){
-    h+=`<div class="st-head"><span class="st-title">${esc(G.pending.title)}</span><span class="chip" style="background:var(--gold)">완성!</span></div><button class="btn red" data-act="tab" data-v="prod">개봉 방식 정하기</button>`;
+    h+=`<div class="st-head"><span class="st-title">${esc(G.pending.title)}</span><span class="chip" style="background:var(--gold)">완성</span></div><div class="st-sub"><span>극장에 걸지, OTT에 팔지 정해주세요</span></div><button class="btn red" data-act="tab" data-v="prod">개봉 방식 정하기</button>`;
   }else{
-    h+=`<div class="st-head"><span class="st-title">다음 작품 기획 중</span><span class="chip">외주 작업 중</span></div>
-    <div class="st-sub"><span>직원들이 광고와 뮤직비디오 외주로 돈을 벌고 있어요.</span></div>
+    h+=`<div class="st-head"><span class="st-title">다음 작품 기획 중</span><span class="chip">대기</span></div>
+    <div class="st-sub"><span>그동안 직원들이 광고 외주로 돈을 벌어요</span></div>
     <button class="btn red" data-act="tab" data-v="prod">새 영화 만들기</button>`;
   }
   const shw=G.films.filter(f=>f.status==='showing');
@@ -813,12 +842,11 @@ function renderSheet(){
 }
 const STAT_COLOR={plan:'#9C7BE0',mkt:'#F7C948',cast:'#F27BA5',tech:'#33AEA3',nego:'#FF8F3A',dir:'#E2434C',write:'#4F7BD9'};
 const statGrid=rows=>`<span class="sg">${rows.map(([l,v,c])=>`<span class="sr"><span class="sl">${l}</span><span class="sb"><i style="width:${clamp(v,0,100)}%;--c:${c}"></i></span><b>${v}</b></span>`).join('')}</span>`;
-function personCard(p,{act='',sel=false,dis=false,side='',extra=''}={}){
-  const st=ROLE_STATS[p.role]||Object.keys(p.stats);
-  return `<button class="card" ${act} aria-pressed="${sel}" ${dis?'disabled':''}><img class="av" alt="" src="${avatar(p)}"><span class="main"><span class="nm">${esc(p.name)}${p.lv?` <span class="chip">Lv.${p.lv}</span>`:''}${p.parody?' <span class="chip" style="background:#F5C542">거장</span>':''}</span>
-  ${extra}</span><span class="side">${side}</span>${statGrid(st.map(s=>[STAT_LABEL[s],p.stats[s],STAT_COLOR[s]]))}</button>`;
+function personCard(p,{act='',sel=false,dis=false,val='',valLabel='',sub='',foot=''}={}){
+  const st=ROLE_STATS[p.role]||Object.keys(p.stats);const tag=act?'button':'div';
+  return `<${tag} class="card" ${act} ${act?`aria-pressed="${sel}"`:''} ${dis?'disabled':''}><img class="av" alt="" src="${avatar(p)}"><span class="main"><span class="nm">${esc(p.name)}${p.lv&&G.staff.includes(p)?`<span class="chip">Lv.${p.lv}</span>`:''}${p.parody?'<span class="chip gold">거장</span>':''}</span><span class="sub">${sub}</span></span><span class="side"><b>${val}</b><small>${valLabel}</small></span>${statGrid(st.map(s=>[STAT_LABEL[s],p.stats[s],STAT_COLOR[s]]))}${foot?`<span class="cfoot">${foot}</span>`:''}</${tag}>`;
 }
-const masteryTxt=(p,g)=>{const n=Math.min(5,(p.mastery||{})[g]||0);return n?`<span class="muted">${g} 숙련 ${'●'.repeat(n)}</span>`:`<span class="muted">${g} 경험 없음</span>`};
+const masteryTxt=(p,g)=>{const n=Math.min(5,(p.mastery||{})[g]||0);return n?`${g} 숙련 <span class="stars">${'●'.repeat(n)}</span>`:`${g} 경험 없음`};
 const SHEETS={
   intro(){return['새 영화사 설립',`
     <div class="poster" style="background:var(--red)"><span class="t">흥행제작소</span><span>반지하 원룸에서 천만 영화까지</span></div>
@@ -854,11 +882,19 @@ const SHEETS={
     ${f.luckMsg?`<div class="note">${f.luckMsg}</div>`:''}
     <button class="btn red" data-act="close">확인</button>`]},
   awards(){const r=UI.awards||[];return[`${G.year}년차 황금복숭아 영화제`,r.length?`<div class="center big">축하해요!</div><div class="sumtbl">${r.map(([a,b])=>`<div><span>${a}</span><span>${esc(b)}</span></div>`).join('')}</div><div class="note">상금 ${fmtMoney(r.length*10000)}, 명성 +${r.length*2}</div><button class="btn red" data-act="close">확인</button>`:`<div class="center big">수상 실패</div><div class="center muted">올해는 빈손이에요. 내년엔 레드카펫을 밟아봐요.</div><button class="btn red" data-act="close">확인</button>`]},
-  staff(){const cap=OFFICE[G.office].cap;
-    return[`직원 (${G.staff.length}/${cap})`,`<div class="list">${G.staff.map(p=>personCard(p,{side:`${ROLE_LABEL[p.role]}<br>${p.salary?'월 '+fmtMoney(p.salary):''}<br>${p.role==='boss'?'':UI.confirm===p.id?`<span class="btn sm red" data-act="fire" data-id="${p.id}">정말 해고</span>`:`<span class="btn sm plain" data-act="askfire" data-id="${p.id}">해고</span>`}`,extra:`<span class="muted">${p.trait} · ${TRAITS.find(t=>t[0]===p.trait)[1]}</span>`})).join('')}</div>
-    <h3>채용 공고</h3><div class="muted">매달 새 지원자가 와요. 채용비는 월급 3개월치.</div>
-    <div class="list">${G.recruits.map(p=>{const fee=p.salary*3;const full=G.staff.length>=cap;return personCard(p,{act:`data-act="hire" data-id="${p.id}"`,dis:full||fee>G.money,side:`${ROLE_LABEL[p.role]}<br>월 ${fmtMoney(p.salary)}<br>채용 ${fmtMoney(fee)}`,extra:`<span class="muted">${p.trait}${full?' · 자리 없음':''}</span>`})}).join('')||'<div class="muted">이번 달 지원자를 모두 채용했어요.</div>'}</div>
-    <button class="btn plain" data-act="repost" ${G.money<300?'disabled':''}>공고 다시 내기 (300만)</button>`]},
+  staff(){const cap=OFFICE[G.office].cap;const full=G.staff.length>=cap;const role=UI.postRole||'staff';
+    const mine=G.staff.map(p=>{const tr=TRAITS.find(t=>t[0]===p.trait);
+      const fb=p.role==='boss'?'':UI.confirm===p.id?`<button class="btn sm red" data-act="fire" data-id="${p.id}">정말 내보내기</button>`:`<button class="btn sm plain" data-act="askfire" data-id="${p.id}">해고</button>`;
+      return personCard(p,{sub:`${ROLE_LABEL[p.role]} · ${p.trait}`,val:p.salary?fmtMoney(p.salary):'-',valLabel:p.salary?'월급':'대표',foot:`<span class="muted">${tr?tr[1]:''}</span>${fb}`})}).join('');
+    const posts=POSTS.map(t=>{const lock=t.fame&&G.fame<t.fame;const b=Math.round(t.base+G.fame*.15);
+      return `<div class="post"><span class="pn">${t.name}</span><button class="btn sm ${lock?'plain':'red'}" data-act="post" data-v="${t.id}" ${lock||G.money<t.cost?'disabled':''}>${lock?`명성 ${t.fame}`:fmtMoney(t.cost)}</button><span class="pd">${t.desc}</span><span class="pr pix">능력 ${b}~${Math.min(95,b+t.spread)}</span></div>`}).join('');
+    const cands=G.recruits.map(p=>{const fee=p.salary*2;return personCard(p,{sub:`${ROLE_LABEL[p.role]} · ${p.trait}`,val:fmtMoney(p.salary),valLabel:'희망 월급',foot:`<span class="muted">채용비 ${fmtMoney(fee)}</span><button class="btn sm red" data-act="hire" data-id="${p.id}" ${full||fee>G.money?'disabled':''}>${full?'자리 없음':'채용하기'}</button>`})}).join('');
+    return[`직원 ${G.staff.length}/${cap}`,`<div class="list">${mine}</div>
+    <h3>채용 공고 내기</h3>
+    <div class="seg">${[['staff','직원'],['director','전속 감독'],['writer','전속 작가']].map(([k,n])=>`<button class="pick" data-act="postRole" data-v="${k}" aria-pressed="${role===k}">${n}</button>`).join('')}</div>
+    <div class="list">${posts}</div>
+    <h3>지원자</h3>
+    ${cands?`<div class="list">${cands}</div>`:`<div class="empty">공고를 내면 지원자 3명이 여기에 나타나요.<br>비싼 공고일수록 실력 좋은 사람이 와요.</div>`}`]},
   actors(){const cp=castPower();
     const list=[...G.actors].sort((a,b)=>GRADE[b.grade].req-GRADE[a.grade].req||b.pop-a.pop);
     return['배우 명단',`<div class="note">캐스팅 역량 <b class="pix">${cp}</b>. 캐스팅 직원의 능력과 회사 명성이 높을수록 더 유명한 배우를 섭외할 수 있어요.</div>
@@ -883,9 +919,7 @@ const SHEETS={
 function actorCard(a,cp,act='',sel=false){
   const req=GRADE[a.grade].req;const lock=cp<req;
   const g=UI.wiz&&UI.sheet==='wizard'?UI.wiz.genre:null;
-  return `<button class="card" ${act} aria-pressed="${sel}" ${lock||(act&&a.fee>G.money)?'disabled':''}><img class="av" alt="" src="${avatar(a)}"><span class="main"><span class="nm"><span class="grade ${a.grade}">${GRADE_LABEL[a.grade]}</span>${esc(a.name)}</span>
-  <span class="muted">적성 ${a.apt.map(x=>x===g?`<b style="color:var(--red)">${x}</b>`:x).join(', ')}</span></span>
-  <span class="side">${lock?`캐스팅 ${req} 필요`:fmtMoney(a.fee)}</span>${statGrid([['연기',a.act,'#E2434C'],['인기',a.pop,'#F27BA5']])}</button>`;
+  return `<button class="card" ${act} aria-pressed="${sel}" ${lock||(act&&a.fee>G.money)?'disabled':''}><img class="av" alt="" src="${avatar(a)}"><span class="main"><span class="nm"><span class="grade ${a.grade}">${GRADE_LABEL[a.grade]}</span>${esc(a.name)}</span><span class="sub">적성 ${a.apt.map(x=>x===g?`<b style="color:var(--red)">${x}</b>`:x).join(', ')}</span></span><span class="side"><b>${lock?'잠김':fmtMoney(a.fee)}</b><small>${lock?`캐스팅 ${req} 필요`:'출연료'}</small></span>${statGrid([['연기',a.act,'#E2434C'],['인기',a.pop,'#F27BA5']])}</button>`;
 }
 
 /* ---------- wizard ---------- */
@@ -906,11 +940,11 @@ const WIZ=[
     <h3>제목</h3><div class="row2"><input type="text" id="titleIn" maxlength="16" value="${esc(w.title)}"><button class="btn sm" data-act="wtitle">다시 짓기</button></div>
     ${wizFoot(w.genre&&w.topic&&w.title.trim())}`]},
   ()=>{const w=UI.wiz;const ex=G.staff.filter(p=>p.role==='director');
-    return['2. 감독',stepsBar(1)+`${ex.length?`<h3>전속 감독</h3><div class="list">${ex.map(p=>personCard(p,{act:`data-act="wdir" data-type="ex" data-id="${p.id}"`,sel:w.dir&&w.dir.id===p.id,side:'추가 비용 없음',extra:masteryTxt(p,w.genre)})).join('')}</div>`:''}
-    <h3>외주 감독</h3><div class="list">${G.outDir.map(p=>{const lock=G.fame<p.fameReq;return personCard(p,{act:`data-act="wdir" data-type="out" data-id="${p.id}"`,sel:w.dir&&w.dir.id===p.id,dis:lock,side:lock?`명성 ${p.fameReq} 필요`:fmtMoney(p.fee),extra:masteryTxt(p,w.genre)})}).join('')}</div>${wizFoot(!!w.dir)}`]},
+    return['2. 감독',stepsBar(1)+`${ex.length?`<h3>전속 감독</h3><div class="list">${ex.map(p=>personCard(p,{act:`data-act="wdir" data-type="ex" data-id="${p.id}"`,sel:w.dir&&w.dir.id===p.id,val:'0원',valLabel:'전속',sub:masteryTxt(p,w.genre)})).join('')}</div>`:''}
+    <h3>외주 감독</h3><div class="list">${G.outDir.map(p=>{const lock=G.fame<p.fameReq;return personCard(p,{act:`data-act="wdir" data-type="out" data-id="${p.id}"`,sel:w.dir&&w.dir.id===p.id,dis:lock,val:lock?'잠김':fmtMoney(p.fee),valLabel:lock?`명성 ${p.fameReq} 필요`:'섭외비',sub:masteryTxt(p,w.genre)})}).join('')}</div>${wizFoot(!!w.dir)}`]},
   ()=>{const w=UI.wiz;const ex=G.staff.filter(p=>p.role==='writer');
-    return['3. 작가',stepsBar(2)+`${ex.length?`<h3>전속 작가</h3><div class="list">${ex.map(p=>personCard(p,{act:`data-act="wwri" data-type="ex" data-id="${p.id}"`,sel:w.wri&&w.wri.id===p.id,side:'추가 비용 없음',extra:masteryTxt(p,w.genre)})).join('')}</div>`:''}
-    <h3>외주 작가</h3><div class="list">${G.outWri.map(p=>{const lock=G.fame<p.fameReq;return personCard(p,{act:`data-act="wwri" data-type="out" data-id="${p.id}"`,sel:w.wri&&w.wri.id===p.id,dis:lock,side:lock?`명성 ${p.fameReq} 필요`:fmtMoney(p.fee),extra:masteryTxt(p,w.genre)})}).join('')}</div>${wizFoot(!!w.wri)}`]},
+    return['3. 작가',stepsBar(2)+`${ex.length?`<h3>전속 작가</h3><div class="list">${ex.map(p=>personCard(p,{act:`data-act="wwri" data-type="ex" data-id="${p.id}"`,sel:w.wri&&w.wri.id===p.id,val:'0원',valLabel:'전속',sub:masteryTxt(p,w.genre)})).join('')}</div>`:''}
+    <h3>외주 작가</h3><div class="list">${G.outWri.map(p=>{const lock=G.fame<p.fameReq;return personCard(p,{act:`data-act="wwri" data-type="out" data-id="${p.id}"`,sel:w.wri&&w.wri.id===p.id,dis:lock,val:lock?'잠김':fmtMoney(p.fee),valLabel:lock?`명성 ${p.fameReq} 필요`:'섭외비',sub:masteryTxt(p,w.genre)})}).join('')}</div>${wizFoot(!!w.wri)}`]},
   ()=>{const w=UI.wiz;const cp=castPower();const list=[...G.actors].sort((a,b)=>(cp>=GRADE[b.grade].req)-(cp>=GRADE[a.grade].req)||(b.apt.includes(w.genre))-(a.apt.includes(w.genre))||b.pop-a.pop);
     return['4. 주연 배우',stepsBar(3)+`<div class="note">캐스팅 역량 <b class="pix">${cp}</b> · 장르 적성이 맞는 배우는 연기력이 20% 올라가요.</div><div class="list">${list.map(a=>actorCard(a,cp,`data-act="wactor" data-id="${a.id}"`,w.actor===a.id)).join('')}</div>${wizFoot(!!w.actor)}`]},
   ()=>{const w=UI.wiz;const cost=wizCost();const D=ref(w.dir,'director'),Wr=ref(w.wri,'writer'),A=findById(G.actors,w.actor);
@@ -974,18 +1008,19 @@ const ACT={
     G.money+=off;Object.assign(f,{status:'ott',rev:off,aud:0,campCost:0,profit:off-f.cost,year:G.year,month:G.month,ottRank:clamp(Math.round(11-f.Q/10+rnd(-1,1)),1,10)});
     f.fameUp=1+(f.A>=8?1:0);G.fame=clamp(G.fame+f.fameUp,0,100);if(m)G.ottReq=null;
     G.combos[f.genre+'|'+f.topic]=f.combo;G.films.push(f);G.pending=null;UI.resultId=f.id;openSheet('result');sfx('coin');save()},
-  hire(d){const p=G.recruits.find(x=>x.id===+d.id);if(!p)return;const fee=p.salary*3;if(fee>G.money||G.staff.length>=OFFICE[G.office].cap)return;
+  hire(d){const p=G.recruits.find(x=>x.id===+d.id);if(!p)return;const fee=p.salary*2;if(fee>G.money||G.staff.length>=OFFICE[G.office].cap)return;
     G.money-=fee;G.staff.push(p);G.recruits=G.recruits.filter(x=>x!==p);toast(`${p.name} 입사! 환영해요`,'gold');sfx('hire');renderSheet();renderHUD();save()},
   askfire(d){UI.confirm=+d.id;renderSheet()},
   fire(d){const id=+d.id;if(G.prod&&((G.prod.dir.type==='ex'&&G.prod.dir.id===id)||(G.prod.wri.type==='ex'&&G.prod.wri.id===id))){toast('제작 중인 영화의 감독이나 작가는 내보낼 수 없어요','red');UI.confirm=null;renderSheet();return}
     G.staff=G.staff.filter(p=>p.id!==id);UI.confirm=null;renderSheet();renderHUD();save()},
-  repost(){if(G.money<300)return;G.money-=300;refreshRecruits();renderSheet();renderHUD()},
+  postRole(d){UI.postRole=d.v;renderSheet()},
+  post(d){if(postJob(d.v,UI.postRole||'staff')){sfx('coin');toast('공고를 냈어요. 지원자 3명이 도착했어요','gold');renderSheet();renderHUD();save();const el=document.querySelector('#sheetBody h3:last-of-type');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}},
   upgrade(){const n=OFFICE[G.office+1];if(!n||G.money<n.cost)return;G.money-=n.cost;G.office++;toast(`${n.name}로 이사했어요!`,'gold');sfx('big');renderSheet();renderHUD();save()},
   sequel(d){const f=G.films.find(x=>x.id===+d.id);if(!f)return;const mt=f.title.match(/^(.*?)\s*(\d+)$/);
     const title=mt&&+mt[2]<10?mt[1]+' '+(+mt[2]+1):f.title+' 2';
     UI.wiz={step:1,genre:f.genre,topic:f.topic,title,dir:null,wri:null,actor:null,budget:f.budget,rating:f.rating,ppl:'none',sequelOf:f.id};openSheet('wizard')},
 };
-const QUIET=new Set(['start','hire','theater','ott','wstart','upgrade','sndSfx','mute','sndBgm']);
+const QUIET=new Set(['start','hire','post','theater','ott','wstart','upgrade','sndSfx','mute','sndBgm']);
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b||b.disabled)return;const f=ACT[b.dataset.act];if(!f)return;if(!QUIET.has(b.dataset.act))sfx('click');f(b.dataset,b)});
 document.addEventListener('input',e=>{if(e.target.id==='titleIn'&&UI.wiz){UI.wiz.title=e.target.value;const nb=document.querySelector('[data-act="wnext"]');if(nb)nb.disabled=!(UI.wiz.genre&&UI.wiz.topic&&UI.wiz.title.trim())}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&G)save()});
