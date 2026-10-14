@@ -46,7 +46,7 @@ body{
 .valance{position:absolute;left:0;right:0;top:0;height:20px;pointer-events:none;
   background:radial-gradient(circle at 50% 0,var(--curtain3) 0 9px,var(--ink) 9px 11px,transparent 11.5px) 0 0/24px 20px repeat-x,
     linear-gradient(var(--gold-d),var(--gold-d)) 0 0/100% 3px no-repeat}
-.app{max-width:460px;margin:0 auto;padding-block:22px 28px;display:flex;flex-direction:column;gap:14px;position:relative}
+.app{max-width:460px;margin:0 auto;padding-block:22px 10px;display:flex;flex-direction:column;gap:12px;position:relative;min-height:100%;box-sizing:border-box}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
 button:focus-visible,input:focus-visible{outline:3px solid var(--teal-l);outline-offset:3px}
 img.ic{width:18px;height:18px;image-rendering:pixelated;display:inline-block;vertical-align:middle;flex:none}
@@ -79,12 +79,12 @@ img.ic{width:18px;height:18px;image-rendering:pixelated;display:inline-block;ver
 .pill.money{color:var(--gold-l)}.pill.money.neg{color:var(--red-l)}
 
 /* screen with film strip */
-.scene{background:#120C17;padding:8px 18px;position:relative}
+.scene{background:#120C17;padding:8px 18px;position:relative;flex:1 0 auto;display:flex;flex-direction:column}
 .scene::before,.scene::after{content:"";position:absolute;top:8px;bottom:8px;width:8px;
   background:repeating-linear-gradient(180deg,var(--ink3) 0 6px,transparent 6px 12px)}
 .scene::before{left:5px}.scene::after{right:5px}
-.screen{position:relative;box-shadow:0 0 0 2px #000;overflow:hidden}
-.screen canvas{display:block;width:100%;height:auto;aspect-ratio:4/3;max-width:100%;image-rendering:pixelated;image-rendering:crisp-edges}
+.screen{position:relative;box-shadow:0 0 0 2px #000;overflow:hidden;flex:1 0 auto;aspect-ratio:4/3;max-height:calc(min(460px,100vw) * 1.6)}
+.screen canvas{display:block;position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges}
 #fx{position:absolute;inset:0;pointer-events:none}
 .bub{position:absolute;transform:translate(-50%,0);font-family:var(--display);font-size:12px;line-height:16px;padding:0 4px;white-space:nowrap;margin:2px;background:#fff;
   box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink);animation:up 1.15s ease-out forwards}
@@ -164,7 +164,7 @@ h3::before{content:"";width:8px;height:8px;background:var(--red);box-shadow:0 0 
 .pick:disabled{background:#EDE3D0;color:#AE9F95;cursor:not-allowed}
 .pick .st{display:block;font-size:10px;color:var(--red);line-height:1;margin-top:3px;font-family:var(--pixel)}
 .pick[aria-pressed="true"] .st{color:var(--gold)}
-.card{background:#fff;padding:9px;display:flex;gap:10px;align-items:center;text-align:left;width:calc(100% - 4px);margin:2px;
+.card{background:#fff;padding:9px;display:grid;grid-template-columns:auto 1fr auto;gap:8px 10px;align-items:center;text-align:left;width:calc(100% - 4px);margin:2px;
   box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 -3px 0 0 rgba(0,0,0,.07)}
 .card[aria-pressed="true"]{background:var(--butter-l);box-shadow:0 -2px 0 0 var(--ink),0 2px 0 0 var(--ink),-2px 0 0 0 var(--ink),2px 0 0 0 var(--ink),inset 0 0 0 3px var(--gold)}
 .card:disabled{background:#F1E8D8;color:var(--muted);cursor:not-allowed}
@@ -174,6 +174,13 @@ h3::before{content:"";width:8px;height:8px;background:var(--red);box-shadow:0 0 
 .card .main{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
 .card .nm{font-family:var(--display);font-size:16px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .card .side{text-align:right;font-family:var(--pixel);font-size:13px;white-space:nowrap}
+.sg{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:5px 14px;padding-top:7px;border-top:2px dashed rgba(35,26,43,.18)}
+.sr{display:flex;align-items:center;gap:6px;min-width:0;font-size:12px}
+.sl{flex:none;width:50px;color:var(--muted);white-space:nowrap}
+.sb{flex:1;height:8px;background:#EFE6D3;position:relative;min-width:20px;box-shadow:0 0 0 2px var(--ink)}
+.sb i{position:absolute;left:0;top:0;bottom:0;background:var(--c);box-shadow:inset 0 -2px 0 rgba(0,0,0,.18);background-image:repeating-linear-gradient(90deg,transparent 0 9px,rgba(255,255,255,.35) 9px 10px)}
+.sr b{flex:none;width:20px;text-align:right;font-family:var(--pixel);font-weight:400;font-size:12px}
+.card:disabled .sb i{filter:grayscale(.7)}
 .stats{display:flex;flex-wrap:wrap;gap:3px 10px;font-size:12px}
 .stats span b{font-family:var(--pixel);font-weight:400}
 .list{display:flex;flex-direction:column;gap:8px}
@@ -254,7 +261,7 @@ input[type=text]{box-sizing:border-box;font:inherit;font-family:var(--display);f
 <script>
 (()=>{
 /* ---------- data ---------- */
-const W=160,H=120,WEEK_MS=1400,SPEEDS=[0,1,2.4],KEY='heunghaeng-save-v1';
+const W=160,WEEK_MS=1400,SPEEDS=[0,1,2.4],KEY='heunghaeng-save-v1';
 const GENRES=['액션','코미디','로맨스','호러','SF','스릴러','드라마','사극','판타지','애니'];
 const GCOLOR={액션:'#E0434B',코미디:'#E3A92A',로맨스:'#F27BA5',호러:'#5B3F7A',SF:'#2FA79E',스릴러:'#3A4A6B',드라마:'#6FA54E',사극:'#B5763C',판타지:'#9C7BE0',애니:'#FF8F3A'};
 const TOPICS_START=['좀비','첫사랑','형사','가족','학교','복수','요리','조폭','귀신','스포츠'];
@@ -303,7 +310,7 @@ const randName=()=>pick(SURN)+pick(GIVEN);
 const makeTitle=t=>pick(TITLE_T).replace('{t}',t);
 
 /* ---------- state ---------- */
-let G=null;
+let G=null;let H=120;
 const UI={sheet:null,wiz:null,camp:0,confirm:null,avatars:{}};
 
 function look(){return{hair:pick(HAIR),skin:pick(SKIN),body:pick(BODY),long:Math.random()<.45}}
@@ -601,7 +608,7 @@ const LAY=[
 ];
 const GLYPH={액션:['#.#.#','.###.','#####','.###.','#.#.#'],코미디:['.###.','#.#.#','#####','#.#.#','.#.#.'].map((r,i)=>i===3?'#...#':i===4?'.###.':r),로맨스:['##.##','#####','#####','.###.','..#..'],호러:['.###.','#.#.#','#####','#####','#.#.#'],SF:['..#..','.###.','.#.#.','.###.','#.#.#'],스릴러:['.###.','#...#','#.#.#','#...#','.###.'],드라마:['..#..','.###.','#####','#####','.###.'],사극:['.###.','.###.','#####','..#..','.#.#.'],판타지:['#...#','.#.#.','..#..','.#.#.','#...#'],애니:['#...#','##.##','#####','#.#.#','.###.']};
 let bgKey='',bgC=null,vigC=null;
-function slotPos(i){const col=i%4,row=Math.floor(i/4);return{x:4+col*39,y:56+row*18}}
+function slotPos(i){const col=i%4,row=Math.floor(i/4);const sp=clamp(Math.floor((H-70)/3.4),18,30);return{x:4+col*39,y:56+row*sp}}
 function visPos(){const d=LAY[G?G.office:0].doorX;return{vd:{x:d-3,y:21},vw:{x:d+9,y:21},va:{x:d+9,y:21}}}
 function buildBg(o,winter){
   const L=LAY[o];const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
@@ -636,19 +643,20 @@ function buildBg(o,winter){
     R_(x,103,6,18,15,OUTC);R_(x,104,7,16,13,'#3A2346');const st=['....#....','...###...','#########','.#######.','..#####..','.##...##.'];st.forEach((r,j)=>[...r].forEach((ch,i)=>{if(ch==='#')R_(x,108+i,9+j,1,1,'#FFE89A')}));
     R_(x,146,14,10,7,OUTC);R_(x,147,15,6,5,'#4A4058');R_(x,153,16,3,3,'#8A95B8');R_(x,150,21,2,13,OUTC);R_(x,146,33,10,2,OUTC);R_(x,147,31,1,3,OUTC);R_(x,154,31,1,3,OUTC)}
 
-  if(o===0){
+  if(o===0){x.save();x.translate(0,Math.round((H-120)*.5));
     const rx=44,ry=80,rw=72,rh=24;R_(x,rx+2,ry,rw-4,rh,OUTC);R_(x,rx,ry+2,rw,rh-4,OUTC);R_(x,rx+3,ry+1,rw-6,rh-2,'#E89BB5');R_(x,rx+1,ry+3,rw-2,rh-6,'#E89BB5');
     R_(x,rx+5,ry+4,rw-10,rh-8,'#F6C3D4');for(let i=rx+8;i<rx+rw-8;i+=6)R_(x,i,ry+rh/2,3,1,'#E89BB5');
     R_(x,14,90,16,12,OUTC);R_(x,15,91,14,10,'#F7C948');R_(x,16,91,6,3,'#FFE89A');R_(x,15,100,14,1,'#C48A22');
     R_(x,132,84,18,18,OUTC);R_(x,133,85,16,16,'#F3EEE6');R_(x,133,92,16,1,OUTC);R_(x,146,87,1,3,'#9A8F86');R_(x,146,95,1,4,'#9A8F86');
     [[124,104],[127,99]].forEach(([cx,cy])=>{R_(x,cx,cy,9,5,OUTC);R_(x,cx+1,cy+1,7,3,'#4A4058');R_(x,cx+3,cy+2,3,1,'#8A95B8')});
-  }
-  if(o===1){
+  x.restore()}
+  if(o===1){x.save();x.translate(0,Math.round((H-120)*.8));
     R_(x,10,94,40,16,OUTC);R_(x,11,95,38,6,'#2F8F86');R_(x,11,101,38,8,'#33AEA3');R_(x,11,95,38,1,'#8FE3D8');R_(x,13,103,15,4,'#2F8F86');R_(x,32,103,15,4,'#2F8F86');
     R_(x,60,100,30,8,OUTC);R_(x,61,101,28,4,'#C9975E');R_(x,61,101,28,1,'#E8C08A');R_(x,62,105,2,3,OUTC);R_(x,86,105,2,3,OUTC);R_(x,66,99,4,2,'#FFF5DA');R_(x,78,99,3,2,'#E2434C');
     R_(x,132,92,10,12,'#C9975E');R_(x,132,92,10,1,OUTC);R_(x,129,80,16,12,'#4F8A3A');R_(x,132,78,10,3,'#6FA54E');R_(x,135,76,4,2,'#6FA54E');
-  }
-  if(o===2){R_(x,8,113,144,1,'rgba(0,0,0,.12)')}
+  x.restore()}
+  if(o===2&&H>=134){const ty=H-18;R_(x,40,ty,80,9,OUTC);R_(x,41,ty+1,78,4,'#8C6E54');R_(x,41,ty+1,78,1,'#B08A6A');R_(x,41,ty+5,78,3,'#5F4635');[48,64,80,96,108].forEach(cx=>{R_(x,cx,ty-4,6,4,OUTC);R_(x,cx+1,ty-3,4,3,'#2F2A3D')});R_(x,56,ty+1,6,2,'#FFF5DA');R_(x,88,ty+1,4,2,'#E2434C')}
+  if(o===3&&H>=128){const ry=H-7;R_(x,0,ry,W,1,'#8A8A9A');R_(x,0,ry+4,W,1,'#8A8A9A');for(let i=2;i<W;i+=8)R_(x,i,ry,2,5,'#5A4A3A')}
   const d=L.doorX;R_(x,d-1,7,20,31,OUTC);R_(x,d,8,18,28,L.door);R_(x,d,8,18,1,sh(L.door,.25));R_(x,d+3,11,12,8,sh(L.door,-.12));R_(x,d+3,22,12,11,sh(L.door,-.12));R_(x,d+14,22,2,2,'#F7C948');R_(x,d+5,1,9,5,OUTC);R_(x,d+6,2,7,3,'#5A1E26');
   return c;
 }
@@ -710,6 +718,8 @@ function draw(now){
   for(let i=0;i<cap;i++)deskAt(i,G.staff[i],o,working);
   ctx.drawImage(vigC,0,0);
 }
+function fitCanvas(){const r=$('.screen').getBoundingClientRect();if(!r.width)return;const nh=clamp(Math.round(W*r.height/r.width),120,300);if(nh!==H){H=nh;cv.height=H;ctx.imageSmoothingEnabled=false;bgKey='';vigC=null;lastDraw=0}}
+if(window.ResizeObserver)new ResizeObserver(fitCanvas).observe($('.screen'));
 function bubble(slot,text,cls){
   let x,y;
   if(typeof slot==='string'){const v=visPos()[slot];x=v.x+6;y=v.y-6}else{if(slot>=OFFICE[G.office].cap)return;const s=slotPos(slot);x=s.x+10;y=s.y-20}
@@ -801,10 +811,12 @@ function renderSheet(){
   const k=UI.sheet;if(!k||!SHEETS[k])return;const r=SHEETS[k]();$('#sheetTitle').textContent=r[0];$('#sheetBody').innerHTML=r[1];
   $('#sheetClose').hidden=LOCKED_SHEETS.includes(k)||k==='result'||k==='awards';
 }
+const STAT_COLOR={plan:'#9C7BE0',mkt:'#F7C948',cast:'#F27BA5',tech:'#33AEA3',nego:'#FF8F3A',dir:'#E2434C',write:'#4F7BD9'};
+const statGrid=rows=>`<span class="sg">${rows.map(([l,v,c])=>`<span class="sr"><span class="sl">${l}</span><span class="sb"><i style="width:${clamp(v,0,100)}%;--c:${c}"></i></span><b>${v}</b></span>`).join('')}</span>`;
 function personCard(p,{act='',sel=false,dis=false,side='',extra=''}={}){
   const st=ROLE_STATS[p.role]||Object.keys(p.stats);
   return `<button class="card" ${act} aria-pressed="${sel}" ${dis?'disabled':''}><img class="av" alt="" src="${avatar(p)}"><span class="main"><span class="nm">${esc(p.name)}${p.lv?` <span class="chip">Lv.${p.lv}</span>`:''}${p.parody?' <span class="chip" style="background:#F5C542">거장</span>':''}</span>
-  <span class="stats">${st.map(s=>`<span>${STAT_LABEL[s]} <b>${p.stats[s]}</b></span>`).join('')}</span>${extra}</span><span class="side">${side}</span></button>`;
+  ${extra}</span><span class="side">${side}</span>${statGrid(st.map(s=>[STAT_LABEL[s],p.stats[s],STAT_COLOR[s]]))}</button>`;
 }
 const masteryTxt=(p,g)=>{const n=Math.min(5,(p.mastery||{})[g]||0);return n?`<span class="muted">${g} 숙련 ${'●'.repeat(n)}</span>`:`<span class="muted">${g} 경험 없음</span>`};
 const SHEETS={
@@ -872,8 +884,8 @@ function actorCard(a,cp,act='',sel=false){
   const req=GRADE[a.grade].req;const lock=cp<req;
   const g=UI.wiz&&UI.sheet==='wizard'?UI.wiz.genre:null;
   return `<button class="card" ${act} aria-pressed="${sel}" ${lock||(act&&a.fee>G.money)?'disabled':''}><img class="av" alt="" src="${avatar(a)}"><span class="main"><span class="nm"><span class="grade ${a.grade}">${GRADE_LABEL[a.grade]}</span>${esc(a.name)}</span>
-  <span class="stats"><span>연기 <b>${a.act}</b></span><span>인기 <b>${a.pop}</b></span></span><span class="muted">적성 ${a.apt.map(x=>x===g?`<b style="color:var(--red)">${x}</b>`:x).join(', ')}</span></span>
-  <span class="side">${lock?`캐스팅 ${req} 필요`:fmtMoney(a.fee)}</span></button>`;
+  <span class="muted">적성 ${a.apt.map(x=>x===g?`<b style="color:var(--red)">${x}</b>`:x).join(', ')}</span></span>
+  <span class="side">${lock?`캐스팅 ${req} 필요`:fmtMoney(a.fee)}</span>${statGrid([['연기',a.act,'#E2434C'],['인기',a.pop,'#F27BA5']])}</button>`;
 }
 
 /* ---------- wizard ---------- */
